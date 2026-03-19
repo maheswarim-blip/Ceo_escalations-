@@ -11,11 +11,14 @@ Run:
 import json
 import os
 import time
+from dotenv import load_dotenv
 from pathlib import Path
 
 import streamlit as st
 
 from case_builder import build_cases
+
+load_dotenv()
 
 # ── page config ────────────────────────────────────────────────────────────────
 st.set_page_config(

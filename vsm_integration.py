@@ -55,7 +55,7 @@ def fetch_vsm_order(order_id: str) -> dict:
         resp = requests.get(url, headers=VSM_HEADERS, timeout=15)
         resp.raise_for_status()
         raw = resp.json()
-        data = raw.get("data", raw)
+        data = raw.get("data", raw).get("result", raw)
         return {
             "order_id":       data.get("orderId") or data.get("id"),
             "status":         data.get("status") or data.get("orderStatus"),
