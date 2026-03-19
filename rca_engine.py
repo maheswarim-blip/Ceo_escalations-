@@ -7,6 +7,9 @@ Supports streaming output for real-time display in the dashboard.
 
 import os
 import anthropic
+from dotenv import load_dotenv
+
+load_dotenv()
 
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 
@@ -140,7 +143,7 @@ Generate the complete RCA now."""
     with client.messages.stream(
         model="claude-opus-4-6",
         max_tokens=4096,
-        thinking={"type": "adaptive"},
+        thinking={"type": "enabled", "budget_tokens": 2000},
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
     ) as stream:
