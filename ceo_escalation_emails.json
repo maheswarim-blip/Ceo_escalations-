@@ -2,8 +2,190 @@
   "collected_at": "2026-03-19",
   "query": "to:ceoescalation@lenskart.com OR cc:ceoescalation@lenskart.com OR from:ceoescalation@lenskart.com",
   "total_estimated": 201,
-  "total_collected": 354,
+  "total_collected": 366,
   "emails": [
+    {
+      "id": "19d069f4eeffb64f",
+      "threadId": "19d069f4eeffb64f",
+      "date": "Thu, 19 Mar 2026 20:33:02 +0530",
+      "from": "\"'Ayush Roy' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "LKST2690 Phagwara_Banga rd <Bangard.phagwara@lenskartstore.com>, Arun Kumar <arun.kumar1@lenskart.com>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>, Gagneet Singh <gagneet.singh@lenskart.in>",
+      "subject": "CEO Esclation Case || 1333524414 || 118918663 || Need RCA & Assistance Required in Re-order",
+      "snippet": "Hi Store, This email is regarding a CEO escalation wherein the customer has reported that her order was incorrectly placed by the store. We have issued store credit of ₹3199. Kindly assist the customer",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d066b644866c1a",
+      "threadId": "19d066b644866c1a",
+      "date": "Thu, 19 Mar 2026 19:37:56 +0530",
+      "from": "\"'Suraj Verma' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "kmtcore <kmtcore@lenskart.mobi>, Kiran Sama <kiran1@lenskart.in>, Vikash Narayan <vikash.narayan@lenskart.mobi>, Ruchi Nagpall <ruchi.nagpal@lenskart.in>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "CEO Escalation | 118585452 | 1306684866 | RCA Required",
+      "snippet": "Dear Kiran, Please share the RCA on this escalation images has been attached below. Phonic frame broken post 9 months. Regards, Suraj Verma Team - CEO Escalation",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d066ab11f850f1",
+      "threadId": "19d066ab11f850f1",
+      "date": "Thu, 19 Mar 2026 19:35:33 +0530",
+      "from": "\"'Ankit Dua' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Vanitha Balu <vanitha.balu@lenskart.in>",
+      "cc": "Himanshu Gupta <himanshu.gupta2@lenskart.in>, Japin Charan <japin@lenskart.in>, LKST2080 Pune_Kondhwa <kondhwa1.pune@lenskartstore.com>, Mohsin Shaikh <mohsin.shaikh@lenskart.com>, Sourabh Upadhyay <sourabh.upadhyay@lenskart.in>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation|| #118467248|| 1332705880|| RCA Required",
+      "snippet": "+LKST2080 Pune_Kondhwa connect with the customer to confirm the product delivery.",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d06689ac3a7bc4",
+      "threadId": "19d06689ac3a7bc4",
+      "date": "Thu, 19 Mar 2026 19:35:01 +0530",
+      "from": "\"'Suraj Verma' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "St234 Jodhpur <sardarpura.jodhpur@lenskartstore.com>",
+      "cc": "Sunny Srivastava <sunny.srivastava@lenskart.in>, Nitin Khanna <nitin.khanna@lenskart.com>, CEO Escalation <CEOescalation@lenskart.com>, Himanshu Gupta <himanshu.gupta2@lenskart.in>",
+      "subject": "Re: CEO Escalation | 118585452 | 1306684866 | RCA Required",
+      "snippet": "Dear Store Team, Greetings. Could you please clarify why, even after the warranty approval, the matter remained unresolved for nearly two months?",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d06665b1175dd9",
+      "threadId": "19d05447a16f1be1",
+      "date": "Thu, 19 Mar 2026 19:30:48 +0530",
+      "from": "\"'Vikas Singh' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Ayush Roy <ayush.roy@lenskart.in>",
+      "cc": "Rahul Mehta <rahul.mehta@lenskart.in>, Akshay Bhardwaj <akshay.sharma@lenskart.mobi>, Mohit Kumar Singh <mohit.singh2@lenskart.com>, Logistics <logistics@lenskart.in>, Ashish Kumar Jaiswal <ashish.jaiswal1@delhivery.com>, CEO Escalation <CEOescalation@lenskart.com>, Vishal Gupta <vishal.gupta2@lenskart.in>",
+      "subject": "Re: CEO Escalation Case || 1332620322 || 118830840 || RCA Required",
+      "snippet": "Hi Ayush, As per the customer he visited to the hub to collect and also paid some amounts for no reason.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d0659df3e5e5ab",
+      "threadId": "19d05d1ebb743bb4",
+      "date": "Thu, 19 Mar 2026 19:17:12 +0530",
+      "from": "Yogesh Kumar <yogesh.kumar2@lenskart.com>",
+      "to": "control.tower@lenskart.in, Rashid Taj <rashid.taj@lenskart.com>",
+      "cc": "LKST1945 Hyderabad_HMT hills <Hmthills.hyderabad@lenskartstore.com>, Mohit Kumar Singh <mohit.singh2@lenskart.com>, Vikas Singh <vikas.singh@lenskart.in>, Logistics <logistics@lenskart.in>, Himanshu Rajput <himanshu.rajput@thelenskart.com>, ORM <orm@valyoo.in>, Mohammed Asif <mohammed.asif1@lenskart.com>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: Social Media Escalation || #118916624 || 1331356056",
+      "snippet": "Hi Team, @Rashid Taj - Pls help",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d062cd3a6619ee",
+      "threadId": "19d061ba38bb4244",
+      "date": "Thu, 19 Mar 2026 18:27:34 +0530",
+      "from": "Manish Lakhera <manish.lakhera@lenskart.com>",
+      "to": "Himanshu Gupta <himanshu.gupta2@lenskart.in>, Rashmi <rashmibp@vrxlab.com>, Dhruba Das <dhrubadas@vrxlab.com>",
+      "cc": "Mohd Sahajad Khan <sahajad.khan@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>, Local Fitting <local_fitting@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>, Lkst192 Ahmedabad <memnagar.gurukul@lenskartstore.com>",
+      "subject": "Re: CEO Escalation | Urgent Dispatch Required | 1334202837 | 118912572",
+      "snippet": "@Rashmi @Dhruba Das - Kindly expedite this order and deliver asap",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d061e7fff44f5c",
+      "threadId": "19d061e7fff44f5c",
+      "date": "Thu, 19 Mar 2026 18:12:15 +0530",
+      "from": "\"'Himanshu Gupta' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Manish Lakhera <manish.lakhera@lenskart.com>, Mohd Sahajad Khan <sahajad.khan@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>, Local Fitting <local_fitting@lenskart.in>",
+      "cc": "CEO Escalation <ceoescalation@lenskart.com>, Lkst192 Ahmedabad <memnagar.gurukul@lenskartstore.com>",
+      "subject": "Re: CEO Escalation | Urgent Dispatch Required | 1334203869 | 118912572",
+      "snippet": "Correct Order ID : 1334203869",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d061ba38bb4244",
+      "threadId": "19d061ba38bb4244",
+      "date": "Thu, 19 Mar 2026 18:09:08 +0530",
+      "from": "\"'Himanshu Gupta' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Manish Lakhera <manish.lakhera@lenskart.com>, Mohd Sahajad Khan <sahajad.khan@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>, Local Fitting <local_fitting@lenskart.in>",
+      "cc": "CEO Escalation <ceoescalation@lenskart.com>, Lkst192 Ahmedabad <memnagar.gurukul@lenskartstore.com>",
+      "subject": "CEO Escalation | Urgent Dispatch Required | 1334202837 | 118912572",
+      "snippet": "Hi Sahajad, This is regarding a CEO escalation where the customer has placed an order for Rodenstock lenses, which is currently under processing. Request you to please expedite the order on priority",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d061a7285d64bf",
+      "threadId": "19d061a7285d64bf",
+      "date": "Thu, 19 Mar 2026 18:07:50 +0530",
+      "from": "\"'Himanshu Gupta' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Laiba Afsar <laiba.afsar@lenskart.in>, Control Tower <control.tower@lenskart.in>, V Jaya Vishagan <vjaya.vishagan@lenskart.in>, Bhiwadi Escalation Management <bhiwadi-escalation@lenskart.in>",
+      "cc": "CEO Escalation <ceoescalation@lenskart.com>, Lkst192 Ahmedabad <memnagar.gurukul@lenskartstore.com>",
+      "subject": "CEO Escalation | Urgent Dispatch Required | 1334202837 | 118912572",
+      "snippet": "Hi Laiba, This is regarding a CEO escalation where the customer has placed an order for Rodenstock lenses, which is currently under processing. Request you to please expedite the order on priority",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d0605963980f5e",
+      "threadId": "19d05f78c2c4ec5a",
+      "date": "Thu, 19 Mar 2026 17:46:52 +0530",
+      "from": "\"'Suraj Verma' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "LKST2374 Noida_PKS Town central <pkstowncentral.noida@lenskartstore.com>, Shamsher Ahmad <shamsher.ahmad@lenskart.com>, Abhishek Gupta <Abhishek.gupta1@lenskart.com>, Tarun Agarwal <tarun.agarwal@lenskart.com>, Sudhir Kumar <sudhir.kumar2@lenskart.in>",
+      "cc": "Ankit Dua <ankit.dua@lenskart.in>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | 118838657 | 1332306269 | RCA Required.",
+      "snippet": "@Sudhir Kumar Kindly arrange the cluster visit at store for tomorrow if possible and let me know the timings",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
+    {
+      "id": "19d05f78c2c4ec5a",
+      "threadId": "19d05f78c2c4ec5a",
+      "date": "Thu, 19 Mar 2026 17:31:32 +0530",
+      "from": "\"'Suraj Verma' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "LKST2374 Noida_PKS Town central <pkstowncentral.noida@lenskartstore.com>, Shamsher Ahmad <shamsher.ahmad@lenskart.com>, Abhishek Gupta <Abhishek.gupta1@lenskart.com>, Tarun Agarwal <tarun.agarwal@lenskart.com>",
+      "cc": "Ankit Dua <ankit.dua@lenskart.in>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | 118838657 | 1332306269 | RCA Required.",
+      "snippet": "Dear store, Please share the RCA of this escalation VOC shared below. Need to know the price discrepancy reason.",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ]
+    },
     {
       "id": "19d05ddd0048e0c7",
       "threadId": "19d0507f3f3e174d",
