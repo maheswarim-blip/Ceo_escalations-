@@ -161,7 +161,10 @@ def _sync_via_mcp(verbose=False):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _get_oauth_creds():
-    """Load or refresh OAuth2 credentials from gmail_token.json."""
+    """
+    Load, refresh, or create OAuth2 credentials.
+    Always returns credentials with a valid access token.
+    """
     try:
         from google.oauth2.credentials import Credentials
         from google.auth.transport.requests import Request as GRequest
@@ -172,32 +175,76 @@ def _get_oauth_creds():
             "  pip install google-auth-oauthlib google-auth-httplib2 google-api-python-client"
         )
 
+    creds_file = Path(__file__).parent / "credentials.json"
     creds = None
+
     if TOKEN_FILE.exists():
         creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), SCOPES)
 
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
+    # Refresh whenever the access token is missing or expired
+    if creds and creds.refresh_token and (not creds.token or creds.expired):
+        try:
             creds.refresh(GRequest())
-        else:
-            creds_file = Path(__file__).parent / "credentials.json"
-            if not creds_file.exists():
-                raise RuntimeError(
-                    "credentials.json not found.\n\n"
-                    "To set up Gmail access on your Mac:\n"
-                    "  1. Go to https://console.cloud.google.com/\n"
-                    "  2. Create a project → Enable Gmail API\n"
-                    "  3. Create OAuth2 credentials (Desktop app type)\n"
-                    "  4. Download as credentials.json into this folder\n"
-                    "  5. Run: python gmail_sync.py --setup"
-                )
-            flow = InstalledAppFlow.from_client_secrets_file(str(creds_file), SCOPES)
-            creds = flow.run_local_server(port=0)
+            with open(TOKEN_FILE, "w") as f:
+                f.write(creds.to_json())
+            return creds
+        except Exception as e:
+            # Refresh failed (revoked token etc.) — fall through to re-auth
+            print(f"  Token refresh failed ({e}), re-authenticating…", flush=True)
+            TOKEN_FILE.unlink(missing_ok=True)
+            creds = None
 
+    if not creds or not creds.valid:
+        if not creds_file.exists():
+            raise RuntimeError(
+                "credentials.json not found.\n\n"
+                "One-time setup steps:\n"
+                "  1. Go to https://console.cloud.google.com/\n"
+                "  2. Select your project → APIs & Services → Library\n"
+                "     Search 'Gmail API' → Enable it\n"
+                "  3. APIs & Services → Credentials → + Create Credentials\n"
+                "     → OAuth client ID → Desktop app → Download JSON\n"
+                "  4. Rename the downloaded file to credentials.json\n"
+                "     and place it in this project folder\n"
+                "  5. Run: python gmail_sync.py --setup\n"
+                "     (opens browser for one-time Google sign-in)"
+            )
+        flow = InstalledAppFlow.from_client_secrets_file(str(creds_file), SCOPES)
+        creds = flow.run_local_server(port=0)
         with open(TOKEN_FILE, "w") as f:
             f.write(creds.to_json())
 
     return creds
+
+
+def _gmail_get(creds, url, params=None):
+    """GET a Gmail API URL, raising clear errors on 403/401."""
+    resp = requests.get(
+        url,
+        headers={"Authorization": f"Bearer {creds.token}"},
+        params=params,
+        timeout=30,
+    )
+    if resp.status_code == 403:
+        err = resp.json().get("error", {})
+        msg = err.get("message", resp.text[:200])
+        raise RuntimeError(
+            f"Gmail API 403 Forbidden: {msg}\n\n"
+            "Common fixes:\n"
+            "  1. Make sure the Gmail API is enabled:\n"
+            "     console.cloud.google.com → APIs & Services → Gmail API → Enable\n"
+            "  2. Delete gmail_token.json and re-run setup to get a fresh token:\n"
+            "     rm gmail_token.json && python gmail_sync.py --setup\n"
+            "  3. If using a Google Workspace account, ensure the OAuth consent\n"
+            "     screen lists your email as a test user."
+        )
+    if resp.status_code == 401:
+        raise RuntimeError(
+            "Gmail API 401 Unauthorized — token expired or revoked.\n"
+            "Delete gmail_token.json and re-run: python gmail_sync.py --setup"
+        )
+    resp.raise_for_status()
+    return resp.json()
 
 
 def _search_via_oauth(creds, page_token=None, max_results=500):
@@ -209,29 +256,19 @@ def _search_via_oauth(creds, page_token=None, max_results=500):
     }
     if page_token:
         params["pageToken"] = page_token
-
-    headers = {"Authorization": f"Bearer {creds.token}"}
-    resp = requests.get(
-        "https://gmail.googleapis.com/gmail/v1/users/me/messages",
-        headers=headers, params=params, timeout=30
-    )
-    resp.raise_for_status()
-    return resp.json()
+    return _gmail_get(creds, "https://gmail.googleapis.com/gmail/v1/users/me/messages",
+                      params=params)
 
 
 def _get_message_meta(creds, msg_id):
     """Fetch message metadata (headers + snippet) via REST API."""
-    headers = {"Authorization": f"Bearer {creds.token}"}
-    resp = requests.get(
+    return _gmail_get(
+        creds,
         f"https://gmail.googleapis.com/gmail/v1/users/me/messages/{msg_id}",
-        headers=headers,
         params={"format": "metadata",
                 "metadataHeaders": "From,To,Cc,Subject,Date",
                 "fields": "id,threadId,labelIds,snippet,payload/headers"},
-        timeout=30,
     )
-    resp.raise_for_status()
-    return resp.json()
 
 
 def _parse_oauth_message(raw: dict) -> dict:
@@ -251,11 +288,9 @@ def _parse_oauth_message(raw: dict) -> dict:
 
 
 def _sync_via_oauth(verbose=False):
-    creds = _get_oauth_creds()
-    # Refresh token if close to expiry
-    from google.auth.transport.requests import Request as GRequest
-    if creds.expired:
-        creds.refresh(GRequest())
+    creds = _get_oauth_creds()  # always returns a valid token
+    # Save any token refresh that happened inside _get_oauth_creds
+    if not TOKEN_FILE.exists():
         with open(TOKEN_FILE, "w") as f:
             f.write(creds.to_json())
 
