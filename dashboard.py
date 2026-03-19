@@ -278,7 +278,7 @@ def render_order_cards(vsm_orders: list):
         with cols[0]:
             st.markdown(f"### Order `{order.get('order_id')}`")
             st.markdown(f"👤 **{order.get('customer_name')}** · 📱 `{order.get('customer_phone')}`")
-            st.markdown(f"🏬 {order.get('store','—')} · 📅 {(order.get('created_at') or '')[:10]}")
+            st.markdown(f"🏬 {order.get('store','—')} · 📅 {str(order.get('created_at') or '')[:10]}")
 
         with cols[1]:
             scolor = status_color(order.get("status",""))
@@ -307,7 +307,7 @@ def render_order_cards(vsm_orders: list):
             st.markdown(
                 f"🚚 **{tracking.get('courier','—')}** · AWB: `{tracking.get('awb','—')}` · "
                 f"Status: **{tracking.get('status','—')}** · "
-                f"Updated: {(tracking.get('updated_at') or '')[:10]}"
+                f"Updated: {str(tracking.get('updated_at') or '')[:10]}"
             )
 
         # Items
@@ -353,7 +353,7 @@ def render_crm_comments(crm_comments: dict):
                 direction = c.get("direction","outbound")
                 msg = c.get("message","")
                 author = c.get("author","")
-                ts = (c.get("created_at") or "")[:16]
+                ts = str(c.get("created_at") or "")[:16]
 
                 if direction == "inbound":
                     html_parts.append(
