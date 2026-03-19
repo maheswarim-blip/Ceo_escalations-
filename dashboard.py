@@ -91,7 +91,7 @@ st.markdown("""
 
 # ── data loading ───────────────────────────────────────────────────────────────
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(ttl=120, show_spinner=False)
 def load_cases():
     enriched = Path("ceo_escalation_emails_enriched.json")
     raw      = Path("ceo_escalation_emails.json")
@@ -103,19 +103,77 @@ def load_cases():
         with open(raw) as f:
             data = json.load(f)
     else:
-        return [], None
+        return [], None, {}
 
-    return build_cases(data["emails"]), data.get("enriched_at") or data.get("collected_at")
+    meta = {
+        "total": data.get("total_collected", len(data.get("emails", []))),
+        "synced_at": data.get("synced_at") or data.get("collected_at") or "",
+    }
+    return build_cases(data["emails"]), data.get("enriched_at") or data.get("collected_at"), meta
+
+
+def _gmail_sync_available() -> bool:
+    token_file = os.environ.get("CLAUDE_SESSION_INGRESS_TOKEN_FILE", "")
+    return bool(token_file and os.path.exists(token_file))
 
 # ── sidebar ────────────────────────────────────────────────────────────────────
 
 def severity_icon(s):
     return {"HIGH": "🔴", "MEDIUM": "🟠", "LOW": "🟢"}.get(s, "⚪")
 
-def render_sidebar(cases):
+def _do_sync():
+    """Run Gmail sync and clear the cache so the dashboard reloads."""
+    try:
+        from gmail_sync import sync_new_emails
+        result = sync_new_emails()
+        st.session_state["last_sync_result"] = result
+        load_cases.clear()
+    except Exception as e:
+        st.session_state["last_sync_result"] = {"error": str(e)}
+
+
+def render_sidebar(cases, meta=None):
     with st.sidebar:
         st.title("🔺 CEO Escalations")
         st.caption(f"{len(cases)} active cases")
+
+        # ── Real-time sync controls ──────────────────────────────────────────
+        st.divider()
+        sync_available = _gmail_sync_available()
+        col_btn, col_auto = st.columns([3, 2])
+
+        with col_btn:
+            if st.button(
+                "🔄 Sync Gmail",
+                disabled=not sync_available,
+                use_container_width=True,
+                help="Fetch new emails from ceoescalation@lenskart.com" if sync_available
+                     else "Available only inside a Claude Code session",
+            ):
+                with st.spinner("Syncing…"):
+                    _do_sync()
+                st.rerun()
+
+        with col_auto:
+            auto = st.toggle("Auto", value=st.session_state.get("auto_refresh", False),
+                             help="Auto-refresh every 2 min")
+            st.session_state["auto_refresh"] = auto
+
+        # Show last sync result
+        lsr = st.session_state.get("last_sync_result")
+        if lsr:
+            if "error" in lsr:
+                st.error(f"Sync failed: {lsr['error']}", icon="⚠️")
+            else:
+                st.success(
+                    f"+{lsr['new_count']} new · {lsr['total']} total",
+                    icon="✅"
+                )
+
+        if meta and meta.get("synced_at"):
+            st.caption(f"Last synced: {meta['synced_at'][:19]}")
+
+        st.divider()
 
         # Filters
         with st.expander("Filters", expanded=False):
@@ -412,14 +470,14 @@ def render_case_header(case: dict):
 
 
 def main():
-    cases, enriched_at = load_cases()
+    cases, enriched_at, meta = load_cases()
 
     if not cases:
         st.error("No data found. Run `python generate_mock_data.py` first.")
         st.stop()
 
     # Sidebar returns the filtered list
-    filtered_cases = render_sidebar(cases)
+    filtered_cases = render_sidebar(cases, meta)
 
     if not filtered_cases:
         st.warning("No cases match the current filters.")
@@ -466,6 +524,12 @@ def main():
 
     if enriched_at:
         st.caption(f"Data enriched at: {enriched_at}")
+
+    # Auto-refresh: rerun every 2 minutes when enabled
+    if st.session_state.get("auto_refresh"):
+        time.sleep(120)
+        load_cases.clear()
+        st.rerun()
 
 
 if __name__ == "__main__":

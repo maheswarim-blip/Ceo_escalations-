@@ -1,7 +1,7 @@
 {
   "collected_at": "2026-03-19",
   "query": "to:ceoescalation@lenskart.com OR cc:ceoescalation@lenskart.com OR from:ceoescalation@lenskart.com",
-  "total_estimated": 201,
+  "total_estimated": 366,
   "total_collected": 366,
   "emails": [
     {
@@ -5361,5 +5361,6 @@
         "INBOX"
       ]
     }
-  ]
+  ],
+  "synced_at": "2026-03-19T16:26:07"
 }
