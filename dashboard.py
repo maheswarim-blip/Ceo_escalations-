@@ -265,6 +265,36 @@ def render_email_thread(emails: list):
             st.markdown(f"> {email.get('snippet','_(no preview)_')}")
 
 
+def _extract_status_str(raw) -> str:
+    """Return a plain string from a status field that may be a str or dict."""
+    if isinstance(raw, dict):
+        return (raw.get("status") or raw.get("trackingStatus") or
+                raw.get("state") or "—")
+    return str(raw) if raw else "—"
+
+
+def _fmt_ts(ts) -> str:
+    """Format a Unix-ms timestamp or ISO string to a readable date."""
+    if not ts:
+        return "—"
+    if isinstance(ts, (int, float)):
+        from datetime import datetime, timezone
+        try:
+            return datetime.fromtimestamp(ts / 1000, tz=timezone.utc).strftime("%d %b %Y")
+        except Exception:
+            return str(ts)
+    return str(ts)[:10]
+
+
+def _price_val(price) -> str:
+    """Extract a numeric price from a plain number or a {'value':…} dict."""
+    if isinstance(price, dict):
+        return f"₹{price.get('value', 0):,.0f}"
+    if isinstance(price, (int, float)):
+        return f"₹{price:,.0f}"
+    return "—"
+
+
 def render_order_cards(vsm_orders: list):
     if not vsm_orders:
         st.info("No VSM order data available for this case.")
@@ -274,54 +304,75 @@ def render_order_cards(vsm_orders: list):
     for order in vsm_orders:
         st.markdown('<div class="order-card">', unsafe_allow_html=True)
 
+        status_str = _extract_status_str(order.get("status"))
+        payment_str = _extract_status_str(order.get("payment_status"))
+        created_str = _fmt_ts(order.get("created_at"))
+
         cols = st.columns([2, 1, 1, 1])
         with cols[0]:
             st.markdown(f"### Order `{order.get('order_id')}`")
-            st.markdown(f"👤 **{order.get('customer_name')}** · 📱 `{order.get('customer_phone')}`")
-            st.markdown(f"🏬 {order.get('store','—')} · 📅 {str(order.get('created_at') or '')[:10]}")
+            name  = order.get('customer_name') or "—"
+            phone = order.get('customer_phone') or "—"
+            store = order.get('store') or "—"
+            st.markdown(f"👤 **{name}** · 📱 `{phone}`")
+            st.markdown(f"🏬 {store} · 📅 {created_str}")
 
         with cols[1]:
-            scolor = status_color(order.get("status",""))
+            scolor = status_color(status_str)
             st.markdown(
                 f"**Order Status**<br>"
-                f"<span style='color:{scolor};font-size:16px;font-weight:700'>"
-                f"{order.get('status','—')}</span>",
+                f"<span style='color:{scolor};font-size:14px;font-weight:700'>"
+                f"{status_str}</span>",
                 unsafe_allow_html=True
             )
 
         with cols[2]:
-            pcolor = payment_color(order.get("payment_status",""))
+            pcolor = payment_color(payment_str)
             st.markdown(
                 f"**Payment**<br>"
-                f"<span style='color:{pcolor};font-size:16px;font-weight:700'>"
-                f"{order.get('payment_status','—')}</span>",
+                f"<span style='color:{pcolor};font-size:14px;font-weight:700'>"
+                f"{payment_str}</span>",
                 unsafe_allow_html=True
             )
 
         with cols[3]:
-            st.metric("Total Amount", f"₹{order.get('total_amount','—'):,}" if isinstance(order.get('total_amount'), int) else "—")
+            amt = order.get("total_amount")
+            amt_str = f"₹{amt:,.0f}" if isinstance(amt, (int, float)) else "—"
+            st.metric("Total Amount", amt_str)
 
-        # Tracking
-        tracking = order.get("tracking") or {}
-        if tracking:
-            st.markdown(
-                f"🚚 **{tracking.get('courier','—')}** · AWB: `{tracking.get('awb','—')}` · "
-                f"Status: **{tracking.get('status','—')}** · "
-                f"Updated: {str(tracking.get('updated_at') or '')[:10]}"
-            )
+        # Tracking — real data is a list of checkpoint dicts
+        tracking_raw = order.get("tracking")
+        if tracking_raw:
+            if isinstance(tracking_raw, list) and tracking_raw:
+                # Show latest checkpoint
+                latest = tracking_raw[0]
+                t_status = _extract_status_str(latest)
+                t_time   = _fmt_ts(latest.get("updatedTime") or latest.get("createdTime"))
+                details  = latest.get("details", [])
+                detail_str = details[0].get("trackStatus", "") if details else ""
+                st.markdown(
+                    f"🚚 **Latest checkpoint:** {t_status}"
+                    + (f" · {detail_str}" if detail_str and detail_str != t_status else "")
+                    + f" · Updated: {t_time}"
+                )
+            elif isinstance(tracking_raw, dict):
+                t_status = _extract_status_str(tracking_raw)
+                t_time   = _fmt_ts(tracking_raw.get("updated_at") or tracking_raw.get("updatedTime"))
+                st.markdown(f"🚚 **Status:** {t_status} · Updated: {t_time}")
 
         # Items
-        items = order.get("items", [])
+        items = order.get("items") or []
         if items:
             st.markdown("**Items:**")
-            item_cols = st.columns(len(items))
+            num_cols = min(len(items), 3)
+            item_cols = st.columns(num_cols)
             for j, item in enumerate(items):
-                with item_cols[j]:
+                with item_cols[j % num_cols]:
                     st.markdown(
                         f"<div style='background:#0f2040;border-radius:6px;padding:10px'>"
                         f"<b>{item.get('name','—')}</b><br>"
-                        f"<small>SKU: {item.get('sku','—')} · Qty: {item.get('qty',1)}</small><br>"
-                        f"<b>₹{item.get('price',0):,}</b>"
+                        f"<small>Qty: {item.get('qty',1)}</small><br>"
+                        f"<b>{_price_val(item.get('price', 0))}</b>"
                         f"</div>",
                         unsafe_allow_html=True
                     )
