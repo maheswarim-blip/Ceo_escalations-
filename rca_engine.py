@@ -7,11 +7,46 @@ Supports streaming output for real-time display in the dashboard.
 
 import os
 import anthropic
+import httpx
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
+def _make_client() -> anthropic.Anthropic:
+    """
+    Build the Anthropic client, honouring SSL env vars.
+
+    Set in .env (or shell) to work around SSL issues:
+      REQUESTS_CA_BUNDLE=/path/to/corp-ca-bundle.pem   # custom CA cert
+      SSL_CERT_FILE=/path/to/cert.pem                  # alternative CA path
+      ANTHROPIC_DISABLE_SSL_VERIFY=true                # disable verification (dev only)
+    """
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+
+    # Resolve CA bundle: prefer explicit paths, then system defaults
+    ca_bundle = (
+        os.environ.get("REQUESTS_CA_BUNDLE")
+        or os.environ.get("SSL_CERT_FILE")
+    )
+    disable_verify = os.environ.get("ANTHROPIC_DISABLE_SSL_VERIFY", "").lower() in (
+        "1", "true", "yes"
+    )
+
+    if disable_verify:
+        http_client = httpx.Client(verify=False)
+    elif ca_bundle:
+        http_client = httpx.Client(verify=ca_bundle)
+    else:
+        http_client = None  # default: let httpx use certifi / system certs
+
+    kwargs = {"api_key": api_key}
+    if http_client:
+        kwargs["http_client"] = http_client
+
+    return anthropic.Anthropic(**kwargs)
+
+
+client = _make_client()
 
 SYSTEM_PROMPT = """You are a senior Customer Experience analyst at Lenskart, India's leading eyewear company.
 You specialize in performing Root Cause Analysis (RCA) on CEO-escalated customer complaints.
