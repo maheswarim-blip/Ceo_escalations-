@@ -2,3 +2,9 @@ anthropic>=0.50.0
 streamlit>=1.35.0
 requests>=2.31.0
 python-dotenv>=1.0.0
+httpx>=0.27.0
+# Gmail OAuth2 (needed for local/Mac sync mode)
+google-auth>=2.29.0
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0
+google-api-python-client>=2.126.0
