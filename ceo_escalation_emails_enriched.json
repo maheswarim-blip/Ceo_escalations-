@@ -1,0 +1,1836 @@
+{
+  "collected_at": "2026-03-19",
+  "enriched_at": "2026-03-19T09:12:00",
+  "total_emails": 20,
+  "total_unique_orders": 10,
+  "emails": [
+    {
+      "id": "19d05299339bae72",
+      "threadId": "19d05299339bae72",
+      "date": "Thu, 19 Mar 2026 13:44:18 +0530",
+      "from": "'St367 Sambhalpur' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "Himanshu Gupta <himanshu.gupta2@lenskart.in>",
+      "cc": "Sudipto Mitra <sudipto.mitra@lenskart.com>, Sanjay Verma <sanjay.verma@lenskart.in>, Parag Pattnaik <parag.pattnaik@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | RCA Required | 1333848607 & 1333848314 | 118784423",
+      "snippet": "Today received one pending product on this order 1333848314.takl to cx then delivered a speed post. i will attached screenshot",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1333848607",
+        "1333848314"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1333848607",
+          "status": "PARTIALLY_DELIVERED",
+          "created_at": "2026-01-30T05:29:00",
+          "customer_name": "Priya Singh",
+          "customer_phone": "9895285932",
+          "customer_email": "priya.singh@gmail.com",
+          "store": "LKST658 Mumbai",
+          "total_amount": 3198,
+          "payment_status": "PAID",
+          "tracking": {
+            "courier": "Xpressbees",
+            "awb": "AWB553035110",
+            "status": "PARTIALLY_DELIVERED",
+            "updated_at": "2026-03-18T09:07:00"
+          },
+          "items": [
+            {
+              "sku": "FR-FAS-4582",
+              "name": "Fastrack Full Rim Frame",
+              "qty": 1,
+              "price": 2499
+            },
+            {
+              "sku": "LN-BIF-9279",
+              "name": "Bifocal Lens",
+              "qty": 1,
+              "price": 699
+            }
+          ],
+          "issue_type": "Customer dissatisfied with fit",
+          "whatsapp_thread": "WA127824"
+        },
+        {
+          "order_id": "1333848314",
+          "status": "ON_HOLD",
+          "created_at": "2026-02-10T23:19:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9774996843",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST733 Jaipur",
+          "total_amount": 5498,
+          "payment_status": "REFUND_INITIATED",
+          "tracking": {
+            "courier": "Xpressbees",
+            "awb": "AWB306468299",
+            "status": "ON_HOLD",
+            "updated_at": "2026-03-17T07:30:00"
+          },
+          "items": [
+            {
+              "sku": "FR-CAL-4733",
+              "name": "Calvin Klein Half Rim Frame",
+              "qty": 1,
+              "price": 4999
+            },
+            {
+              "sku": "LN-SIN-2307",
+              "name": "Single Vision Lens",
+              "qty": 1,
+              "price": 499
+            }
+          ],
+          "issue_type": "Prescription error",
+          "whatsapp_thread": "WA205907"
+        }
+      ],
+      "crm_comments": {
+        "1333848607": [
+          {
+            "id": "CMT-1333848607-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-08T21:53:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333848607-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹2305 has been initiated. It will reflect in 5-7 days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-09T07:19:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333848607-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-09T13:10:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333848607-004",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Deepak Nair",
+            "created_at": "2026-03-09T16:54:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333848607-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-09T20:07:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333848607-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-09T22:12:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333848607-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-10T04:50:00",
+            "direction": "inbound"
+          }
+        ],
+        "1333848314": [
+          {
+            "id": "CMT-1333848314-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-06T17:52:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333848314-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-06T21:15:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333848314-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-07T02:59:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333848314-004",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Saurabh Gupta",
+            "created_at": "2026-03-07T14:03:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333848314-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-07T18:13:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333848314-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-08T01:30:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d052887e54020e",
+      "threadId": "19d04bc2e670c79b",
+      "date": "Thu, 19 Mar 2026 13:43:40 +0530",
+      "from": "'Karan Kumar' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "Puneet Bahl <puneet.bahl@lenskart.in>, Jayendra Giri <jayendra.giri@lenskart.com>, Karan Luthra <karan.luthra@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>",
+      "cc": "Veyomendu Singh <veyomendu.singh@lenskart.in>, Awaneesh Pandey <awaneesh.pandey@lenskart.com>, local_fitting@lenskart.in, Mohd Sahajad Khan <sahajad.khan@lenskart.com>, Sugam Sharma <sugam.sharma@lenskart.com>, Dhiraj Kumar <dhiraj.kumar1@lenskart.mobi>, Rohit Rohit <rohit1@lenskart.mobi>, Manish Lakhera <manish.lakhera@lenskart.com>, Ashish Gupta <ashish.gupta@gkbhitech.com>, Yatish Chandra <yatish.chandra@lenskart.com>, LKST2071 Gorakhpur_Taramandal <taramandal.gorakhpur@lenskartstore.com>, Harshita Sharma <harshita.sharma1@thelenskart.com>, Rachit Jain <rachit.jain@lenskart.in>, Bharat Manghwani <bharat.manghwani@lenskart.com>, Anju Singh <anjus@lenskart.mobi>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: Request for Guidance – Customer Escalation on High Value Frame Damage (LKST 2071)",
+      "snippet": "Team - kindly provide your approvals We need to resolve this for the customer by tomorrow or he will pursue legal channels.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d05258f9d2226a",
+      "threadId": "19d0506422bf3ab2",
+      "date": "Thu, 19 Mar 2026 13:39:59 +0530",
+      "from": "Manish Lakhera <manish.lakhera@lenskart.com>",
+      "to": "Ayush Roy <ayush.roy@lenskart.in>",
+      "cc": "Sugam Sharma <sugam.sharma@lenskart.com>, Local Fitting <local_fitting@lenskart.in>, Mohd Sahajad Khan <sahajad.khan@lenskart.com>, Kiran Sama <kiran1@lenskart.in>, Vikas Narayan <vikash.narayan@lenskart.mobi>, Ruchi Nagpall <ruchi.nagpal@lenskart.in>, kmtcore <kmtcore@lenskart.mobi>, CEO Escalation <CEOescalation@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>",
+      "subject": "Re: CEO Escalation Case || 1313804934 || 118887165 || Need RCA",
+      "snippet": "Hi Ayush, As we discussed there is no discrepancy of this order from our end for this order Also this CX has raised below CEO Escalation too",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1313804934"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1313804934",
+          "status": "ON_HOLD",
+          "created_at": "2026-03-01T06:59:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9709004943",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST997 Hyderabad",
+          "total_amount": 4698,
+          "payment_status": "REFUND_INITIATED",
+          "tracking": {
+            "courier": "BlueDart",
+            "awb": "AWB803771909",
+            "status": "ON_HOLD",
+            "updated_at": "2026-03-10T20:16:00"
+          },
+          "items": [
+            {
+              "sku": "FR-RAY-8517",
+              "name": "Ray-Ban Full Rim Frame",
+              "qty": 1,
+              "price": 3499
+            },
+            {
+              "sku": "LN-ANT-5339",
+              "name": "Anti-glare Premium Lens",
+              "qty": 1,
+              "price": 1199
+            }
+          ],
+          "issue_type": "Frame damage in transit",
+          "whatsapp_thread": "WA358607"
+        }
+      ],
+      "crm_comments": {
+        "1313804934": [
+          {
+            "id": "CMT-1313804934-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-06T21:49:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "We have escalated your issue to the concerned team. You will hear from us in 24 hours.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T08:14:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-07T17:45:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T19:40:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-07T23:30:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "We are arranging a replacement for you. Please allow 2-3 business days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-08T07:08:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-08T17:37:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-08T23:12:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d0523a74e96a22",
+      "threadId": "19d0507f3f3e174d",
+      "date": "Thu, 19 Mar 2026 13:38:17 +0530",
+      "from": "Paidimukkala Hemalatha <paidimukkala.hemalatha@lenskart.com>",
+      "to": "Ayush Roy <ayush.roy@lenskart.in>",
+      "cc": "Japin Charan <japin@lenskart.in>, Srinivas Reddy <srinivas.reddy@thelenskart.com>, LKST146 Hyderabad <malakpet.hyderabad@lenskart.mobi>, Abhishek Kumar <abhishek.kumar@lenskart.in>, Naresh Negi <naresh.negi@lenskart.in>, Mohammed Ayyan Qureshi <mohammed@lenskart.com>, Vanitha Balu <vanitha.balu@lenskart.in>, Harpratap Malhi <harpratap.malhi@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | 118653145 | 1285091211 | CLUSTER OPTUM VISIT ALIGN",
+      "snippet": "Hello Team, Today I have visited LKST146Malakpet to handle the troubleshoot. The findings are below customer was escalated that she ordered glasses through online in 2024 with external prescription",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1285091211"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1285091211",
+          "status": "DELIVERED",
+          "created_at": "2026-02-27T20:02:00",
+          "customer_name": "Arjun Reddy",
+          "customer_phone": "9587182120",
+          "customer_email": "arjun.reddy@gmail.com",
+          "store": "LKST103 Ahmedabad",
+          "total_amount": 3998,
+          "payment_status": "REFUND_INITIATED",
+          "tracking": {
+            "courier": "Xpressbees",
+            "awb": "AWB918150683",
+            "status": "DELIVERED",
+            "updated_at": "2026-03-15T16:14:00"
+          },
+          "items": [
+            {
+              "sku": "FR-FAS-2743",
+              "name": "Fastrack Rimless Frame",
+              "qty": 1,
+              "price": 3499
+            },
+            {
+              "sku": "LN-ANT-5889",
+              "name": "Anti-glare Premium Lens",
+              "qty": 1,
+              "price": 499
+            }
+          ],
+          "issue_type": "Power mismatch",
+          "whatsapp_thread": "WA738551"
+        }
+      ],
+      "crm_comments": {
+        "1285091211": [
+          {
+            "id": "CMT-1285091211-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-10T16:00:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1285091211-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹4844 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-11T01:49:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1285091211-003",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-11T08:20:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1285091211-004",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Vivek Rao",
+            "created_at": "2026-03-11T11:19:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d0508fbe565ae3",
+      "threadId": "19d0506422bf3ab2",
+      "date": "Thu, 19 Mar 2026 13:09:12 +0530",
+      "from": "'Ayush Roy' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "Manish Lakhera <manish.lakhera@lenskart.com>, Sugam Sharma <sugam.sharma@lenskart.com>, Local Fitting <local_fitting@lenskart.in>, Mohd Sahajad Khan <sahajad.khan@lenskart.com>",
+      "cc": "Kiran Sama <kiran1@lenskart.in>, Vikas Narayan <vikash.narayan@lenskart.mobi>, Ruchi Nagpall <ruchi.nagpal@lenskart.in>, kmtcore <kmtcore@lenskart.mobi>, CEO Escalation <CEOescalation@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>",
+      "subject": "Re: CEO Escalation Case || 1313804934 || 118887165 || Need RCA",
+      "snippet": "Hi Manish, Order Id: 1313804934",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1313804934"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1313804934",
+          "status": "ON_HOLD",
+          "created_at": "2026-03-01T06:59:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9709004943",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST997 Hyderabad",
+          "total_amount": 4698,
+          "payment_status": "REFUND_INITIATED",
+          "tracking": {
+            "courier": "BlueDart",
+            "awb": "AWB803771909",
+            "status": "ON_HOLD",
+            "updated_at": "2026-03-10T20:16:00"
+          },
+          "items": [
+            {
+              "sku": "FR-RAY-8517",
+              "name": "Ray-Ban Full Rim Frame",
+              "qty": 1,
+              "price": 3499
+            },
+            {
+              "sku": "LN-ANT-5339",
+              "name": "Anti-glare Premium Lens",
+              "qty": 1,
+              "price": 1199
+            }
+          ],
+          "issue_type": "Frame damage in transit",
+          "whatsapp_thread": "WA358607"
+        }
+      ],
+      "crm_comments": {
+        "1313804934": [
+          {
+            "id": "CMT-1313804934-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-06T21:49:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "We have escalated your issue to the concerned team. You will hear from us in 24 hours.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T08:14:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-07T17:45:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T19:40:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-07T23:30:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "We are arranging a replacement for you. Please allow 2-3 business days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-08T07:08:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-08T17:37:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-08T23:12:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d0507f3f3e174d",
+      "threadId": "19d0507f3f3e174d",
+      "date": "Thu, 19 Mar 2026 13:08:03 +0530",
+      "from": "'Ayush Roy' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "Japin Charan <japin@lenskart.in>, Srinivas Reddy <srinivas.reddy@thelenskart.com>, LKST146 Hyderabad <malakpet.hyderabad@lenskart.mobi>, Paidimukkala Hemalatha <paidimukkala.hemalatha@lenskart.com>",
+      "cc": "Abhishek Kumar <abhishek.kumar@lenskart.in>, Naresh Negi <naresh.negi@lenskart.in>, Mohammed Ayyan Qureshi <mohammed@lenskart.com>, Vanitha Balu <vanitha.balu@lenskart.in>, Harpratap Malhi <harpratap.malhi@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | 118653145 | 1285091211 | CLUSTER OPTUM VISIT ALIGN",
+      "snippet": "+Paidimukkala Hemalatha please share your findings here",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1285091211"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1285091211",
+          "status": "DELIVERED",
+          "created_at": "2026-02-27T20:02:00",
+          "customer_name": "Arjun Reddy",
+          "customer_phone": "9587182120",
+          "customer_email": "arjun.reddy@gmail.com",
+          "store": "LKST103 Ahmedabad",
+          "total_amount": 3998,
+          "payment_status": "REFUND_INITIATED",
+          "tracking": {
+            "courier": "Xpressbees",
+            "awb": "AWB918150683",
+            "status": "DELIVERED",
+            "updated_at": "2026-03-15T16:14:00"
+          },
+          "items": [
+            {
+              "sku": "FR-FAS-2743",
+              "name": "Fastrack Rimless Frame",
+              "qty": 1,
+              "price": 3499
+            },
+            {
+              "sku": "LN-ANT-5889",
+              "name": "Anti-glare Premium Lens",
+              "qty": 1,
+              "price": 499
+            }
+          ],
+          "issue_type": "Power mismatch",
+          "whatsapp_thread": "WA738551"
+        }
+      ],
+      "crm_comments": {
+        "1285091211": [
+          {
+            "id": "CMT-1285091211-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-10T16:00:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1285091211-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹4844 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-11T01:49:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1285091211-003",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-11T08:20:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1285091211-004",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Vivek Rao",
+            "created_at": "2026-03-11T11:19:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d0506cb8cf597a",
+      "threadId": "19d04e8291c56bc0",
+      "date": "Thu, 19 Mar 2026 13:06:50 +0530",
+      "from": "'Vipul Kumar Gautam' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "Karan Kumar <karan.kumar@lenskart.mobi>",
+      "cc": "Suraj Verma <suraj.verma@thelenskart.com>, delight <delight@lenskart.in>, Mohd Sadiq Ali Siddiqui <mohd.sadiq@thelenskart.com>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | 1334062884 | 118718438 | Partial refund",
+      "snippet": "Hi Karan, A refund of ₹450.00 has been initiated today against the mismatch amount. The refund is expected to be processed by 29-03-2026.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1334062884"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1334062884",
+          "status": "DISPATCHED",
+          "created_at": "2026-02-15T06:24:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9671988889",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST884 Hyderabad",
+          "total_amount": 3498,
+          "payment_status": "PARTIALLY_PAID",
+          "tracking": {
+            "courier": "BlueDart",
+            "awb": "AWB808402051",
+            "status": "DISPATCHED",
+            "updated_at": "2026-03-10T16:02:00"
+          },
+          "items": [
+            {
+              "sku": "FR-GUE-5342",
+              "name": "Guess Rimless Frame",
+              "qty": 1,
+              "price": 1499
+            },
+            {
+              "sku": "LN-SIN-7932",
+              "name": "Single Vision Lens",
+              "qty": 1,
+              "price": 1999
+            }
+          ],
+          "issue_type": "Prescription error",
+          "whatsapp_thread": "WA665492"
+        }
+      ],
+      "crm_comments": {
+        "1334062884": [
+          {
+            "id": "CMT-1334062884-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-08T21:31:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3559 has been initiated. It will reflect in 5-7 days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-09T09:12:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-09T17:19:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3269 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-09T21:23:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-10T06:37:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-10T10:37:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-10T11:51:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3206 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-10T13:46:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d0506422bf3ab2",
+      "threadId": "19d0506422bf3ab2",
+      "date": "Thu, 19 Mar 2026 13:05:50 +0530",
+      "from": "Manish Lakhera <manish.lakhera@lenskart.com>",
+      "to": "Kiran Sama <kiran1@lenskart.in>",
+      "cc": "Ayush Roy <ayush.roy@lenskart.in>, Sugam Sharma <sugam.sharma@lenskart.com>, Vikas Narayan <vikash.narayan@lenskart.mobi>, Ruchi Nagpall <ruchi.nagpal@lenskart.in>, kmtcore <kmtcore@lenskart.mobi>, CEO Escalation <CEOescalation@lenskart.com>, Mohd Sahajad Khan <sahajad.khan@lenskart.com>",
+      "subject": "Re: CEO Escalation Case || 1313804934 || 118887165 || Need RCA",
+      "snippet": "Hi Ayush Kindly share Order Details.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1313804934"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1313804934",
+          "status": "ON_HOLD",
+          "created_at": "2026-03-01T06:59:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9709004943",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST997 Hyderabad",
+          "total_amount": 4698,
+          "payment_status": "REFUND_INITIATED",
+          "tracking": {
+            "courier": "BlueDart",
+            "awb": "AWB803771909",
+            "status": "ON_HOLD",
+            "updated_at": "2026-03-10T20:16:00"
+          },
+          "items": [
+            {
+              "sku": "FR-RAY-8517",
+              "name": "Ray-Ban Full Rim Frame",
+              "qty": 1,
+              "price": 3499
+            },
+            {
+              "sku": "LN-ANT-5339",
+              "name": "Anti-glare Premium Lens",
+              "qty": 1,
+              "price": 1199
+            }
+          ],
+          "issue_type": "Frame damage in transit",
+          "whatsapp_thread": "WA358607"
+        }
+      ],
+      "crm_comments": {
+        "1313804934": [
+          {
+            "id": "CMT-1313804934-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-06T21:49:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "We have escalated your issue to the concerned team. You will hear from us in 24 hours.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T08:14:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-07T17:45:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T19:40:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-07T23:30:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "We are arranging a replacement for you. Please allow 2-3 business days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-08T07:08:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1313804934-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-08T17:37:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1313804934-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-08T23:12:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d04f881e1e845b",
+      "threadId": "19d04f881e1e845b",
+      "date": "Thu, 19 Mar 2026 12:51:13 +0530",
+      "from": "Kajal Sharma <kajal.sharma@lenskart.com>",
+      "to": "CEO Escalation <CEOescalation@lenskart.com>",
+      "cc": "ORM <orm@valyoo.in>",
+      "subject": "Social Media || Case #118912118 || 1334202114 || 1334290389 || Ceo case",
+      "snippet": "Hi Team, The case was received simultaneously on Instagram and by the CEO team. To avoid duplication, we have closed this case.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1334202114",
+        "1334290389"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1334202114",
+          "status": "DISPATCHED",
+          "created_at": "2026-01-17T14:36:00",
+          "customer_name": "Vikram Nair",
+          "customer_phone": "9607526654",
+          "customer_email": "vikram.nair@gmail.com",
+          "store": "LKST348 Jaipur",
+          "total_amount": 3998,
+          "payment_status": "REFUNDED",
+          "tracking": {
+            "courier": "Ekart",
+            "awb": "AWB304451095",
+            "status": "DISPATCHED",
+            "updated_at": "2026-03-17T05:30:00"
+          },
+          "items": [
+            {
+              "sku": "FR-LEN-8062",
+              "name": "Lenskart Own Half Rim Frame",
+              "qty": 1,
+              "price": 1999
+            },
+            {
+              "sku": "LN-PHO-7939",
+              "name": "Photochromic Lens",
+              "qty": 1,
+              "price": 1999
+            }
+          ],
+          "issue_type": "Refund not processed",
+          "whatsapp_thread": "WA589710"
+        },
+        {
+          "order_id": "1334290389",
+          "status": "DISPATCHED",
+          "created_at": "2026-03-07T21:12:00",
+          "customer_name": "Deepak Verma",
+          "customer_phone": "9519212169",
+          "customer_email": "deepak.verma@gmail.com",
+          "store": "LKST371 Jaipur",
+          "total_amount": 5498,
+          "payment_status": "REFUNDED",
+          "tracking": {
+            "courier": "DTDC",
+            "awb": "AWB554200826",
+            "status": "DISPATCHED",
+            "updated_at": "2026-03-09T11:27:00"
+          },
+          "items": [
+            {
+              "sku": "FR-TOM-8973",
+              "name": "Tommy Hilfiger Full Rim Frame",
+              "qty": 1,
+              "price": 4999
+            },
+            {
+              "sku": "LN-BIF-4111",
+              "name": "Bifocal Lens",
+              "qty": 1,
+              "price": 499
+            }
+          ],
+          "issue_type": "Missing items",
+          "whatsapp_thread": "WA328275"
+        }
+      ],
+      "crm_comments": {
+        "1334202114": [
+          {
+            "id": "CMT-1334202114-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-13T20:53:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334202114-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-13T22:56:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334202114-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-14T01:11:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334202114-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "We are arranging a replacement for you. Please allow 2-3 business days.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-14T05:45:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334202114-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-14T09:02:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334202114-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "A refund of ₹1117 has been initiated. It will reflect in 5-7 days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-14T13:57:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334202114-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-14T16:00:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334202114-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "We have escalated your issue to the concerned team. You will hear from us in 24 hours.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-15T01:53:00",
+            "direction": "outbound"
+          }
+        ],
+        "1334290389": [
+          {
+            "id": "CMT-1334290389-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-13T21:32:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334290389-002",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "A refund of ₹4405 has been initiated. It will reflect in 5-7 days.",
+            "author": "Saurabh Gupta",
+            "created_at": "2026-03-13T23:09:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334290389-003",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-14T02:12:00",
+            "direction": "inbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d04f83c3ef79b8",
+      "threadId": "19d04e8291c56bc0",
+      "date": "Thu, 19 Mar 2026 12:50:57 +0530",
+      "from": "'Karan Kumar' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "Suraj Verma <suraj.verma@thelenskart.com>",
+      "cc": "delight <delight@lenskart.in>, Mohd Sadiq Ali Siddiqui <mohd.sadiq@thelenskart.com>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | 1334062884 | 118718438 | Partial refund",
+      "snippet": "Approved for refund - as a one time exception.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1334062884"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1334062884",
+          "status": "DISPATCHED",
+          "created_at": "2026-02-15T06:24:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9671988889",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST884 Hyderabad",
+          "total_amount": 3498,
+          "payment_status": "PARTIALLY_PAID",
+          "tracking": {
+            "courier": "BlueDart",
+            "awb": "AWB808402051",
+            "status": "DISPATCHED",
+            "updated_at": "2026-03-10T16:02:00"
+          },
+          "items": [
+            {
+              "sku": "FR-GUE-5342",
+              "name": "Guess Rimless Frame",
+              "qty": 1,
+              "price": 1499
+            },
+            {
+              "sku": "LN-SIN-7932",
+              "name": "Single Vision Lens",
+              "qty": 1,
+              "price": 1999
+            }
+          ],
+          "issue_type": "Prescription error",
+          "whatsapp_thread": "WA665492"
+        }
+      ],
+      "crm_comments": {
+        "1334062884": [
+          {
+            "id": "CMT-1334062884-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-08T21:31:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3559 has been initiated. It will reflect in 5-7 days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-09T09:12:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-09T17:19:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3269 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-09T21:23:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-10T06:37:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-10T10:37:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-10T11:51:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3206 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-10T13:46:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d04e8291c56bc0",
+      "threadId": "19d04e8291c56bc0",
+      "date": "Thu, 19 Mar 2026 12:35:06 +0530",
+      "from": "'Suraj Verma' via CEO Escalation <CEOescalation@lenskart.com>",
+      "to": "delight <delight@lenskart.in>, Mohd Sadiq Ali Siddiqui <mohd.sadiq@thelenskart.com>, Karan Kumar <karan.kumar@lenskart.mobi>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "CEO Escalation | 1334062884 | 118718438 | Partial refund",
+      "snippet": "Dear Sadiq, Could you please release 450/- refund into the source account, since customer had opted for 199/- free lens replacement but, store pitched otherwise.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1334062884"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1334062884",
+          "status": "DISPATCHED",
+          "created_at": "2026-02-15T06:24:00",
+          "customer_name": "Rajesh Kumar",
+          "customer_phone": "9671988889",
+          "customer_email": "rajesh.kumar@gmail.com",
+          "store": "LKST884 Hyderabad",
+          "total_amount": 3498,
+          "payment_status": "PARTIALLY_PAID",
+          "tracking": {
+            "courier": "BlueDart",
+            "awb": "AWB808402051",
+            "status": "DISPATCHED",
+            "updated_at": "2026-03-10T16:02:00"
+          },
+          "items": [
+            {
+              "sku": "FR-GUE-5342",
+              "name": "Guess Rimless Frame",
+              "qty": 1,
+              "price": 1499
+            },
+            {
+              "sku": "LN-SIN-7932",
+              "name": "Single Vision Lens",
+              "qty": 1,
+              "price": 1999
+            }
+          ],
+          "issue_type": "Prescription error",
+          "whatsapp_thread": "WA665492"
+        }
+      ],
+      "crm_comments": {
+        "1334062884": [
+          {
+            "id": "CMT-1334062884-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-08T21:31:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3559 has been initiated. It will reflect in 5-7 days.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-09T09:12:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-09T17:19:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3269 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-09T21:23:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I want to escalate this to the CEO team.",
+            "author": "Customer",
+            "created_at": "2026-03-10T06:37:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-10T10:37:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1334062884-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "My order hasn't arrived yet, it's been 15 days!",
+            "author": "Customer",
+            "created_at": "2026-03-10T11:51:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1334062884-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3206 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-10T13:46:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d04c0974e02d1b",
+      "threadId": "19d04c0974e02d1b",
+      "date": "Thu, 19 Mar 2026 11:50:10 +0530",
+      "from": "Charu Sahay <charu.sahay@lenskart.com>",
+      "to": "Ankit Dua <ankit.dua@lenskart.in>, Faiyaz Shaikh <faiyaz.shaikh@fos.lenskart.in>",
+      "cc": "LKST621 Mumbai_Bail Bazar_Kalyan <bailbazarkalyan.mumbai@lenskartstore.com>, Jai Shivam Pathak <jai.pathak@lenskart.com>, Vipul Shekar Shetty <vipul.shetty@lenskart.com>, Japin Charan <japin@lenskart.in>, Harpratap Malhi <harpratap.malhi@lenskart.in>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation||1333230344||#118836081|| RCA Required",
+      "snippet": "@Faiyaz Shaikh Kindly check and revert",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1333230344"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1333230344",
+          "status": "DELIVERED",
+          "created_at": "2026-03-10T14:57:00",
+          "customer_name": "Amit Sharma",
+          "customer_phone": "9721609600",
+          "customer_email": "amit.sharma@gmail.com",
+          "store": "LKST708 Delhi",
+          "total_amount": 3698,
+          "payment_status": "PAID",
+          "tracking": {
+            "courier": "Xpressbees",
+            "awb": "AWB188029013",
+            "status": "DELIVERED",
+            "updated_at": "2026-03-11T11:35:00"
+          },
+          "items": [
+            {
+              "sku": "FR-GUE-9565",
+              "name": "Guess Half Rim Frame",
+              "qty": 1,
+              "price": 2499
+            },
+            {
+              "sku": "LN-SIN-5272",
+              "name": "Single Vision Lens",
+              "qty": 1,
+              "price": 1199
+            }
+          ],
+          "issue_type": "Prescription error",
+          "whatsapp_thread": "WA802258"
+        }
+      ],
+      "crm_comments": {
+        "1333230344": [
+          {
+            "id": "CMT-1333230344-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-04T13:28:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333230344-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Anita Patel",
+            "created_at": "2026-03-04T17:10:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333230344-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-04T19:10:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333230344-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "A refund of ₹1319 has been initiated. It will reflect in 5-7 days.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-05T05:46:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333230344-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-05T10:18:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333230344-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "We have escalated your issue to the concerned team. You will hear from us in 24 hours.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-05T14:17:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1333230344-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-05T20:35:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1333230344-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Neha Singh",
+            "created_at": "2026-03-06T05:28:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d04ba8d9d0c0df",
+      "threadId": "19d04b59513b3b80",
+      "date": "Thu, 19 Mar 2026 11:43:36 +0530",
+      "from": "Sajid Khan <sajid.khan@lenskart.com>",
+      "to": "Abhishek Yadav <abhishek.yadav@thelenskart.com>",
+      "cc": "Maheswari M <maheswari.m@lenskart.com>, CEO Escalation <ceoescalation@lenskart.com>, Abinash Kumar <abinashk@lenskart.com>, IT Support <it_support@lenskart.in>",
+      "subject": "Re: Request to Add User in CEO Escalation Group",
+      "snippet": "Hello Abhishek, As requested, the mentioned user has been added to the specified group.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_PERSONAL",
+        "INBOX"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d04b59513b3b80",
+      "threadId": "19d04b59513b3b80",
+      "date": "Thu, 19 Mar 2026 11:38:10 +0530",
+      "from": "Abhishek Yadav <abhishek.yadav@thelenskart.com>",
+      "to": "Sajid Khan <sajid.khan@lenskart.com>, IT Asset <it.assets@lenskart.in>",
+      "cc": "Maheswari M <maheswari.m@lenskart.com>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Request to Add User in CEO Escalation Group",
+      "snippet": "Hi Sajid and IT, Please help to add the below mail id in CEO group Mail- maheswari.m@lenskart.com Group- CEO Escalation <ceoescalation@lenskart.com>",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_PERSONAL",
+        "INBOX"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d04a3ca5febb47",
+      "threadId": "19d04a3ca5febb47",
+      "date": "Thu, 19 Mar 2026 11:18:55 +0530",
+      "from": "Maheswari M <maheswari.m@lenskart.com>",
+      "to": "CEO Escalation <ceoescalation@lenskart.com>",
+      "cc": "",
+      "subject": "(Draft)",
+      "snippet": "",
+      "labels": [
+        "DRAFT"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d02c7e36c88902",
+      "threadId": "19d02c7e36c88902",
+      "date": "Wed, 18 Mar 2026 21:09:06 +0000",
+      "from": "Karan Kumar (via Google Docs) <drive-shares-dm-noreply@google.com>",
+      "to": "maheswari.m@lenskart.com",
+      "cc": "ceoescalation@lenskart.com, jayendra.giri@lenskart.com",
+      "subject": "Document shared with you: \"Customer RCA: Ajit Nair\"",
+      "snippet": "Karan Kumar shared a document - Customer RCA: Ajit Nair",
+      "labels": [
+        "CATEGORY_UPDATES",
+        "INBOX"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19cfb47cc78ef8c8",
+      "threadId": "19cfb47cc78ef8c8",
+      "date": "Tue, 17 Mar 2026 15:41:38 +0530",
+      "from": "Karan Kumar <karan.kumar@lenskart.mobi>",
+      "to": "devendra.singh@lenskart.in, Rachit Jain <rachit.jain@lenskart.in>, Puneet Bahl <puneet.bahl@lenskart.in>, Maheswari M <maheswari.m@lenskart.com>",
+      "cc": "Ankit Dua <ankit.dua@lenskart.in>, sahajad.khan@lenskart.com, binoj.s@lenskart.in, local_fitting@lenskart.in, Lkst492 Kochi <mgrd.kochi@lenskartstore.com>, japin@lenskart.in, vanitha.balu@lenskart.in, sreejith.kumar@lenskart.in, ceoescalation@lenskart.com, Jayendra Giri <jayendra.giri@lenskart.com>, Bharat Manghwani <bharat.manghwani@lenskart.com>",
+      "subject": "Re: CEO Escalation|| #116408181|| 1318734696|| RCA Required",
+      "snippet": "Hi Devendra and team, We're honestly clueless about what exactly LF is doing with this customer's order? Initially, this customer placed an order with us on 26th Jan'26 worth Rs. 21999",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_PERSONAL",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1318734696"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1318734696",
+          "status": "CANCELLED",
+          "created_at": "2026-01-17T12:06:00",
+          "customer_name": "Arjun Reddy",
+          "customer_phone": "9244193987",
+          "customer_email": "arjun.reddy@gmail.com",
+          "store": "LKST370 Ahmedabad",
+          "total_amount": 8898,
+          "payment_status": "PAID",
+          "tracking": {
+            "courier": "Delhivery",
+            "awb": "AWB897163846",
+            "status": "CANCELLED",
+            "updated_at": "2026-03-10T04:55:00"
+          },
+          "items": [
+            {
+              "sku": "FR-RAY-5616",
+              "name": "Ray-Ban Rimless Frame",
+              "qty": 1,
+              "price": 7999
+            },
+            {
+              "sku": "LN-TOR-4450",
+              "name": "Toric Lens",
+              "qty": 1,
+              "price": 899
+            }
+          ],
+          "issue_type": "Delayed delivery",
+          "whatsapp_thread": "WA313487"
+        }
+      ],
+      "crm_comments": {
+        "1318734696": [
+          {
+            "id": "CMT-1318734696-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-06T18:43:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1318734696-002",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "As per our records, the order was dispatched. We are checking with the courier.",
+            "author": "Vivek Rao",
+            "created_at": "2026-03-06T19:48:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1318734696-003",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-06T20:48:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1318734696-004",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "Our store team will contact you shortly to resolve this.",
+            "author": "Priya Verma",
+            "created_at": "2026-03-07T00:28:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1318734696-005",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Still waiting for resolution. No one is responding.",
+            "author": "Customer",
+            "created_at": "2026-03-07T09:03:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1318734696-006",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Dear customer, we apologize for the inconvenience. Our team is looking into order 1318734696.",
+            "author": "Rahul Sharma",
+            "created_at": "2026-03-07T16:38:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1318734696-007",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "I received wrong product, this is not what I ordered.",
+            "author": "Customer",
+            "created_at": "2026-03-08T05:35:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1318734696-008",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "A refund of ₹3524 has been initiated. It will reflect in 5-7 days.",
+            "author": "Saurabh Gupta",
+            "created_at": "2026-03-08T14:37:00",
+            "direction": "outbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19cf6c9268cc11fb",
+      "threadId": "19cf66891f541041",
+      "date": "Mon, 16 Mar 2026 18:45:03 +0530",
+      "from": "Maheswari M <maheswari.m@lenskart.com>",
+      "to": "Abhishek Kumar <abhishek.kumar@lenskart.in>",
+      "cc": "Ramneek Khurana <ramneek@lenskart.com>, Ashwani Agarwal <ashwani.agarwal@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: Worst customer service",
+      "snippet": "This is not an RCA, pls dive deep into the issue.",
+      "labels": [
+        "SENT"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19cf6b63efde4027",
+      "threadId": "19cf66891f541041",
+      "date": "Mon, 16 Mar 2026 18:24:12 +0530",
+      "from": "Abhishek Kumar <abhishek.kumar@lenskart.in>",
+      "to": "Ramneek Khurana <ramneek@lenskart.com>, Maheswari M <maheswari.m@lenskart.com>, Ashwani Agarwal <ashwani.agarwal@lenskart.in>",
+      "cc": "CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: Worst customer service",
+      "snippet": "Hi Maheshwari, This is regarding an ex-employee of Lenskart who had placed Order ID: 1266990086 in February 2023.",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_PERSONAL",
+        "INBOX"
+      ],
+      "order_ids": [
+        "1266990086"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1266990086",
+          "status": "DISPATCHED",
+          "created_at": "2026-01-19T21:59:00",
+          "customer_name": "Deepak Verma",
+          "customer_phone": "9832363533",
+          "customer_email": "deepak.verma@gmail.com",
+          "store": "LKST355 Bengaluru",
+          "total_amount": 3998,
+          "payment_status": "PAID",
+          "tracking": {
+            "courier": "DTDC",
+            "awb": "AWB937643439",
+            "status": "DISPATCHED",
+            "updated_at": "2026-03-09T19:33:00"
+          },
+          "items": [
+            {
+              "sku": "FR-RAY-3532",
+              "name": "Ray-Ban Full Rim Frame",
+              "qty": 1,
+              "price": 3499
+            },
+            {
+              "sku": "LN-PRO-3662",
+              "name": "Progressive Lens",
+              "qty": 1,
+              "price": 499
+            }
+          ],
+          "issue_type": "Frame damage in transit",
+          "whatsapp_thread": "WA532322"
+        }
+      ],
+      "crm_comments": {
+        "1266990086": [
+          {
+            "id": "CMT-1266990086-001",
+            "type": "whatsapp",
+            "channel": "whatsapp",
+            "message": "The frame is damaged. I am very unhappy with this.",
+            "author": "Customer",
+            "created_at": "2026-03-09T22:11:00",
+            "direction": "inbound"
+          },
+          {
+            "id": "CMT-1266990086-002",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "We have escalated your issue to the concerned team. You will hear from us in 24 hours.",
+            "author": "Deepak Nair",
+            "created_at": "2026-03-10T06:02:00",
+            "direction": "outbound"
+          },
+          {
+            "id": "CMT-1266990086-003",
+            "type": "email",
+            "channel": "whatsapp",
+            "message": "Please refund my money. This is unacceptable.",
+            "author": "Customer",
+            "created_at": "2026-03-10T18:08:00",
+            "direction": "inbound"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19cf69c9c4d77712",
+      "threadId": "19cf66891f541041",
+      "date": "Mon, 16 Mar 2026 17:56:12 +0530",
+      "from": "Ayush Roy <ayush.roy@lenskart.in>",
+      "to": "Maheswari M <maheswari.m@lenskart.com>, Abhishek Kumar <abhishek.kumar@lenskart.in>",
+      "cc": "CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: Worst customer service",
+      "snippet": "Hi Maheswari, We have picked up this case. @Abhishek Kumar will be handling it and will share the summary with you shortly. Case Id: #118792213",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_PERSONAL",
+        "INBOX"
+      ],
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+"""
+RCA Engine - Uses Claude Opus 4.6 with adaptive thinking to generate
+Root Cause Analysis for CEO escalation cases.
+
+Supports streaming output for real-time display in the dashboard.
+"""
+
+import os
+import anthropic
+
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
+
+SYSTEM_PROMPT = """You are a senior Customer Experience analyst at Lenskart, India's leading eyewear company.
+You specialize in performing Root Cause Analysis (RCA) on CEO-escalated customer complaints.
+
+Your analysis must be structured, data-driven, and actionable. You have access to:
+- Email thread content showing the escalation chain
+- VSM (Visual Store Manager) order details including status, items, payments, tracking
+- CRM WhatsApp/email conversation logs
+
+For each case, provide a comprehensive RCA covering:
+1. **Issue Summary** – What the customer complained about (1-2 sentences)
+2. **Root Cause** – The primary reason this escalated (operational, process, human error, system)
+3. **Contributing Factors** – Secondary issues that made the situation worse
+4. **Timeline of Events** – Key events in chronological order
+5. **Impact Assessment** – Customer impact + business impact
+6. **Immediate Resolution** – What was or should be done NOW
+7. **Preventive Actions** – Process/system changes to prevent recurrence
+8. **Responsible Teams** – Which teams need to act (Store Ops, Logistics, Tech, Finance etc.)
+
+Be specific. Reference order IDs, amounts, dates, and names where available.
+Use bullet points for clarity. Flag any data inconsistencies you notice."""
+
+
+def build_rca_context(case: dict) -> str:
+    """Build a rich context string for the RCA prompt from a case dict."""
+    parts = []
+
+    # Email thread
+    emails = case.get("emails", [])
+    if emails:
+        parts.append("## EMAIL THREAD\n")
+        for e in emails:
+            parts.append(f"**Date:** {e.get('date','')}")
+            parts.append(f"**From:** {e.get('from','')}")
+            parts.append(f"**Subject:** {e.get('subject','')}")
+            parts.append(f"**Snippet:** {e.get('snippet','')}\n")
+
+    # VSM order details (deduplicated by order_id)
+    seen_orders = set()
+    all_vsm = []
+    for e in emails:
+        for order in e.get("vsm_orders", []):
+            oid = order.get("order_id")
+            if oid and oid not in seen_orders:
+                seen_orders.add(oid)
+                all_vsm.append(order)
+
+    if all_vsm:
+        parts.append("## VSM ORDER DETAILS\n")
+        for order in all_vsm:
+            parts.append(f"**Order ID:** {order.get('order_id')}")
+            parts.append(f"**Status:** {order.get('status')}")
+            parts.append(f"**Customer:** {order.get('customer_name')} | {order.get('customer_phone')}")
+            parts.append(f"**Store:** {order.get('store')}")
+            parts.append(f"**Total Amount:** ₹{order.get('total_amount')}")
+            parts.append(f"**Payment Status:** {order.get('payment_status')}")
+            parts.append(f"**Created At:** {order.get('created_at')}")
+
+            tracking = order.get("tracking") or {}
+            if tracking:
+                parts.append(f"**Tracking:** {tracking.get('courier')} | AWB: {tracking.get('awb')} | {tracking.get('status')}")
+
+            items = order.get("items", [])
+            if items:
+                parts.append("**Items:**")
+                for item in items:
+                    parts.append(f"  - {item.get('name')} (SKU: {item.get('sku')}) × {item.get('qty')} @ ₹{item.get('price')}")
+
+            issue = order.get("issue_type")
+            if issue:
+                parts.append(f"**Reported Issue:** {issue}")
+
+            parts.append("")
+
+    # CRM comments (across all orders in this case)
+    seen_comments: set = set()
+    parts.append("## CRM / WHATSAPP CONVERSATION LOG\n")
+    has_comments = False
+    for e in emails:
+        crm = e.get("crm_comments", {})
+        for oid, comments in crm.items():
+            for c in comments:
+                cid = c.get("id", "")
+                if cid in seen_comments:
+                    continue
+                seen_comments.add(cid)
+                has_comments = True
+                direction = c.get("direction", "")
+                arrow = "→ Agent" if direction == "outbound" else "← Customer"
+                ts = c.get("created_at", "")[:16]
+                author = c.get("author", "Unknown")
+                msg = c.get("message", "")
+                parts.append(f"[{ts}] {arrow} ({author}): {msg}")
+
+    if not has_comments:
+        parts.append("_(No CRM conversation data available)_")
+
+    return "\n".join(parts)
+
+
+def generate_rca_streaming(case: dict):
+    """
+    Generator that streams RCA text tokens for a given case dict.
+    Each yield is a string chunk.
+    Caller assembles the full RCA.
+    """
+    context = build_rca_context(case)
+    order_ids = list({
+        o.get("order_id")
+        for e in case.get("emails", [])
+        for o in e.get("vsm_orders", [])
+        if o.get("order_id")
+    })
+
+    prompt = f"""Please perform a detailed Root Cause Analysis for this CEO escalation case.
+
+**Case Title:** {case.get('title', 'CEO Escalation')}
+**Order IDs:** {', '.join(order_ids) if order_ids else 'N/A'}
+**Total Emails in Thread:** {len(case.get('emails', []))}
+
+---
+
+{context}
+
+---
+
+Generate the complete RCA now."""
+
+    with client.messages.stream(
+        model="claude-opus-4-6",
+        max_tokens=4096,
+        thinking={"type": "adaptive"},
+        system=SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": prompt}],
+    ) as stream:
+        for event in stream:
+            if event.type == "content_block_delta":
+                if event.delta.type == "text_delta":
+                    yield event.delta.text
+        # Yield usage stats at end as a special marker
+        final = stream.get_final_message()
+        usage = final.usage
+        yield f"\n\n---\n_Tokens — Input: {usage.input_tokens} | Output: {usage.output_tokens}_"
+
+
+def generate_rca_sync(case: dict) -> str:
+    """
+    Non-streaming version - returns complete RCA string.
+    Useful for batch processing.
+    """
+    return "".join(generate_rca_streaming(case))
+
+
+# ── standalone test ────────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    import json
+    from pathlib import Path
+    from case_builder import build_cases
+
+    data_path = Path("ceo_escalation_emails_enriched.json")
+    if not data_path.exists():
+        print("[!] Run generate_mock_data.py first")
+        exit(1)
+
+    with open(data_path) as f:
+        data = json.load(f)
+
+    cases = build_cases(data["emails"])
+    if not cases:
+        print("[!] No cases found")
+        exit(1)
+
+    # Test RCA on the first case
+    case = cases[0]
+    print(f"\n{'='*60}")
+    print(f"RCA for: {case['title']}")
+    print(f"{'='*60}\n")
+
+    for chunk in generate_rca_streaming(case):
+        print(chunk, end="", flush=True)
+    print()
