@@ -218,13 +218,17 @@ def render_sidebar(cases, meta=None):
 
 def status_color(status: str) -> str:
     s = (status or "").upper()
-    if s in ("DELIVERED",):
+    if s in ("DELIVERED", "COMPLETE_SHIPPED"):
         return "#00c853"
-    if s in ("DISPATCHED", "PROCESSING"):
-        return "#ffa500"
-    if s in ("CANCELLED", "RETURNED"):
+    if "REFUND" in s or "RETURN" in s:
+        return "#ff9800"
+    if s in ("DISPATCHED", "PROCESSING", "IN_HOUSE_PROCESSING", "ORDER_PLACED"):
+        return "#4fc3f7"
+    if s in ("CANCELLED",):
         return "#ff4b4b"
-    return "#888"
+    if s in ("CLOSED",):
+        return "#888"
+    return "#aaa"
 
 
 def payment_color(status: str) -> str:
@@ -304,63 +308,110 @@ def render_order_cards(vsm_orders: list):
     for order in vsm_orders:
         st.markdown('<div class="order-card">', unsafe_allow_html=True)
 
-        status_str = _extract_status_str(order.get("status"))
-        payment_str = _extract_status_str(order.get("payment_status"))
+        status_obj  = order.get("status") or {}
         created_str = _fmt_ts(order.get("created_at"))
 
-        cols = st.columns([2, 1, 1, 1])
-        with cols[0]:
+        # Unpack status fields
+        if isinstance(status_obj, dict):
+            order_status   = status_obj.get("status") or "—"
+            state          = status_obj.get("state") or "—"
+            tracking_ckpt  = status_obj.get("orderTrackingStatusCheckpoint") or status_obj.get("trackingStatus") or "—"
+            is_returnable  = status_obj.get("returnable", False)
+            is_cancellable = status_obj.get("cancellable", False)
+        else:
+            order_status   = str(status_obj) if status_obj else "—"
+            state = tracking_ckpt = "—"
+            is_returnable = is_cancellable = False
+
+        # ── Row 1: identity ────────────────────────────────────────────────
+        col_id, col_status, col_state, col_ckpt = st.columns([2, 2, 1, 1])
+        with col_id:
             st.markdown(f"### Order `{order.get('order_id')}`")
-            name  = order.get('customer_name') or "—"
-            phone = order.get('customer_phone') or "—"
-            store = order.get('store') or "—"
+            name  = order.get("customer_name") or "—"
+            phone = order.get("customer_phone") or "—"
+            email = order.get("customer_email") or ""
+            store = order.get("store") or "—"
             st.markdown(f"👤 **{name}** · 📱 `{phone}`")
+            if email and not email.endswith("@lenskartomni.com"):
+                st.markdown(f"✉️ `{email}`")
             st.markdown(f"🏬 {store} · 📅 {created_str}")
 
-        with cols[1]:
-            scolor = status_color(status_str)
+        with col_status:
+            scolor = status_color(order_status)
             st.markdown(
                 f"**Order Status**<br>"
-                f"<span style='color:{scolor};font-size:14px;font-weight:700'>"
-                f"{status_str}</span>",
+                f"<span style='color:{scolor};font-size:13px;font-weight:700'>"
+                f"{order_status.replace('_',' ')}</span>",
                 unsafe_allow_html=True
             )
+            # Cancellable / returnable flags
+            flags = []
+            if is_cancellable:
+                flags.append("<span style='color:#ff4b4b;font-size:11px'>✖ Cancellable</span>")
+            if is_returnable:
+                flags.append("<span style='color:#4fc3f7;font-size:11px'>↩ Returnable</span>")
+            if flags:
+                st.markdown(" &nbsp; ".join(flags), unsafe_allow_html=True)
 
-        with cols[2]:
-            pcolor = payment_color(payment_str)
+        with col_state:
+            sc = "#888" if state == "CLOSED" else "#00c853"
             st.markdown(
-                f"**Payment**<br>"
-                f"<span style='color:{pcolor};font-size:14px;font-weight:700'>"
-                f"{payment_str}</span>",
+                f"**State**<br><span style='color:{sc};font-weight:700'>{state}</span>",
                 unsafe_allow_html=True
             )
 
-        with cols[3]:
-            amt = order.get("total_amount")
-            amt_str = f"₹{amt:,.0f}" if isinstance(amt, (int, float)) else "—"
-            st.metric("Total Amount", amt_str)
+        with col_ckpt:
+            cc = status_color(tracking_ckpt)
+            st.markdown(
+                f"**Checkpoint**<br>"
+                f"<span style='color:{cc};font-size:12px;font-weight:700'>"
+                f"{tracking_ckpt.replace('_',' ')}</span>",
+                unsafe_allow_html=True
+            )
 
-        # Tracking — real data is a list of checkpoint dicts
-        tracking_raw = order.get("tracking")
-        if tracking_raw:
-            if isinstance(tracking_raw, list) and tracking_raw:
-                # Show latest checkpoint
-                latest = tracking_raw[0]
-                t_status = _extract_status_str(latest)
-                t_time   = _fmt_ts(latest.get("updatedTime") or latest.get("createdTime"))
-                details  = latest.get("details", [])
-                detail_str = details[0].get("trackStatus", "") if details else ""
+        # ── Row 2: amount + payment ────────────────────────────────────────
+        amt = order.get("total_amount")
+        payment_raw = order.get("payment_status")
+        payment_str = _extract_status_str(payment_raw) if payment_raw else "—"
+        if amt is not None or payment_str != "—":
+            col_amt, col_pay, _ = st.columns([1, 1, 3])
+            with col_amt:
+                amt_str = f"₹{amt:,.0f}" if isinstance(amt, (int, float)) else "—"
+                st.metric("Total Amount", amt_str)
+            with col_pay:
+                pcolor = payment_color(payment_str)
                 st.markdown(
-                    f"🚚 **Latest checkpoint:** {t_status}"
-                    + (f" · {detail_str}" if detail_str and detail_str != t_status else "")
-                    + f" · Updated: {t_time}"
+                    f"**Payment**<br>"
+                    f"<span style='color:{pcolor};font-weight:700'>{payment_str}</span>",
+                    unsafe_allow_html=True
                 )
-            elif isinstance(tracking_raw, dict):
-                t_status = _extract_status_str(tracking_raw)
-                t_time   = _fmt_ts(tracking_raw.get("updated_at") or tracking_raw.get("updatedTime"))
-                st.markdown(f"🚚 **Status:** {t_status} · Updated: {t_time}")
 
-        # Items
+        # ── Tracking timeline ──────────────────────────────────────────────
+        tracking_list = order.get("tracking") or []
+        if isinstance(tracking_list, list) and tracking_list:
+            st.markdown("**🚚 Tracking Timeline**")
+            # Reverse so oldest → newest (left to right)
+            for checkpoint in reversed(tracking_list):
+                ck_status  = (checkpoint.get("status") or checkpoint.get("trackStatus") or "—")
+                ck_time    = _fmt_ts(checkpoint.get("updatedTime") or checkpoint.get("createdTime"))
+                details    = checkpoint.get("details") or []
+                detail_labels = " · ".join(
+                    d.get("time", "") + (f" ({d['trackStatus']})" if d.get("trackStatus") != ck_status else "")
+                    for d in details
+                ) if details else ""
+                ck_color = status_color(ck_status)
+                st.markdown(
+                    f"<span style='color:{ck_color};font-weight:700'>{ck_status.replace('_',' ')}</span>"
+                    f" <span style='color:#888;font-size:12px'>({ck_time})</span>"
+                    + (f"<br><span style='color:#aaa;font-size:11px;margin-left:12px'>{detail_labels}</span>" if detail_labels else ""),
+                    unsafe_allow_html=True
+                )
+        elif isinstance(tracking_list, dict):
+            t_status = _extract_status_str(tracking_list)
+            t_time   = _fmt_ts(tracking_list.get("updatedTime"))
+            st.markdown(f"🚚 **{t_status}** · {t_time}")
+
+        # ── Items ──────────────────────────────────────────────────────────
         items = order.get("items") or []
         if items:
             st.markdown("**Items:**")
@@ -371,8 +422,8 @@ def render_order_cards(vsm_orders: list):
                     st.markdown(
                         f"<div style='background:#0f2040;border-radius:6px;padding:10px'>"
                         f"<b>{item.get('name','—')}</b><br>"
-                        f"<small>Qty: {item.get('qty',1)}</small><br>"
-                        f"<b>{_price_val(item.get('price', 0))}</b>"
+                        f"<small style='color:#aaa'>Qty: {item.get('qty', 1)}</small><br>"
+                        f"<b style='color:#4fc3f7'>{_price_val(item.get('price', 0))}</b>"
                         f"</div>",
                         unsafe_allow_html=True
                     )
