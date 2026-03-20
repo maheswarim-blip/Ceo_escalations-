@@ -12,6 +12,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def _fmt_ts(ts) -> str:
+    """Format a Unix-ms timestamp or ISO string to a readable date."""
+    if not ts:
+        return "—"
+    if isinstance(ts, (int, float)):
+        from datetime import datetime, timezone
+        try:
+            return datetime.fromtimestamp(ts / 1000, tz=timezone.utc).strftime("%d %b %Y")
+        except Exception:
+            return str(ts)
+    return str(ts)[:10]
+
+
 def _make_client() -> anthropic.Anthropic:
     """
     Build the Anthropic client, honouring SSL env vars.
@@ -98,22 +112,47 @@ def build_rca_context(case: dict) -> str:
         parts.append("## VSM ORDER DETAILS\n")
         for order in all_vsm:
             parts.append(f"**Order ID:** {order.get('order_id')}")
-            parts.append(f"**Status:** {order.get('status')}")
+
+            # status is a nested dict in real VSM data
+            status_raw = order.get("status")
+            if isinstance(status_raw, dict):
+                parts.append(f"**Order Status:** {status_raw.get('status')} | State: {status_raw.get('state')} | Checkpoint: {status_raw.get('orderTrackingStatusCheckpoint') or status_raw.get('trackingStatus')}")
+                parts.append(f"**Returnable:** {status_raw.get('returnable')} | Cancellable: {status_raw.get('cancellable')}")
+            else:
+                parts.append(f"**Status:** {status_raw}")
+
             parts.append(f"**Customer:** {order.get('customer_name')} | {order.get('customer_phone')}")
             parts.append(f"**Store:** {order.get('store')}")
             parts.append(f"**Total Amount:** ₹{order.get('total_amount')}")
-            parts.append(f"**Payment Status:** {order.get('payment_status')}")
-            parts.append(f"**Created At:** {order.get('created_at')}")
 
-            tracking = order.get("tracking") or {}
-            if tracking:
-                parts.append(f"**Tracking:** {tracking.get('courier')} | AWB: {tracking.get('awb')} | {tracking.get('status')}")
+            pay_raw = order.get("payment_status")
+            pay_str = pay_raw.get("status") if isinstance(pay_raw, dict) else pay_raw
+            parts.append(f"**Payment Status:** {pay_str}")
 
-            items = order.get("items", [])
+            parts.append(f"**Created At:** {_fmt_ts(order.get('created_at'))}")
+
+            # tracking is a list of checkpoints in real VSM data
+            tracking_raw = order.get("tracking") or []
+            if isinstance(tracking_raw, list) and tracking_raw:
+                parts.append("**Tracking Timeline:**")
+                for ck in reversed(tracking_raw):
+                    ck_status = ck.get("status") or ck.get("trackStatus") or "—"
+                    ck_time   = _fmt_ts(ck.get("updatedTime") or ck.get("createdTime"))
+                    details   = " / ".join(
+                        d.get("time", "") + (f" [{d['trackStatus']}]" if d.get("trackStatus") != ck_status else "")
+                        for d in (ck.get("details") or [])
+                    )
+                    parts.append(f"  {ck_status} ({ck_time})" + (f": {details}" if details else ""))
+            elif isinstance(tracking_raw, dict) and tracking_raw:
+                parts.append(f"**Tracking:** {tracking_raw.get('status')} | Updated: {_fmt_ts(tracking_raw.get('updatedTime'))}")
+
+            items = order.get("items") or []
             if items:
                 parts.append("**Items:**")
                 for item in items:
-                    parts.append(f"  - {item.get('name')} (SKU: {item.get('sku')}) × {item.get('qty')} @ ₹{item.get('price')}")
+                    price_raw = item.get("price", 0)
+                    price_str = f"₹{price_raw.get('value', 0):,.0f}" if isinstance(price_raw, dict) else f"₹{price_raw}"
+                    parts.append(f"  - {item.get('name')} × {item.get('qty')} @ {price_str}")
 
             issue = order.get("issue_type")
             if issue:
