@@ -203,7 +203,7 @@ def generate_rca_streaming(case: dict):
     prompt = f"""Please perform a detailed Root Cause Analysis for this CEO escalation case.
 
 **Case Title:** {case.get('title', 'CEO Escalation')}
-**Order IDs:** {', '.join(order_ids) if order_ids else 'N/A'}
+**Order IDs:** {', '.join(str(oid) for oid in order_ids) if order_ids else 'N/A'}
 **Total Emails in Thread:** {len(case.get('emails', []))}
 
 ---
