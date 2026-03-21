@@ -513,11 +513,11 @@ def render_rca_panel(case: dict):
 
     with col2:
         if existing_rca:
-            st.caption("✅ Initial draft RCA generated · scroll below")
+            st.caption("✅ RCA generated · scroll below")
         elif api_key_set:
             st.caption(
-                "Generates an initial draft RCA from the **first escalation email only** "
-                "(not replies). Matches VSM order data and flags information gaps."
+                "Stitches the complaint email with VSM order data · "
+                "customer impact only · 6 crisp sections"
             )
 
     if gen_btn and api_key_set:

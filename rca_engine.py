@@ -63,59 +63,55 @@ def _make_client() -> anthropic.Anthropic:
 
 client = _make_client()
 
-SYSTEM_PROMPT = """You are a senior Customer Experience analyst at Lenskart, India's leading eyewear company.
+SYSTEM_PROMPT = """You are a Customer Experience analyst at Lenskart.
+You write crisp, action-oriented RCAs for CEO-escalated complaints.
 
-Your task is to produce an **Initial Draft RCA** for a CEO-escalated complaint based solely on the
-FIRST escalation email received at ceoescalation@lenskart.com and the VSM order details matched
-to that email. No follow-up replies are available yet.
+Audience: the Customer Experience team. They need to understand exactly what went wrong
+for the customer and act immediately. Do NOT include business impact, brand risk, revenue
+exposure, or refund cost — those are irrelevant here. Focus entirely on the customer's experience.
 
-Your output must contain exactly these sections:
-
----
-
-## 1. Escalation Summary
-One paragraph covering: who escalated, on behalf of which customer, the order ID(s) involved,
-the date the order was placed, and the nature of the complaint as stated in the email.
-
-## 2. Initial Root Cause (Hypothesis)
-Based only on available data, state the most likely root cause.
-Clearly label it as a hypothesis until confirmed.
-Categories: Operational Delay | Process Failure | Human Error | System / Tech Issue | Logistics | Product Quality | Communication Gap
-
-## 3. VSM Order Snapshot
-Summarise what the VSM data shows: order status, payment status, tracking checkpoint, items ordered, order value.
-Highlight anything that corroborates or contradicts the complaint.
-
-## 4. Timeline of Known Events
-Chronological list of events derived from the email date, order creation date, and tracking checkpoints.
-Mark any unexplained gaps.
-
-## 5. Customer & Business Impact
-- Customer impact (financial, experience, trust)
-- Business impact (brand risk given CEO escalation, potential refund/re-order cost)
-
-## 6. Immediate Recommended Action
-What should be done in the next 24 hours? Be specific about team and action.
-
-## 7. Information Gaps — What Is Needed to Close This RCA
-This section is critical. List every piece of information that is MISSING and would change or confirm the root cause.
-For each gap, state:
-  • What data is missing
-  • Where / from which team it should be obtained
-  • How it would impact the RCA conclusion
-
-## 8. Responsible Teams
-List teams that need to investigate or act, with the specific ask for each.
-
-## 9. RCA Confidence Score
-Rate your confidence in the current RCA: **Low / Medium / High**
-Explain why, referencing the information gaps above.
+Output exactly these six sections. Keep every section short and punchy — bullets preferred,
+no long paragraphs.
 
 ---
 
-Be specific. Reference order IDs, amounts, dates, and names wherever available.
-Do NOT fabricate data. If a field is blank or unknown, state it explicitly rather than guessing.
-Use bullet points for clarity."""
+## What Happened
+2–3 sentences max. Cover: customer name, order ID(s), complaint as described in the email,
+order date, and date the complaint was raised.
+
+## Root Cause
+1–2 sentences. State the most likely root cause and label it as confirmed or hypothesis.
+Pick one category: `Operational Delay | Process Failure | Human Error | System Issue | Logistics | Product Quality | Communication Gap`
+Then explain in one line exactly where in the customer journey the failure occurred — connect
+what the customer says in the email to what the VSM data shows (or doesn't show).
+
+## What the Customer Experienced
+Bullet list of the customer journey from order placement to escalation. Use dates wherever
+available. Highlight each moment where the experience broke down: delays, missed SLAs,
+wrong product, no communication, repeated failures. This should read as the customer's story,
+not an internal report.
+
+## Order Status at Time of Escalation
+Bullet list from VSM:
+- Order status and last tracking checkpoint
+- Payment status
+- Items ordered and order value
+- Call out anything that directly explains or contradicts what the customer reported
+
+## What Must Happen in 24 Hours
+Numbered list. For each action specify: team responsible + exact action + expected outcome for the customer.
+
+## What Is Still Unknown
+Bullet list of missing data that would change the root cause conclusion, and which team owns each gap.
+If nothing is missing, write "Sufficient data available to close RCA."
+
+---
+
+Rules:
+- Always quote order IDs, amounts, dates, and team names.
+- Never fabricate. If a field is blank write "not available".
+- No business impact. No brand risk. No revenue figures.
+- Bullets and short sentences only. No padding."""
 
 
 import re as _re
@@ -395,16 +391,22 @@ def generate_rca_streaming(case: dict):
         if o.get("created_at")
     ]
 
-    prompt = f"""Please produce an Initial Draft RCA for this CEO escalation.
+    has_vsm = bool(vsm_orders and any(not o.get("error") for o in vsm_orders))
+    vsm_note = (
+        "VSM order data is available — cross-reference the complaint text with the order status and tracking."
+        if has_vsm
+        else "VSM order data could not be fetched — base the analysis on the complaint text alone and flag this gap."
+    )
 
-**Case Title:** {case.get('title', 'CEO Escalation')}
-**Escalation Email Date:** {first_email.get('date', '—')}
-**Order ID(s):** {', '.join(order_ids) if order_ids else 'Not extracted'}
-**Customer Name (from VSM):** {customer_name}
-**Order Date(s):** {', '.join(order_dates) if order_dates else '—'}
+    prompt = f"""Produce an Initial Draft RCA for this CEO escalation.
 
-This analysis is based on the FIRST email in the escalation thread only.
-Do not assume information from any follow-up replies.
+**Case:** {case.get('title', 'CEO Escalation')}
+**Escalation date:** {first_email.get('date', '—')}
+**Order ID(s):** {', '.join(order_ids) if order_ids else 'not extracted from email'}
+**Customer:** {customer_name}
+**Order date(s):** {', '.join(order_dates) if order_dates else '—'}
+
+{vsm_note}
 
 ---
 
@@ -412,12 +414,14 @@ Do not assume information from any follow-up replies.
 
 ---
 
-Generate the Initial Draft RCA now, following the required section structure exactly."""
+Write the RCA now. Stitch together what the customer says in their complaint with what the
+VSM order data shows — point to specific facts from both sources in every section.
+Follow the six-section structure exactly. Be crisp."""
 
     with client.messages.stream(
         model="claude-opus-4-6",
-        max_tokens=4096,
-        thinking={"type": "enabled", "budget_tokens": 2000},
+        max_tokens=3000,
+        thinking={"type": "enabled", "budget_tokens": 3000},
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
     ) as stream:
@@ -429,8 +433,8 @@ Generate the Initial Draft RCA now, following the required section structure exa
         usage = final.usage
         yield (
             f"\n\n---\n"
-            f"_Initial draft RCA · Based on first escalation email only · "
-            f"Tokens — Input: {usage.input_tokens} | Output: {usage.output_tokens}_"
+            f"_Draft RCA · Based on escalation email + VSM data · "
+            f"Input: {usage.input_tokens} tokens_"
         )
 
 
