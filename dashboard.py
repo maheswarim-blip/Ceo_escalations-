@@ -10,7 +10,11 @@ Run:
 
 import json
 import os
+import re
 import time
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -256,6 +260,330 @@ def payment_color(status: str) -> str:
     if s == "PAID":
         return "#00c853"
     return "#888"
+
+# ── overview helpers ────────────────────────────────────────────────────────────
+
+def _parse_case_date(date_str: str):
+    """Parse RFC 2822 or ISO date string to an aware datetime."""
+    if not date_str:
+        return None
+    try:
+        return parsedate_to_datetime(date_str)
+    except Exception:
+        pass
+    for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(date_str[:19], fmt).replace(tzinfo=timezone.utc)
+        except Exception:
+            pass
+    return None
+
+
+def _extract_region(store: str) -> str:
+    """'LKST2011 Mumbai' → 'Mumbai', 'LK Online' → 'Online'."""
+    if not store:
+        return "Unknown"
+    cleaned = re.sub(r"^[A-Z]{2,6}\d*\s*", "", store).strip()
+    return cleaned.split("-")[0].strip() or store.strip()
+
+
+def _build_overview_data(cases: list) -> dict:
+    region_counts: Counter = Counter()
+    week_counts: dict = defaultdict(int)
+    month_counts: dict = defaultdict(int)
+    issue_counts: Counter = Counter()
+    severity_counts: Counter = Counter()
+
+    for case in cases:
+        issue_counts[case["issue_type"]] += 1
+        severity_counts[case["severity"]] += 1
+
+        # Region from VSM store (first order that has one)
+        region = "Unknown"
+        for order in case.get("vsm_orders", []):
+            store = order.get("store", "")
+            r = _extract_region(store)
+            if r and r != "Unknown":
+                region = r
+                break
+        region_counts[region] += 1
+
+        dt = _parse_case_date(case.get("latest_date", ""))
+        if dt:
+            week_counts[dt.strftime("%Y-W%V")] += 1
+            month_counts[dt.strftime("%b '%y")] += 1
+
+    return {
+        "region_counts": dict(region_counts.most_common(15)),
+        "week_counts": dict(sorted(week_counts.items())),
+        "month_counts": dict(sorted(month_counts.items())),
+        "issue_counts": dict(issue_counts.most_common()),
+        "severity_counts": dict(severity_counts),
+        "total": len(cases),
+    }
+
+
+def _build_voc_corpus(cases: list) -> str:
+    """Collect customer-facing text from up to 60 cases for VoC analysis."""
+    lines = []
+    for i, case in enumerate(cases[:60]):
+        lines.append(
+            f"\n--- CASE {i+1}: {case['issue_type']} | {case['severity']} | "
+            f"{case.get('latest_date','')[:10]} ---"
+        )
+        emails = case.get("emails", [])
+        if emails:
+            first = emails[0]
+            body = first.get("snippet") or ""
+            if body:
+                lines.append(f"Complaint snippet: {body[:600]}")
+
+        for order in case.get("vsm_orders", [])[:2]:
+            status_raw = order.get("status", {})
+            status_str = (
+                status_raw.get("status") if isinstance(status_raw, dict) else str(status_raw or "")
+            )
+            store = order.get("store", "")
+            amt = order.get("total_amount")
+            payment_raw = order.get("payment_status", {})
+            payment_str = (
+                payment_raw.get("status") if isinstance(payment_raw, dict) else str(payment_raw or "")
+            )
+            line_parts = []
+            if status_str:
+                line_parts.append(f"status={status_str}")
+            if store:
+                line_parts.append(f"store={store}")
+            if amt:
+                line_parts.append(f"value=₹{amt:,.0f}")
+            if payment_str:
+                line_parts.append(f"payment={payment_str}")
+            if line_parts:
+                lines.append("VSM: " + " | ".join(line_parts))
+
+        crm = case.get("crm_comments", {})
+        for _, comments in list(crm.items())[:1]:
+            inbound_msgs = [
+                c.get("message", "")
+                for c in comments
+                if c.get("direction") == "inbound" and c.get("message")
+            ][:3]
+            if inbound_msgs:
+                joined = " | ".join(m[:200] for m in inbound_msgs)
+                lines.append(f"Customer said: {joined}")
+
+    return "\n".join(lines)
+
+
+_VOC_SYSTEM = (
+    "You are a Customer Experience analyst at Lenskart. "
+    "Be crisp — bullets and short sentences only. No padding."
+)
+
+_VOC_PROMPT = """Analyse this corpus of CEO escalation cases and produce a Voice of Customer report.
+
+Output exactly these four sections using markdown:
+
+## Top Complaint Themes
+List up to 7 themes. For each: **Theme name** — count estimate, one-line description, and the VSM order status most commonly linked to it.
+
+## Customer Sentiment Snapshot
+- Overall dominant tone (frustrated / angry / disappointed / neutral)
+- 3 key emotional triggers pulled directly from the complaint text
+
+## Systemic Patterns
+3–5 process or operational gaps that recur across multiple cases. Quote specific facts from the data.
+
+## Urgent Actions (Next 24–48 Hours)
+Top 4 actions for the CX/Ops team. Each: team responsible + action + expected customer outcome.
+
+---
+CASE DATA:
+{corpus}
+"""
+
+
+def _make_anthropic_client():
+    import anthropic
+    import httpx as _httpx
+    ca = os.environ.get("REQUESTS_CA_BUNDLE") or os.environ.get("SSL_CERT_FILE")
+    if os.environ.get("ANTHROPIC_DISABLE_SSL_VERIFY", "").lower() in ("1", "true", "yes"):
+        http_client = _httpx.Client(verify=False)
+    elif ca:
+        http_client = _httpx.Client(verify=ca)
+    else:
+        http_client = None
+    kwargs = {"api_key": os.environ.get("ANTHROPIC_API_KEY", "")}
+    if http_client:
+        kwargs["http_client"] = http_client
+    return anthropic.Anthropic(**kwargs)
+
+
+def render_voc_analysis(cases: list):
+    st.subheader("🎙️ Voice of Customer Analysis")
+    voc_key = "voc_analysis"
+    existing = st.session_state.get(voc_key)
+    api_key_set = bool(os.environ.get("ANTHROPIC_API_KEY", "").strip())
+
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        gen_btn = st.button(
+            "✨ Analyse VoC" if not existing else "🔄 Re-analyse",
+            disabled=not api_key_set,
+            type="primary",
+            use_container_width=True,
+            key="voc_btn",
+        )
+        if not api_key_set:
+            st.caption("⚠️ Set `ANTHROPIC_API_KEY`")
+    with col2:
+        st.caption(
+            f"Claude Sonnet analyses all {len(cases)} cases — complaint emails + VSM order data "
+            "+ CRM logs — to surface themes, sentiment, and systemic patterns."
+        )
+
+    if gen_btn and api_key_set:
+        corpus = _build_voc_corpus(cases)
+        prompt = _VOC_PROMPT.format(corpus=corpus)
+        _client = _make_anthropic_client()
+        placeholder = st.empty()
+        full_text = ""
+        with st.spinner("Analysing Voice of Customer across all cases…"):
+            try:
+                with _client.messages.stream(
+                    model="claude-sonnet-4-6",
+                    max_tokens=2000,
+                    system=_VOC_SYSTEM,
+                    messages=[{"role": "user", "content": prompt}],
+                ) as stream:
+                    for event in stream:
+                        if event.type == "content_block_delta":
+                            if event.delta.type == "text_delta":
+                                full_text += event.delta.text
+                                placeholder.markdown(full_text + "▌")
+                placeholder.markdown(full_text)
+                st.session_state[voc_key] = full_text
+            except Exception as e:
+                st.error(f"VoC analysis failed: {e}")
+    elif existing:
+        st.markdown(existing)
+    else:
+        st.info(
+            "Click **Analyse VoC** to have Claude identify themes, sentiment, and systemic "
+            "patterns across all escalation cases."
+        )
+
+
+def render_overview_tab(cases: list, filtered_cases: list):
+    # ── Search ──────────────────────────────────────────────────────────────────
+    st.subheader("🔍 Search Cases")
+    q = st.text_input(
+        "Search by case number, order ID, or keyword in title",
+        placeholder="e.g. 100123456  ·  1000987654  ·  'lens damage'",
+        key="overview_search",
+    ).strip().lower()
+
+    if q:
+        hits = [
+            c for c in cases
+            if q in (c.get("case_number") or "").lower()
+            or any(q in oid for oid in c.get("order_ids", []))
+            or q in c.get("title", "").lower()
+        ]
+        if hits:
+            st.success(f"{len(hits)} case(s) found")
+            for case in hits:
+                sev = case["severity"]
+                sev_color = {"HIGH": "#ff4b4b", "MEDIUM": "#ffa500", "LOW": "#00c853"}.get(sev, "#888")
+                with st.expander(
+                    f"{severity_icon(sev)} {case['title'][:70]}",
+                    expanded=len(hits) == 1,
+                ):
+                    ca, cb, cc = st.columns([2, 2, 1])
+                    with ca:
+                        st.write(f"**Case #:** {case.get('case_number') or '—'}")
+                        st.write(f"**Issue:** {case['issue_type']}")
+                        st.write(f"**Orders:** {', '.join(case['order_ids']) or '—'}")
+                    with cb:
+                        st.markdown(
+                            f"**Severity:** <span style='color:{sev_color};font-weight:700'>{sev}</span>",
+                            unsafe_allow_html=True,
+                        )
+                        st.write(f"**Emails:** {case['email_count']}")
+                        st.write(f"**Last activity:** {case['latest_date'][:16] if case['latest_date'] else '—'}")
+                        stores = list({
+                            o.get("store", "") for o in case.get("vsm_orders", []) if o.get("store")
+                        })
+                        if stores:
+                            st.write(f"**Store(s):** {', '.join(stores[:3])}")
+                    with cc:
+                        # Find index in filtered_cases for navigation
+                        try:
+                            nav_idx = filtered_cases.index(case)
+                        except ValueError:
+                            nav_idx = None
+                        if nav_idx is not None:
+                            if st.button("Open →", key=f"open_{case['thread_id']}", type="primary"):
+                                st.session_state["selected_case_idx"] = nav_idx
+                                st.rerun()
+                        else:
+                            st.caption("_Not in current filter_")
+        else:
+            st.warning("No cases match your search.")
+
+    st.divider()
+
+    # ── Summary metrics ──────────────────────────────────────────────────────────
+    data = _build_overview_data(cases)
+    m1, m2, m3, m4, m5 = st.columns(5)
+    m1.metric("Total Cases", data["total"])
+    m2.metric("High Severity", data["severity_counts"].get("HIGH", 0))
+    m3.metric("Medium", data["severity_counts"].get("MEDIUM", 0))
+    m4.metric("Low", data["severity_counts"].get("LOW", 0))
+    m5.metric("Issue Types", len(data["issue_counts"]))
+
+    st.divider()
+
+    # ── Charts ───────────────────────────────────────────────────────────────────
+    st.subheader("📊 Case Analytics")
+
+    # Row 1: Region | Issue Type
+    col_r, col_i = st.columns(2)
+    with col_r:
+        st.markdown("**Cases by Region**")
+        if data["region_counts"]:
+            st.bar_chart(data["region_counts"], height=260)
+        else:
+            st.info("No region data — VSM store field empty.")
+
+    with col_i:
+        st.markdown("**Cases by Issue Type**")
+        if data["issue_counts"]:
+            st.bar_chart(data["issue_counts"], height=260)
+        else:
+            st.info("No issue type data.")
+
+    # Row 2: Week | Month
+    col_w, col_m = st.columns(2)
+    with col_w:
+        st.markdown("**Cases by Week**")
+        if data["week_counts"]:
+            st.bar_chart(data["week_counts"], height=220)
+        else:
+            st.info("No weekly data.")
+
+    with col_m:
+        st.markdown("**Cases by Month**")
+        if data["month_counts"]:
+            st.bar_chart(data["month_counts"], height=220)
+        else:
+            st.info("No monthly data.")
+
+    st.divider()
+
+    # ── Voice of Customer ────────────────────────────────────────────────────────
+    render_voc_analysis(cases)
+
 
 # ── detail panels ──────────────────────────────────────────────────────────────
 
@@ -605,41 +933,46 @@ def main():
     # Sidebar returns the filtered list
     filtered_cases = render_sidebar(cases, meta)
 
-    if not filtered_cases:
-        st.warning("No cases match the current filters.")
-        st.stop()
-
-    # Get selected case
-    idx = st.session_state.get("selected_case_idx", 0)
-    idx = min(idx, len(filtered_cases) - 1)
-    case = filtered_cases[idx]
-
-    # Header metrics
-    render_case_header(case)
-
-    st.markdown("---")
-
-    # Main tab layout
-    tab_email, tab_order, tab_crm, tab_rca = st.tabs([
+    # ── Top-level tabs ──────────────────────────────────────────────────────────
+    tab_overview, tab_email, tab_order, tab_crm, tab_rca = st.tabs([
+        "📊 Overview",
         "📧 Email Thread",
         "📦 Order Details",
         "💬 CRM / WhatsApp",
         "🧠 RCA Analysis",
     ])
 
-    with tab_email:
-        render_email_thread(case["emails"])
+    with tab_overview:
+        render_overview_tab(cases, filtered_cases)
 
-    with tab_order:
-        render_order_cards(case["vsm_orders"])
+    # ── Case-detail tabs ────────────────────────────────────────────────────────
+    if not filtered_cases:
+        for tab in (tab_email, tab_order, tab_crm, tab_rca):
+            with tab:
+                st.warning("No cases match the current filters.")
+    else:
+        idx = st.session_state.get("selected_case_idx", 0)
+        idx = min(idx, len(filtered_cases) - 1)
+        case = filtered_cases[idx]
 
-    with tab_crm:
-        render_crm_comments(case["crm_comments"])
+        for tab in (tab_email, tab_order, tab_crm, tab_rca):
+            with tab:
+                render_case_header(case)
+                st.markdown("---")
 
-    with tab_rca:
-        render_rca_panel(case)
+        with tab_email:
+            render_email_thread(case["emails"])
 
-    # Footer
+        with tab_order:
+            render_order_cards(case["vsm_orders"])
+
+        with tab_crm:
+            render_crm_comments(case["crm_comments"])
+
+        with tab_rca:
+            render_rca_panel(case)
+
+    # ── Footer ──────────────────────────────────────────────────────────────────
     st.markdown("---")
     cols = st.columns(4)
     cols[0].metric("Total Cases", len(cases))
