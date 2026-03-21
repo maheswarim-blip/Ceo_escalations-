@@ -1,9 +1,145 @@
 {
   "collected_at": "2026-03-19",
-  "enriched_at": "2026-03-21T18:47:07",
-  "total_emails": 424,
-  "total_unique_orders": 113,
+  "enriched_at": "2026-03-21T20:29:17",
+  "total_emails": 427,
+  "total_unique_orders": 114,
   "emails": [
+    {
+      "id": "19d10dc0357d9505",
+      "threadId": "19d10dc0357d9505",
+      "date": "Sat, 21 Mar 2026 20:15:32 +0530",
+      "from": "\"'Swapnil Thapa' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Mohammad Aaquib <mohammad.aaquib@lenskart.com>, Mohd Sahajad Khan <sahajad.khan@lenskart.com>, Manish Lakhera <manish.lakhera@lenskart.com>, Devendra Singh <devendra.singh@lenskart.in>, Lkst1200 Mumbai_ Mahim West <mahimwest.mumbai@lenskartstore.com>",
+      "cc": "Heena Khan <heena.khan@lenskart.mobi>, Mumbai CS BUCUS9 <mumbaics@vrxlab.com>, DHRUBA DAS <dhrubadas@vrxlab.com>, subharan <subharan@vrxlab.com>, Local Fitting <local_fitting@lenskart.in>, Sugam Sharma <sugam.sharma@lenskart.com>, ORM <orm@valyoo.in>, CEO Escalation <CEOescalation@lenskart.com>, Chandrakant Wagh <Chandrakant.wagh@lenskartstore.com>, Vipul Shekar Shetty <vipul.shetty@lenskart.com>",
+      "subject": "Re: social media ||1334110978|#118718779||",
+      "snippet": "@Manish Lakhera @Mohd Sahajad Khan Hi, We have received an escalation from the customer, Mr. Kevin Varia, regarding order #1334110978. The customer has stated that incorrect lens powers were provided.",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "@Manish Lakhera <manish.lakhera@lenskart.com> @Mohd Sahajad Khan\r\n<sahajad.khan@lenskart.com> Hi,\r\n\r\nWe have received an escalation from the customer, Mr. Kevin Varia,\r\nregarding order #1334110978.\r\n\r\nThe customer has stated that incorrect lens powers were provided.\r\n\r\nHe has also shared all the necessary details, including the authenticity\r\ncard and lensometer readings, for verification.\r\n\r\nWe request your team to kindly check with the vendor and identify how this\r\nerror occurred.\r\n\r\n@Devendra Singh <devendra.singh@lenskart.in> Sir, we request your\r\nassistance on this matter, as the customer has clearly mentioned that if\r\nthe concern is not resolved with a proper explanation, he may escalate it\r\nto the consumer court and CEO desk.\r\n\r\n@Lkst1200 Mumbai_ Mahim West <mahimwest.mumbai@lenskartstore.com> Hi store\r\nteam,\r\n\r\nKindly clarify why the frame and lenses were not properly checked before\r\nhanding over to the customer, especially when the customer had been facing\r\nissues from the beginning.\r\n\r\nWe are attaching the images for your reference.\r\n\r\nRequesting all concerned teams to treat this as high priority and share a\r\ndetailed update at the earliest.\r\n\r\nThank you.\r\n*Swapnil Thapa*\r\nSocial Media,\r\nLenskart.com\r\n\r\n\r\nOn Wed, Mar 18, 2026 at 11:46 AM 'Mohammad Aaquib' via ORM <orm@valyoo.in>\r\nwrote:\r\n\r\n> @Mumbai CS BUCUS9 <mumbaics@vrxlab.com> @DHRUBA DAS <dhrubadas@vrxlab.com>\r\n>  @subharan <subharan@vrxlab.com> Dear lab, Please proceed on an urgent\r\n> basis.\r\n>\r\n>\r\n> On Wed, Mar 18, 2026 at 11:43 AM 'Heena Khan' via Local Fitting <\r\n> local_fitting@lenskart.in> wrote:\r\n>\r\n>> HI Team,\r\n>>\r\n>> Please expedite this as cx wants order asap\r\n>>\r\n>> [image: image.png]\r\n>>\r\n>> [image: image.png]\r\n>>\r\n>>\r\n",
+      "order_ids": [
+        "1334110978"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1334110978,
+          "status": {
+            "status": "DELIVERED",
+            "state": "COMPLETE",
+            "returnable": true,
+            "cancellable": false,
+            "comment": "delivered",
+            "timestamp": 1773907174817,
+            "trackingStatus": "ORDER_PLACED",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "RETURNABLE",
+            "orderTrackingStatusCheckpoint": "ORDER_PLACED"
+          },
+          "created_at": 1773567263462,
+          "customer_name": null,
+          "customer_phone": "8767416385",
+          "customer_email": "8767416385@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1773567263462,
+              "updatedTime": 1773567263462,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "15 Mar 3:04 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:internal-lensonly-for-full-rim-eyeglasses-rodenstock_singlevision;lens-package-market-price:4800.0",
+              "name": "Replace Lens for Full-Rim Metal Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 5750.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1334110978": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d10c9a82074340",
+      "threadId": "19d10c9a82074340",
+      "date": "Sat, 21 Mar 2026 19:55:06 +0530",
+      "from": "\"'Deepak Verma' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Lkst818 Ahmedabad_Maple Tree <sudharamapletree.ahmedabad@lenskartstore.com>, Hiren Sureshbhai <Hiren.sureshbhai@lenskart.in>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "CEO Escalation | 119012626 | Prakash Solanki | RCA Required",
+      "snippet": "Dear Store Team, This refers to a recent CEO escalation received today, where the customer expressed dissatisfaction following his recent store visit. While we understand the customer&#39;s request is",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Dear Store Team,\r\n\r\nThis refers to a recent CEO escalation received today, where the customer\r\nexpressed dissatisfaction following his recent store visit.\r\n\r\nWhile we understand the customer’s request is not feasible—as he intended\r\nto use LK Cash/LK Cash+ along with an ongoing discount—we need to\r\nunderstand the situation in detail. Specifically, please share the exact\r\nproducts the customer was selecting and the communication provided to him\r\nduring his visit.\r\n\r\nSharing the VOC below for your reference. Kindly provide a detailed\r\nresponse covering the product details and the interaction at the store.\r\n\r\nVOC:-\r\n__________________________________________________________________________________________________________________\r\nSub:Unfair Billing Practice – Forced to Choose Between Discount and Wallet\r\nBalance\r\n21 Mar 26, 12:36 PM\r\nFrom:apksolanki609@gmail.com\r\nDear lenskart Team,\r\n\r\nI am writing to formally raise a complaint regarding an issue I faced at a\r\nLenskart store during my recent purchase.\r\n\r\nI had finalized my order for eyeglasses at a discounted price of ₹1249,\r\nwhich was clearly communicated and agreed upon at the store. However, at\r\nthe time of payment, I requested to use my wallet balance of ₹620. At this\r\npoint, I was informed that I cannot use my wallet balance along with the\r\ndiscount, and if I choose to use the wallet, the price would increase to\r\n₹1878.\r\n\r\nThis condition was never communicated to me during the purchase decision.\r\nChanging the terms at the time of payment is misleading and unfair to\r\ncustomers. As a customer, my wallet balance represents my own prepaid\r\namount, and restricting its usage without prior transparency is not\r\nacceptable.\r\n\r\nI would also like to highlight that I am a Gold Pro Max member of Lenskart\r\nand a loyal customer, having purchased more than 8 frames with glasses from\r\nLenskart in the past. Such an experience is highly disappointing and not\r\nexpected from a brand I have trusted repeatedly.\r\n\r\nDue to this, I am being forced to either:\r\n\r\nLose the benefit of the discount, or\r\nNot use my own wallet balance\r\n\r\nBoth options result in a financial loss for me, which is unreasonable.\r\n\r\nI request you to kindly:\r\n\r\nHonor the originally agreed final price of ₹1249, and allow adjustment of\r\nmy wallet balance, OR\r\nProvide a fair resolution without altering the agreed terms at the time of\r\nbilling\r\n\r\nI also request you to review such practices at store level to ensure better\r\ntransparency for customers in the future.\r\n\r\nLooking forward to your prompt resolution.\r\n\r\n\r\n\r\nThanks,\r\nPrakash Solanki\r\n___________________________________________________________________________________________________________________________\r\n\r\nPlease provide an update at your earliest convenience.\r\n\r\nRegards\r\nDeepak Verma\r\nTeam-CEO Escalation\r\nLenskart\r\n",
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d108b4f8e37a81",
+      "threadId": "19d0b163640bec11",
+      "date": "Sat, 21 Mar 2026 18:47:25 +0530",
+      "from": "Pradumn Kumar <pradumn.kumar@lenskart.com>",
+      "to": "Nidhi Nidhi <nidhi@thelenskart.com>",
+      "cc": "Lkst818 Ahmedabad_Maple Tree <sudharamapletree.ahmedabad@lenskartstore.com>, Sukriti Sachdeva <sukriti.sachdeva@lenskart.com>, Karan Kumar <karan.kumar@lenskart.mobi>, Hiren Sureshbhai <hiren.sureshbhai@lenskart.in>, Amit Kaushik <amit.kaushik@lenskart.mobi>, Sakshi Kumari Verma <sakshi.kumari@lenskart.com>, CS Email <Cs_email@lenskart.in>, CTT_Team <ctt_team@lenskart.in>, CEO Escalation <CEOescalation@lenskart.com>, Shail Patel <shail.patel@lenskart.com>, Mohd Naushad <mohd.naushad@lenskart.mobi>",
+      "subject": "Re: Urgent Customer Feedback & Service Concern – Order ID / 1326317026",
+      "snippet": "Hi Nidhi, I have connected with the customer to understand his requirements in detail. The customer informed me that he intends to place an order for progressive lenses using the Buy Later code from",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi Nidhi,\r\n\r\nI have connected with the customer to understand his requirements in detail.\r\n\r\nThe customer informed me that he intends to place an order for progressive\r\nlenses using the Buy Later code from master order 1326317026. Following\r\nthat, he wants to fit those progressive lenses into his own frame, which he\r\npreviously purchased from Lenskart.\r\n\r\nAdditionally, the customer confirmed that he will place a separate\r\nlens-only order for the remaining frame from which the progressive lenses\r\nwill be interchanged. For this lens-only order, he is willing to proceed\r\nwith ordinary lenses and bear the applicable costs.\r\n\r\nKindly suggest the next steps to meet these requirements, as this customer\r\nis in the Gold category.\r\n\r\n\r\nOn Sat, Mar 21, 2026 at 11:03 AM Nidhi Nidhi <nidhi@thelenskart.com> wrote:\r\n\r\n> +Pradumn Kumar <pradumn.kumar@lenskart.com>  Please connect with the\r\n> customer\r\n>\r\n> On Fri, Mar 20, 2026 at 5:21 PM Lkst818 Ahmedabad_Maple Tree <\r\n> sudharamapletree.ahmedabad@lenskartstore.com> wrote:\r\n>\r\n>> *Dear Nidhi and Sukriti mam*\r\n>> *Kindly update the status. Please connect to the customer and resolve the\r\n>> issue ASAP*\r\n>>\r\n>>\r\n>> *Thanks & Regards*\r\n>> *Rajesh sharma *\r\n>> *8923838923*\r\n>>\r\n>> On Thu, Mar 19, 2026 at 10:31 AM Nidhi Nidhi <nidhi@thelenskart.com>\r\n>> wrote:\r\n>>\r\n>>> +Karan Kumar <karan.kumar@lenskart.mobi>  Please check if we received\r\n>>> ceo escalation for this.\r\n>>>\r\n>>> On Wed, Mar 18, 2026 at 10:08 AM Sukriti Sachdeva <\r\n>>> sukriti.sachdeva@lenskart.com> wrote:\r\n>>>\r\n>>>> +Nidhi Nidhi <nidhi@thelenskart.com> +Amit Kaushik\r\n>>>> <amit.kaushik@lenskart.mobi>\r\n>>>> please connect with this customer , this is a sensitive case\r\n>>>>\r\n>>>> On Tue, Mar 17, 2026 at 10:19 PM Hiren Sureshbhai <\r\n>>>> hiren.sureshbhai@lenskart.in> wrote:\r\n>>>>\r\n>>>>> @Sukriti Sachdeva <sukriti.sachdeva@lenskart.com>  Can You Please\r\n>>>>> Check and Closed This Customer Is Very Smart And Also Last time Has Taken\r\n>>>>> GV From Company.\r\n>>>>>\r\n>>>>> Thanks & Regards\r\n>>>>> Hiren Ajmera\r\n>>>>> ZL\r\n>>>>> Ahmedabad\r\n>>>>> +919879900828\r\n>>>>>\r\n>>>>>\r\n>>>>> On Sun, 15 Mar, 2026, 4:11 pm Lkst818 Ahmedabad_Maple Tree, <\r\n>>>>> sudharamapletree.ahmedabad@lenskartstore.com> wrote:\r\n>>>>>\r\n>>>>>> *Dear team*\r\n>>>>>> * A customer visited the store today who wanted to get the lens only\r\n>>>>>> in his old frame instead of buy later,*\r\n>>>>>> * He also wanted a frame free in which he would provide the lens. *\r\n>>>>>> *He said that the company gives both frame and lens free,*\r\n>>>>>> * not buy later, now you help us in this case*\r\n>>>>>>\r\n>>>>>>\r\n>>>>>> *Thanks & Regards*\r\n>>>>>>\r\n>>>>>> On Fri, Jan 16, 2026 at 11:17 AM Sakshi Kumari Verma <\r\n>>>>>> sakshi.kumari@lenskart.com> wrote:\r\n>>>>>>\r\n>>>>>>> Thanks for the update.\r\n>>>>>>>\r\n>>>>>>> On Fri, Jan 16, 2026 at 11:12 AM Hiren Sureshbhai <\r\n>>>>>>> hiren.sureshbhai@lenskart.in> wrote:\r\n>>>>>>>\r\n>>>>>>>> Hi Sakshi,\r\n>>>>>>>>\r\n>>>>>>>> I am aware of this case because I had spoken with a customer when\r\n>>>>>>>> he was in the store and the store manager had tried all the possible\r\n>>>>>>>> options but was not ready to go with.\r\n>>>>>>>>\r\n>>>>>>>> On the same day he had spoken to the customer support team as well\r\n>>>>>>>> for the same requirements which he had put in infront of me and Store\r\n>>>>>>>> manager, which was not possible in our SOP.\r\n>>>>>>>>\r\n>>>>>>>> I will brief you on the incidents  and discussions that happen.\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>>    - Customer visited our Outlet LKST818 on 10th Jan'26 - Mr\r\n>>>>>>>>    Rajesh Store manager has high rapo so he has attended the customer\r\n>>>>>>>>    - Customer wanted to have Progressive Lense change for His old\r\n>>>>>>>>    frame (PID:135458) which he bought on 5th Oct'25 - order no :*1320631109\r\n>>>>>>>>    *single vision order-Which is not possible as per SOP.\r\n>>>>>>>>    - Store Manager Rajesh Has tried to explain the policy of\r\n>>>>>>>>    Buy2nd Later and Gold pro which he has taken, but not ready to accept.\r\n>>>>>>>>    - Then Customer has called to Customer support Team and Mr\r\n>>>>>>>>    Sourabh has also tried to Convince him with all possible solutions like -\r\n>>>>>>>>    Exchange or extention of Buy2nd Later Validity but not ready, Finally Store\r\n>>>>>>>>    manager had called Me and i had listen his request and buy time for the\r\n>>>>>>>>    next day (sunday 11th jan- till 2pm) and Customer support team had boungh\r\n>>>>>>>>    time till 12pm on sunday but didn't call back and he got angry with\r\n>>>>>>>>    commitments.\r\n>>>>>>>>    - i called the customer around 1.20pm on 11th Jan26 - and\r\n>>>>>>>>    proposed available options in the system 1) customer had 1 buy2nd later\r\n>>>>>>>>    spectacles pending - order no   1326317026 which coupon about\r\n>>>>>>>>    to expire on 14th jan26. but not ready 2) once has PRogressive order\r\n>>>>>>>>    received will use his Gold pro benefit of lense free changes 1 time in 2\r\n>>>>>>>>    years - with old frame so his frame is also used which his main concern-\r\n>>>>>>>>    but not ready 3) Exchange option also given for his daughter within 14\r\n>>>>>>>>    days- still not ready 4) wanted to have Brown Photochromic option in Wider\r\n>>>>>>>>    progressive - which comes with Transition brand only costing 16000 Rs extra\r\n>>>>>>>>    - not ready.\r\n>>>>>>>>    - He wanted to use his existing rimless frame with Brown\r\n>>>>>>>>    Progressive Lense and to no using his coupons available with his orders -\r\n>>>>>>>>    like Gold pro and exchange.\r\n>>>>>>>>\r\n>>>>>>>> In the Final Discussion he told me he will take the Free Coupon by\r\n>>>>>>>> escalating to top management- i am executive director why you don't\r\n>>>>>>>> consider my request.\r\n>>>>>>>>\r\n>>>>>>>> No rude behaviour/ no wrong commitment from Store side or my side.\r\n>>>>>>>>\r\n>>>>>>>> Thanks & Regards\r\n>>>>>>>> Hiren Ajmera\r\n>>>>>>>> 9879900828\r\n>>>>>>>> ZL\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>> On Fri, Jan 16, 2026 at 9:52 AM Sakshi Kumari Verma <\r\n>>>>>>>> sakshi.kumari@lenskart.com> wrote:\r\n>>>>>>>>\r\n>>>>>>>>> Dear Team,\r\n>>>>>>>>>\r\n>>>>>>>>> This email is regarding serious feedback received from *Mr.\r\n>>>>>>>>> Kesavan Brindavana Krishnan*, a long-standing Lenskart customer,\r\n>>>>>>>>> concerning his recent visit to the *Maple Tree outlet, Ahmedabad*.\r\n>>>>>>>>>\r\n>>>>>>>>> This case has now been marked as a *CEO escalation*, and the\r\n>>>>>>>>> customer has tagged *Ashwani Agrawal*. The feedback has been\r\n>>>>>>>>> shared with leadership, and immediate corrective actions are expected.\r\n>>>>>>>>>\r\n>>>>>>>>> The customer reported:\r\n>>>>>>>>>\r\n>>>>>>>>>    -\r\n>>>>>>>>>\r\n>>>>>>>>>    Spending *over 2 hours in-store without resolution*\r\n>>>>>>>>>    -\r\n>>>>>>>>>\r\n>>>>>>>>>    Lack of clear guidance on fitting progressive lenses\r\n>>>>>>>>>    -\r\n>>>>>>>>>\r\n>>>>>>>>>    Poor coordination between the store and customer care\r\n>>>>>>>>>    -\r\n>>>>>>>>>\r\n>>>>>>>>>    Multiple call disconnections and no promised callbacks\r\n>>>>>>>>>    -\r\n>>>>>>>>>\r\n>>>>>>>>>    Escalation to senior leadership due to dissatisfaction\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>> The customer’s request was straightforward: to explore fitting\r\n>>>>>>>>> progressive lenses purchased under Buy Later onto an earlier frame.\r\n>>>>>>>>> However, the experience resulted in frustration and mental stress.\r\n>>>>>>>>>\r\n>>>>>>>>> This is the email we are just sharing as a feedback with you.\r\n>>>>>>>>>\r\n>>>>>>>>> Regards,\r\n>>>>>>>>>\r\n>>>>>>>>> *Sakshi Kumari Verma*Lenskart\r\n>>>>>>>>>\r\n>>>>>>>>\r\n>>>>\r\n>>>> --\r\n>>>>\r\n>>>> *Regards,*\r\n>>>>\r\n>>>> *Sukriti Sachdeva*\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>> [image: photo]\r\n>>>> Lenskart Solutions Pvt. Ltd\r\n>>>>\r\n>>>> *Program coordinatorCentral Operations*\r\n>>>> www.lenskart.com\r\n>>>> |\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>\r\n>>> --\r\n>>> Thanks & Regards,\r\n>>> Nidhi Aneriya\r\n>>> PRG Team\r\n>>>\r\n>>>\r\n>\r\n> --\r\n> Thanks & Regards,\r\n> Nidhi Aneriya\r\n> PRG Team\r\n>\r\n>\r\n\r\n-- \r\nBest Regards\r\nPradumn Kumar\r\nLenskart Care\r\n",
+      "order_ids": [
+        "1326317026",
+        "1320631109"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1326317026",
+          "error": "HTTPSConnectionPool(host='api-gateway.juno.lenskart.com', port=443): Max retries exceeded with url: /v2/orders/internal/1326317026 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+        },
+        {
+          "order_id": "1320631109",
+          "error": "HTTPSConnectionPool(host='api-gateway.juno.lenskart.com', port=443): Max retries exceeded with url: /v2/orders/internal/1320631109 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+        }
+      ],
+      "crm_comments": {
+        "1326317026": [
+          {
+            "error": "HTTPSConnectionPool(host='crm-jr.scm.lenskart.com', port=443): Max retries exceeded with url: /v2/1326317026/comments (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+          }
+        ],
+        "1320631109": [
+          {
+            "error": "HTTPSConnectionPool(host='crm-jr.scm.lenskart.com', port=443): Max retries exceeded with url: /v2/1320631109/comments (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+          }
+        ]
+      }
+    },
     {
       "id": "19d107e1c10b483e",
       "threadId": "19d107e1c10b483e",
