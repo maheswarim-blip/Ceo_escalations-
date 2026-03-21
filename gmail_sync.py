@@ -135,6 +135,18 @@ def _search_via_mcp(url, headers, max_results=500, page_token=None):
     return json.loads(content[0].get("text", "{}"))
 
 
+def _read_message_via_mcp(url, headers, message_id: str) -> dict:
+    """Fetch full message body for a single message ID via MCP."""
+    try:
+        result = _mcp_call(url, headers, "tools/call",
+                           {"name": "gmail_read_message",
+                            "arguments": {"messageId": message_id}})
+        content = result.get("content", [{}])
+        return json.loads(content[0].get("text", "{}"))
+    except Exception:
+        return {}
+
+
 def _sync_via_mcp(verbose=False):
     token, url, extra_headers = _load_mcp_session()
     http_headers = {
@@ -153,7 +165,7 @@ def _sync_via_mcp(verbose=False):
         page_token = page.get("nextPageToken")
         if not page_token:
             break
-    return all_messages, page.get("resultSizeEstimate", len(all_messages))
+    return all_messages, page.get("resultSizeEstimate", len(all_messages)), url, http_headers
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -260,15 +272,15 @@ def _search_via_oauth(creds, page_token=None, max_results=500):
                       params=params)
 
 
-def _get_message_meta(creds, msg_id):
-    """Fetch message metadata (headers + snippet) via REST API."""
-    return _gmail_get(
+def _get_message_full(creds, msg_id):
+    """Fetch full message (headers + snippet + body) via REST API."""
+    raw = _gmail_get(
         creds,
         f"https://gmail.googleapis.com/gmail/v1/users/me/messages/{msg_id}",
-        params={"format": "metadata",
-                "metadataHeaders": "From,To,Cc,Subject,Date",
-                "fields": "id,threadId,labelIds,snippet,payload/headers"},
+        params={"format": "full"},
     )
+    raw["_body_text"] = _extract_body_text_oauth(raw)
+    return raw
 
 
 def _parse_oauth_message(raw: dict) -> dict:
@@ -312,28 +324,31 @@ def _sync_via_oauth(verbose=False):
         with open(DATA_FILE) as f:
             existing_ids = {e["id"] for e in json.load(f).get("emails", [])}
 
-    # Fetch metadata only for new messages
+    # Fetch full message (headers + body) for new messages
     new_raw = []
     for i, m in enumerate(all_ids):
         if m["id"] in existing_ids:
             continue
-        meta = _get_message_meta(creds, m["id"])
-        new_raw.append(meta)
+        full = _get_message_full(creds, m["id"])
+        new_raw.append(full)
         if verbose and (i + 1) % 20 == 0:
-            print(f"  Fetched metadata for {i+1}/{len(all_ids)}…", flush=True)
+            print(f"  Fetched {i+1}/{len(all_ids)} messages…", flush=True)
 
-    # Build fake "messages" list in MCP format for reuse of _msg_to_email
+    # Build MCP-format dicts (shared with _msg_to_email)
     all_messages_mcp = []
     for raw in new_raw:
         h = {hh["name"]: hh["value"]
              for hh in raw.get("payload", {}).get("headers", [])}
-        all_messages_mcp.append({
+        msg = {
             "messageId": raw["id"],
             "threadId":  raw["threadId"],
             "labelIds":  raw.get("labelIds", []),
             "snippet":   raw.get("snippet", ""),
             "headers":   h,
-        })
+        }
+        if raw.get("_body_text"):
+            msg["body"] = raw["_body_text"]
+        all_messages_mcp.append(msg)
 
     return all_messages_mcp, result_size
 
@@ -344,7 +359,7 @@ def _sync_via_oauth(verbose=False):
 
 def _msg_to_email(msg: dict) -> dict:
     h = msg.get("headers", {})
-    return {
+    email = {
         "id":       msg["messageId"],
         "threadId": msg["threadId"],
         "date":     h.get("Date", ""),
@@ -355,6 +370,40 @@ def _msg_to_email(msg: dict) -> dict:
         "snippet":  msg.get("snippet", ""),
         "labels":   msg.get("labelIds", []),
     }
+    # Include full body if already fetched
+    if msg.get("body"):
+        email["body"] = msg["body"]
+    return email
+
+
+def _extract_body_text_oauth(raw: dict) -> str:
+    """Extract plain-text body from a Gmail API full-format message."""
+    import base64
+
+    def _decode(data: str) -> str:
+        try:
+            return base64.urlsafe_b64decode(data + "==").decode("utf-8", errors="replace")
+        except Exception:
+            return ""
+
+    payload = raw.get("payload", {})
+    parts = payload.get("parts")
+
+    if parts:
+        # Multipart: find text/plain parts recursively
+        texts = []
+        stack = list(parts)
+        while stack:
+            part = stack.pop(0)
+            mime = part.get("mimeType", "")
+            if mime == "text/plain":
+                texts.append(_decode((part.get("body") or {}).get("data", "")))
+            elif mime.startswith("multipart/"):
+                stack.extend(part.get("parts") or [])
+        return "\n".join(t for t in texts if t)
+    else:
+        # Single-part message
+        return _decode((payload.get("body") or {}).get("data", ""))
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -377,21 +426,30 @@ def sync_new_emails(verbose: bool = False) -> dict:
     existing_ids = {e["id"] for e in data.get("emails", [])}
 
     # Pick sync method
+    mcp_url = mcp_http_headers = None
     if _in_claude_session():
         if verbose:
             print("Mode: Claude Code MCP session")
-        all_messages, result_size = _sync_via_mcp(verbose=verbose)
+        all_messages, result_size, mcp_url, mcp_http_headers = _sync_via_mcp(verbose=verbose)
     else:
         if verbose:
             print("Mode: Local Gmail OAuth2")
         all_messages, result_size = _sync_via_oauth(verbose=verbose)
 
-    # Merge new emails
-    new_emails = [
-        _msg_to_email(m)
-        for m in all_messages
-        if m["messageId"] not in existing_ids
-    ]
+    # Identify new messages
+    new_raw = [m for m in all_messages if m["messageId"] not in existing_ids]
+
+    # Fetch full body for new messages (MCP mode: call gmail_read_message per message)
+    if mcp_url and new_raw:
+        if verbose:
+            print(f"  Fetching full body for {len(new_raw)} new messages…", flush=True)
+        for msg in new_raw:
+            if not msg.get("body"):
+                full = _read_message_via_mcp(mcp_url, mcp_http_headers, msg["messageId"])
+                if full.get("body"):
+                    msg["body"] = full["body"]
+
+    new_emails = [_msg_to_email(m) for m in new_raw]
 
     if new_emails:
         data["emails"] = new_emails + data["emails"]
@@ -417,6 +475,45 @@ def sync_new_emails(verbose: bool = False) -> dict:
     return summary
 
 
+def backfill_bodies(verbose: bool = False) -> dict:
+    """
+    Fetch and store full email bodies for existing emails that were synced
+    before body-fetching was added (i.e. emails with no 'body' field).
+    Only works in Claude Code MCP session mode.
+    """
+    if not _in_claude_session():
+        raise RuntimeError("backfill_bodies requires a Claude Code MCP session.")
+
+    if not DATA_FILE.exists():
+        raise RuntimeError("ceo_escalation_emails.json not found.")
+
+    with open(DATA_FILE) as f:
+        data = json.load(f)
+
+    _, _, mcp_url, mcp_http_headers = _sync_via_mcp(verbose=False)
+
+    emails = data.get("emails", [])
+    missing = [e for e in emails if not e.get("body")]
+    if verbose:
+        print(f"Emails missing body: {len(missing)} / {len(emails)}")
+
+    filled = 0
+    for i, email in enumerate(missing):
+        full = _read_message_via_mcp(mcp_url, mcp_http_headers, email["id"])
+        if full.get("body"):
+            email["body"] = full["body"]
+            filled += 1
+        if verbose and (i + 1) % 20 == 0:
+            print(f"  Backfilled {i+1}/{len(missing)}…", flush=True)
+
+    with open(DATA_FILE, "w") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    if verbose:
+        print(f"Backfill complete: {filled}/{len(missing)} emails updated")
+    return {"backfilled": filled, "skipped": len(missing) - filled, "total": len(emails)}
+
+
 def setup_oauth():
     """Run the one-time OAuth2 browser flow to generate gmail_token.json."""
     print("Opening browser for Google sign-in…")
@@ -429,6 +526,13 @@ if __name__ == "__main__":
     if "--setup" in sys.argv:
         try:
             setup_oauth()
+        except RuntimeError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+    elif "--backfill" in sys.argv:
+        try:
+            result = backfill_bodies(verbose=True)
+            print(json.dumps(result, indent=2))
         except RuntimeError as e:
             print(f"ERROR: {e}", file=sys.stderr)
             sys.exit(1)

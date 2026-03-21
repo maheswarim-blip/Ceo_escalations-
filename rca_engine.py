@@ -118,10 +118,57 @@ Do NOT fabricate data. If a field is blank or unknown, state it explicitly rathe
 Use bullet points for clarity."""
 
 
+import re as _re
+
 def _extract_phones(text: str) -> list[str]:
     """Extract 10-digit Indian mobile numbers from text."""
-    import re
-    return list(dict.fromkeys(re.findall(r"\b[6-9]\d{9}\b", text)))
+    return list(dict.fromkeys(_re.findall(r"\b[6-9]\d{9}\b", text)))
+
+
+def _extract_forwarded_customer_email(body: str) -> dict | None:
+    """
+    Parse a forwarded email body to extract the original customer message.
+    Looks for '---------- Forwarded message ---------' blocks and returns
+    the innermost one that originated from an external (non-lenskart) sender.
+
+    Returns a dict with keys: from_, date, subject, body
+    Returns None if no forwarded customer email is found.
+    """
+    # Split on forwarded-message dividers (handle nested forwards)
+    # Pattern used by Gmail: ---------- Forwarded message ---------
+    parts = _re.split(
+        r"-{5,}\s*Forwarded message\s*-{5,}",
+        body,
+        flags=_re.IGNORECASE
+    )
+
+    for part in reversed(parts):  # innermost forward first
+        lines = part.strip().splitlines()
+        meta = {}
+        body_lines = []
+        in_meta = True
+        for line in lines:
+            if in_meta:
+                m = _re.match(r"^(From|Date|Subject|To|Cc):\s*(.+)$", line, _re.IGNORECASE)
+                if m:
+                    meta[m.group(1).lower()] = m.group(2).strip()
+                    continue
+                elif meta:  # meta is done, rest is body
+                    in_meta = False
+            body_lines.append(line)
+
+        sender = meta.get("from", "")
+        # Only consider external senders (not @lenskart.com / @valyoo.in domains)
+        if sender and not _re.search(r"@(lenskart\.com|lenskart\.in|valyoo\.in|lenskart\.mobi)", sender, _re.IGNORECASE):
+            extracted_body = "\n".join(body_lines).strip()
+            if len(extracted_body) > 50:  # ignore near-empty blocks
+                return {
+                    "from_": sender,
+                    "date": meta.get("date", ""),
+                    "subject": meta.get("subject", ""),
+                    "body": extracted_body,
+                }
+    return None
 
 
 def get_first_email(case: dict) -> dict | None:
@@ -161,16 +208,37 @@ def build_rca_context(case: dict) -> str:
         return "No email data available."
 
     # ── First (original) escalation email ────────────────────────────────────
-    parts.append("## ORIGINAL ESCALATION EMAIL\n")
-    parts.append(f"**Date Received:** {first_email.get('date', '—')}")
-    parts.append(f"**From:** {first_email.get('from', '—')}")
-    parts.append(f"**To:** {first_email.get('to', '—')}")
-    if first_email.get("cc"):
-        parts.append(f"**CC:** {first_email.get('cc', '')}")
-    parts.append(f"**Subject:** {first_email.get('subject', '—')}")
-    # Use full body preview if available (fetched during enrichment), else snippet
-    email_body = first_email.get("body_preview") or first_email.get("snippet") or "_(no preview available)_"
-    parts.append(f"**Email Content:**\n{email_body}\n")
+    # Prefer full body (stored by gmail_sync), then body_preview, then snippet
+    full_body = first_email.get("body") or first_email.get("body_preview") or ""
+
+    # Try to extract the original customer complaint embedded in a forwarded chain
+    customer_email = _extract_forwarded_customer_email(full_body) if full_body else None
+
+    if customer_email:
+        parts.append("## ORIGINAL CUSTOMER EMAIL (extracted from forwarded chain)\n")
+        parts.append(f"**Customer:** {customer_email['from_']}")
+        parts.append(f"**Sent:** {customer_email['date']}")
+        parts.append(f"**Subject:** {customer_email['subject']}")
+        parts.append(f"**Message:**\n{customer_email['body']}\n")
+
+        parts.append("## ESCALATION CHAIN\n")
+        parts.append(f"**Forwarded by:** {first_email.get('from', '—')}")
+        parts.append(f"**Date forwarded to CEO escalation:** {first_email.get('date', '—')}")
+        if full_body:
+            # Show the escalating manager's own note (text before the first forward divider)
+            manager_note = full_body.split("---------- Forwarded message")[0].strip()
+            if manager_note and len(manager_note) > 5:
+                parts.append(f"**Escalation note:** {manager_note}\n")
+    else:
+        parts.append("## ORIGINAL ESCALATION EMAIL\n")
+        parts.append(f"**Date Received:** {first_email.get('date', '—')}")
+        parts.append(f"**From:** {first_email.get('from', '—')}")
+        parts.append(f"**To:** {first_email.get('to', '—')}")
+        if first_email.get("cc"):
+            parts.append(f"**CC:** {first_email.get('cc', '')}")
+        parts.append(f"**Subject:** {first_email.get('subject', '—')}")
+        email_body = full_body or first_email.get("snippet") or "_(no preview available)_"
+        parts.append(f"**Email Content:**\n{email_body}\n")
 
     # ── VSM orders: first-email preferred, case-level fallback ───────────────
     vsm_orders = _get_vsm_orders_for_rca(case, first_email)
@@ -302,19 +370,24 @@ def generate_rca_streaming(case: dict):
         return
 
     context = build_rca_context(case)
+    vsm_orders = _get_vsm_orders_for_rca(case, first_email)
 
-    # Collect order IDs from the first email only
-    order_ids = [
-        str(o.get("order_id"))
-        for o in first_email.get("vsm_orders", [])
-        if o.get("order_id")
-    ]
+    # Collect order IDs from VSM (first-email preferred, case-level fallback)
+    order_ids = [str(o.get("order_id")) for o in vsm_orders if o.get("order_id")]
 
-    # Try to extract customer name from VSM or email snippet
+    # Customer name: VSM first, then from the extracted customer email sender
     customer_name = next(
-        (o.get("customer_name") for o in first_email.get("vsm_orders", []) if o.get("customer_name")),
+        (o.get("customer_name") for o in vsm_orders if o.get("customer_name")),
         None,
-    ) or "— (not available)"
+    )
+    if not customer_name:
+        full_body = first_email.get("body") or first_email.get("body_preview") or ""
+        cust_email = _extract_forwarded_customer_email(full_body) if full_body else None
+        if cust_email:
+            # Extract name from "Name <email>" format
+            customer_name = cust_email["from_"].split("<")[0].strip().strip("'\"") or "— (not available)"
+        else:
+            customer_name = "— (not available)"
 
     order_dates = [
         _fmt_ts(o.get("created_at"))
