@@ -377,7 +377,7 @@ def _build_overview_data(cases: list) -> dict:
         zone = "Unknown"
         for order in case.get("vsm_orders", []):
             # 1. Explicit city from storeDetails
-            city = (order.get("store_city") or "").strip()
+            city = str(order.get("store_city") or "").strip()
             if city:
                 z = _CITY_TO_ZONE.get(city)
                 if not z:
@@ -389,7 +389,7 @@ def _build_overview_data(cases: list) -> dict:
                     zone = z
                     break
             # 2. Parse store name string
-            store = (order.get("store") or "").strip()
+            store = str(order.get("store") or "").strip()
             z = _store_to_zone(store)
             if z not in ("Unknown", ""):
                 zone = z
@@ -788,10 +788,10 @@ def render_order_cards(vsm_orders: list):
             name  = order.get("customer_name") or "—"
             phone = order.get("customer_phone") or "—"
             email = order.get("customer_email") or ""
-            store      = order.get("store") or "—"
-            store_city = order.get("store_city") or ""
-            store_type = order.get("store_type") or ""
-            tier       = order.get("customer_tier") or ""
+            store      = str(order.get("store") or "—")
+            store_city = str(order.get("store_city") or "")
+            store_type = str(order.get("store_type") or "")
+            tier       = str(order.get("customer_tier") or "")
             store_label = store
             if store_city and store_city not in store:
                 store_label = f"{store} ({store_city})"
