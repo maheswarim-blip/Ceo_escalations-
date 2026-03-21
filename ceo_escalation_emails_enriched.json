@@ -1,9 +1,753 @@
 {
   "collected_at": "2026-03-19",
-  "enriched_at": "2026-03-21T10:58:11",
-  "total_emails": 414,
-  "total_unique_orders": 111,
+  "enriched_at": "2026-03-21T18:47:07",
+  "total_emails": 424,
+  "total_unique_orders": 113,
   "emails": [
+    {
+      "id": "19d107e1c10b483e",
+      "threadId": "19d107e1c10b483e",
+      "date": "Sat, 21 Mar 2026 18:31:57 +0530",
+      "from": "\"'Lkst452 Gurgaon' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Harshita Sharma <harshita.sharma1@thelenskart.com>, CEO Escalation <ceoescalation@lenskart.com>, Nidhi Nidhi <nidhi@thelenskart.com>, Grievances <grievances@lenskart.in>",
+      "cc": "Piyush Jaiswal <piyush.jaiswal@lenskart.in>, Tarun Agarwal <tarun.agarwal@lenskart.com>, Bhavjot Singh <bhavjot.singh@lenskart.com>, Devendra Singh <devendra.singh2@lenskart.com>",
+      "subject": "customer return issue.",
+      "snippet": "Good Evening.! Dear Sir/Mam, A customer visited our store today having already got approval for an exchange after speaking with Customer Care. We asked the customer to select a frame. After that we",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Good Evening.!\r\nDear Sir/Mam,\r\n\r\nA customer visited our store today having already got approval for an\r\nexchange after speaking with Customer Care. We asked the customer to select\r\na frame. After  that we will proceed with their order after that Cx once\r\nwas finalized frame.when we start processing the order we inform the\r\ncustomer that they need to submit their old frame to us before leaving as\r\nwe need to send glass for gate pass to the warehouse as per company SOP\r\nonly then we will process your new order.\r\n\r\nThe customer refused. I will not submit the frame, give me the new frame\r\nfirst & only then will I hand this one over. We contacted customer care and\r\ntalked about this concern. Cx also talked with customer care but customer\r\ncare also said the same thing. First you need to submit glasses. After that\r\nwe will process the order . After that the customer starts making noise and\r\nsays he will complain to everyone. We tell the customer we can process the\r\norder after that we will inform the warehouse about your order and they\r\nwill send your order as soon as possible. We would send an email to our\r\nwarehouse team and raise a support ticket to expedite the delivery of their\r\nnew frame but the customer was simply unwilling to listen to anything we\r\nhad to say.\r\n\r\nKindly look into this issue.\r\n\r\n*Best & Regards*\r\n*LKST452*\r\n",
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d1066e54228ef3",
+      "threadId": "19d106347588c41c",
+      "date": "Sat, 21 Mar 2026 18:07:38 +0530",
+      "from": "\"'Ayush Roy' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Digbijoy Kar <digbijoy.kar@lenskart.com>, LKST2566 Kolkata_New Alipore <newalipore.kolkata@lenskartstore.com>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>, Santosh Kumar Hota <santosh.hota@lenskart.in>, Parag Pattnaik <parag.pattnaik@lenskart.in>",
+      "subject": "Re: LinkedIn Escalation || 1334598908 || 119021493 || Need RCA- Store Visit",
+      "snippet": "Adding +LKST2566 Kolkata_New Alipore Thanks &amp; Regards, Ayush Roy CEO Escalation Team | Lenskart.com On Sat, Mar 21, 2026 at 6:03 PM Ayush Roy &lt;ayush.roy@lenskart.in&gt; wrote: Dear Store, This",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Adding +LKST2566 Kolkata_New Alipore <newalipore.kolkata@lenskartstore.com>\r\n\r\n*Thanks & Regards**,*\r\n*Ayush Roy*\r\n\r\n*CEO Escalation Team | Lenskart.com*\r\n\r\n\r\nOn Sat, Mar 21, 2026 at 6:03 PM Ayush Roy <ayush.roy@lenskart.in> wrote:\r\n\r\n> Dear Store,\r\n>\r\n> This email is regarding a LinkedIn escalation where we have received\r\n> feedback about a poor store experience.\r\n>\r\n> Store Code- LKST2566\r\n>\r\n> Kindly review the case and share a detailed RCA at the earliest.\r\n>\r\n> Customer VOC:\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n> *Sometimes, customer experience matters more than the product\r\n> itself.Recently, I had a disappointing experience with , despite being a\r\n> loyal Gold member. I have always purchased my frames and lenses exclusively\r\n> from Lenskart, which makes this experience even more concerning.I visited\r\n> their store at Lenskart Tollygunge Circular Road store expecting a smooth\r\n> and transparent process. However, things turned out quite differently:• The\r\n> term “free lens replacement” was unclear, and later I was informed that for\r\n> bifocal/progressive lenses, there is an additional charge of ₹450.• I was\r\n> pushed to purchase lenses worth ₹2100 without proper explanation.• I was\r\n> also asked to buy a ₹200 coupon, but surprisingly, even the executive was\r\n> unsure about what it was and couldn’t locate it.This lack of clarity and\r\n> transparency is not what you expect from a brand you trust.As customers, we\r\n> don’t just pay for products-we trust brands for honesty, clarity, and\r\n> service. Experiences like this raise serious concerns.I hope this feedback\r\n> reaches the right team and leads to better training and customer handling\r\n> in the future.Order Number: 1334598908*\r\n>\r\n> *Thanks & Regards**,*\r\n> *Ayush Roy*\r\n>\r\n> *CEO Escalation Team | Lenskart.com*\r\n>\r\n",
+      "order_ids": [
+        "1334598908"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1334598908,
+          "status": {
+            "status": "PROCESSING",
+            "state": "PROCESSING",
+            "returnable": false,
+            "cancellable": false,
+            "comment": "Payment successfully made by customer",
+            "timestamp": 1774081167472,
+            "trackingStatus": "ORDER_PLACED",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "NON_RETURNABLE",
+            "orderTrackingStatusCheckpoint": "ORDER_PLACED"
+          },
+          "created_at": 1774081146819,
+          "customer_name": null,
+          "customer_phone": "8583019502",
+          "customer_email": "8583019502@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1774081146819,
+              "updatedTime": 1774081146819,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "21 Mar 1:49 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:internal-lensonly-for-full-rim-eyeglasses-pack_owndays_blu_normal_prog;lens-package-market-price:3000.0",
+              "name": "Replace Lens for Full-Rim Metal Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 3000.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1334598908": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d106347588c41c",
+      "threadId": "19d106347588c41c",
+      "date": "Sat, 21 Mar 2026 18:03:42 +0530",
+      "from": "\"'Ayush Roy' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Newalipore.kolkata@lenskarstore.com, Digbijoy Kar <digbijoy.kar@lenskart.com>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>, Santosh Kumar Hota <santosh.hota@lenskart.in>, Parag Pattnaik <parag.pattnaik@lenskart.in>",
+      "subject": "LinkedIn Escalation || 1334598908 || 119021493 || Need RCA- Store Visit",
+      "snippet": "Dear Store, This email is regarding a LinkedIn escalation where we have received feedback about a poor store experience. Store Code- LKST2566 Kindly review the case and share a detailed RCA at the",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Dear Store,\r\n\r\nThis email is regarding a LinkedIn escalation where we have received\r\nfeedback about a poor store experience.\r\n\r\nStore Code- LKST2566\r\n\r\nKindly review the case and share a detailed RCA at the earliest.\r\n\r\nCustomer VOC:\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n*Sometimes, customer experience matters more than the product\r\nitself.Recently, I had a disappointing experience with , despite being a\r\nloyal Gold member. I have always purchased my frames and lenses exclusively\r\nfrom Lenskart, which makes this experience even more concerning.I visited\r\ntheir store at Lenskart Tollygunge Circular Road store expecting a smooth\r\nand transparent process. However, things turned out quite differently:• The\r\nterm “free lens replacement” was unclear, and later I was informed that for\r\nbifocal/progressive lenses, there is an additional charge of ₹450.• I was\r\npushed to purchase lenses worth ₹2100 without proper explanation.• I was\r\nalso asked to buy a ₹200 coupon, but surprisingly, even the executive was\r\nunsure about what it was and couldn’t locate it.This lack of clarity and\r\ntransparency is not what you expect from a brand you trust.As customers, we\r\ndon’t just pay for products-we trust brands for honesty, clarity, and\r\nservice. Experiences like this raise serious concerns.I hope this feedback\r\nreaches the right team and leads to better training and customer handling\r\nin the future.Order Number: 1334598908*\r\n\r\n*Thanks & Regards**,*\r\n*Ayush Roy*\r\n\r\n*CEO Escalation Team | Lenskart.com*\r\n",
+      "order_ids": [
+        "1334598908"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1334598908,
+          "status": {
+            "status": "PROCESSING",
+            "state": "PROCESSING",
+            "returnable": false,
+            "cancellable": false,
+            "comment": "Payment successfully made by customer",
+            "timestamp": 1774081167472,
+            "trackingStatus": "ORDER_PLACED",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "NON_RETURNABLE",
+            "orderTrackingStatusCheckpoint": "ORDER_PLACED"
+          },
+          "created_at": 1774081146819,
+          "customer_name": null,
+          "customer_phone": "8583019502",
+          "customer_email": "8583019502@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1774081146819,
+              "updatedTime": 1774081146819,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "21 Mar 1:49 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:internal-lensonly-for-full-rim-eyeglasses-pack_owndays_blu_normal_prog;lens-package-market-price:3000.0",
+              "name": "Replace Lens for Full-Rim Metal Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 3000.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1334598908": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d104be247fca3d",
+      "threadId": "19d069f4eeffb64f",
+      "date": "Sat, 21 Mar 2026 17:38:08 +0530",
+      "from": "\"'Ayush Roy' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "LKST2690 Phagwara_Banga rd <Bangard.phagwara@lenskartstore.com>, Arun Kumar <arun.kumar1@lenskart.com>",
+      "cc": "CEO Escalation <CEOescalation@lenskart.com>, Gagneet Singh <gagneet.singh@lenskart.in>",
+      "subject": "Re: CEO Esclation Case || 1333524414 || 118918663 || Need RCA & Assistance Required in Re-order",
+      "snippet": "Dear Store, Could you help here with the RCA? Also please connect to the customer for re-order. Thanks &amp; Regards, Ayush Roy CEO Escalation Team | Lenskart.com On Thu, Mar 19, 2026 at 8:33 PM Ayush",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Dear Store,\r\n\r\nCould you help here with the RCA?\r\n\r\nAlso please connect to the customer for re-order.\r\n\r\n*Thanks & Regards**,*\r\n*Ayush Roy*\r\n\r\n*CEO Escalation Team | Lenskart.com*\r\n\r\n\r\nOn Thu, Mar 19, 2026 at 8:33 PM Ayush Roy <ayush.roy@lenskart.in> wrote:\r\n\r\n> Hi Store,\r\n>\r\n> This email is regarding a CEO escalation wherein the customer has reported\r\n> that her order was incorrectly placed by the store.\r\n>\r\n> We have issued store credit of ₹3,199. Kindly assist the customer in\r\n> placing a new order with the correct prescription and ensure that the Gold\r\n> Pro membership is added accordingly.\r\n>\r\n> Customer Registered Number: 9417518382\r\n>\r\n> Additionally, we request you to review the VOC and share a detailed RCA at\r\n> the earliest.\r\n>\r\n> Customer VOC:\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n>\r\n> *Dear Team,I am extremely frustrated with my experience.Your employee made\r\n> a serious mistake by selecting the wrong family member’s prescription\r\n> instead of mine while placing the order. Because of this, my glasses were\r\n> made incorrectly.Even after that, I was told the order would be delivered,\r\n> but now the app shows false status “delivery failed / refused”, which is\r\n> not true. No one contacted or attempted delivery.On top of this, I paid\r\n> around ₹3100, but only ₹1350 refund is initiated. I am still suffering\r\n> because of your team’s mistake, and this is completely unfair.You already\r\n> have full history of my case, so I expect:Full refund of my paid\r\n> amountProper explanation for wrong delivery updateImmediate resolution\r\n> without further delayPlease understand this situation has caused me\r\n> unnecessary stress, and I need this resolved urgently.*\r\n>\r\n>\r\n> *Thanks & Regards**,*\r\n> *Ayush Roy*\r\n>\r\n> *CEO Escalation Team | Lenskart.com*\r\n>\r\n",
+      "order_ids": [
+        "1333524414"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1333524414,
+          "status": {
+            "status": "RETURN_REFUNDED_STORE_CREDIT",
+            "state": "CLOSED",
+            "returnable": false,
+            "cancellable": false,
+            "comment": "return_refunded_store_credit",
+            "timestamp": 1773931516603,
+            "trackingStatus": "DISPATCHED",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "NON_RETURNABLE",
+            "orderTrackingStatusCheckpoint": "DISPATCHED"
+          },
+          "created_at": 1772969604601,
+          "customer_name": null,
+          "customer_phone": "9417518382",
+          "customer_email": "9417518382@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1773931517678,
+              "updatedTime": 1773931517678,
+              "status": "DISPATCHED",
+              "details": [
+                {
+                  "time": "19 Mar 8:15 PM",
+                  "trackStatus": "DISPATCHED"
+                }
+              ]
+            },
+            {
+              "createdTime": 1772969604601,
+              "updatedTime": 1772969604601,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "08 Mar 5:03 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:lenskart-air-la-e11484-w-c1-eyeglasses-pack_hydrophobic_premium_sv_fl_android;lens-package-market-price:600.0",
+              "name": "Transparent Purple Full Rim Cat Eye Lenskart Air Flex LA E11484-W-C1 Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 2500.0,
+                "name": "Total Price"
+              }
+            },
+            {
+              "sku": "service:lenskart-gold-pro-2-membership",
+              "name": "Lenskart Gold MAX Pro Membership",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 6000.0,
+                "name": "Total Price"
+              }
+            },
+            {
+              "sku": "eye:lenskart-air-la-e18784-grey-eyeglasses-pack_hydrophobic_premium_sv_fl_android;lens-package-market-price:600.0",
+              "name": "Light Grey Full Rim Square Lenskart Air CLASSIC LA E18784 Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 2500.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1333524414": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d1044d3f72392a",
+      "threadId": "19d1044d3f72392a",
+      "date": "Sat, 21 Mar 2026 17:29:53 +0530",
+      "from": "\"'Suraj Tiwari' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "\"Abhishek Yadav'\" <abhishek.yadav@thelenskart.com>, Himanshu Saini <himanshu.saini@lenskart.mobi>, Gautam <kavita.kavita@thelenskart.com>, Mohd Naushad <mohd.naushad@lenskart.mobi>, AMIT <amit.kaushik@lenskart.mobi>, QUALITY <quality@lenskart.in>, Chitra Mehra <Chitra.mehra@lenskartacademy.com>, Ashish Kumar <ashish.kumar1@lenskart.mobi>, Shalini Sharma <shalini.sharma@lenskart.in>, Shaquib Hussain <shaquib.hussain@lenskart.mobi>, Brij Mohan <brij.mohan@lenskart.in>, Vijay Kashyap <vijay.kashyap@lenskart.com>, Mini Chatterjee <mini.chatterjee@lenskart.com>, Mohd Sadiq Ali Siddiqui <mohd.sadiq@thelenskart.com>, Tanisha Ojha <tanisha.ojha@lenskart.in>, Nidhi Nidhi <nidhi@thelenskart.com>, Pankaj Jasmera <pankaj.jasmera@lenskart.in>, Himanshu Negi <himanshu.negi@lenskart.mobi>, Sarita Yadav <sarita.yadav@lenskart.in>, Ayush Dutta <ayush.dutta@thelenskart.com>, Sakshi Rawat <sakshi.rawat@lenskart.in>, Jyotsana Aggarwal <jyotsana.aggarwal@thelenskart.com>, Karan Kumar <karan.kumar@lenskart.mobi>, Abhishek Dhar <abhishek.dhar@lenskart.in>, Jagrati Khare <jagrati.khare@lenskart.in>, Rajesh Kumar <rajesh.kumar2@thelenskart.com>, Abhay Kumar <abhay.kumar3@lenskart.in>, Bhim Bhusal <bhim.bhusal@lenskart.com>, Gowhar Shah <gowhar.shah@lenskart.mobi>, Zaiwish Hera <zaiwish.hera@thelenskart.com>, Hardik Kumar <hardik.kumar@lenskart.com>, Payal Prasad <payal.prasad@thelenskart.com>, Yash Agrawal <yash.agrawal@lenskart.com>, Azhar Abbas Khan <azhar.khan@lenskart.com>, Lokendra Pal <lokendra.Pal@lenskart.com>, CTT_Team <ctt_team@lenskart.in>, Pfu <PFU@valyoo.in>, Inbound <inbound@lenskart.in>, delight <delight@lenskart.in>, GV Team <gvteam@lenskart.in>, Inbound Supervisors <inboundsup@lenskart.in>, CS Email <Cs_email@lenskart.in>, ORM <orm@valyoo.in>, Escalation Support Team L2 <escalation.support@lenskart.in>, Cs_chat <Cs_chat@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>, Milan Sharma <milan.sharma@lenskart.com>, Bharat Manghwani <bharat.manghwani@lenskart.com>, Salman Shakir <salman.shakir@lenskart.com>, Shashwat Chaudhary <shashwat.chaudhary@lenskart.com>",
+      "cc": "Rachit Jain <rachit.jain@lenskart.in>, Jayendra Giri <jayendra.giri@lenskart.com>, Mehul Pancholi <mehul.pancholi@lenskart.mobi>, Nandini Puri <nandini.puri@lenskart.com>, Ravindra Chauhan <Ravindra.chauhan@lenskart.in>",
+      "subject": "Overall CS Shrinkage Report - till 20 Mar'26 || Without Week offs",
+      "snippet": "Hi All, Please find attached the Overall CS Shrinkage Report for Mar 2026. On Mon, Mar 16, 2026 at 6:54 PM Suraj Tiwari &lt;suraj.tiwari@lenskart.in&gt; wrote: Hi All, Please find attached the Overall",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi All,\r\n\r\nPlease find attached the Overall CS Shrinkage Report for Mar 2026.\r\n\r\n[image: image.png]\r\n\r\n[image: image.png]\r\n\r\n[image: image.png]\r\n\r\n\r\nOn Mon, Mar 16, 2026 at 6:54 PM Suraj Tiwari <suraj.tiwari@lenskart.in>\r\nwrote:\r\n\r\n> Hi All,\r\n>\r\n> Please find attached the Overall CS Shrinkage Report for Mar 2026.\r\n>\r\n> [image: image.png]\r\n>\r\n> [image: image.png]\r\n>\r\n>\r\n> On Tue, Mar 10, 2026 at 6:59 PM Suraj Tiwari <suraj.tiwari@lenskart.in>\r\n> wrote:\r\n>\r\n>> Hi All,\r\n>>\r\n>> Please find attached the Overall CS Shrinkage Report for Mar 2026.\r\n>>\r\n>> [image: image.png]\r\n>>\r\n>> [image: image.png]\r\n>>\r\n>>\r\n>> --\r\n>> Best regards,\r\n>> Suraj Tiwari\r\n>>\r\n>\r\n",
+      "order_ids": [],
+      "vsm_orders": [],
+      "crm_comments": {}
+    },
+    {
+      "id": "19d10317893ae7b8",
+      "threadId": "19d04c0974e02d1b",
+      "date": "Sat, 21 Mar 2026 17:08:52 +0530",
+      "from": "\"'Deepak Verma' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "LKST621 Mumbai_Bail Bazar_Kalyan <bailbazarkalyan.mumbai@lenskartstore.com>, Akshay Ravindra Deshmukh <akshay.deshmukh@lenskart.in>",
+      "cc": "Charu Sahay <charu.sahay@lenskart.com>, Faiyaz Shaikh <faiyaz.shaikh@fos.lenskart.in>, Jai Shivam Pathak <jai.pathak@lenskart.com>, Vipul Shekar Shetty <vipul.shetty@lenskart.com>, Japin Charan <japin@lenskart.in>, Harpratap Malhi <harpratap.malhi@lenskart.in>, CEO Escalation <CEOescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation||1333230344||#118836081|| RCA Required",
+      "snippet": "Hi Team, Thank you for your response. @Akshay Ravindra Deshmukh We connected with the customer, and he confirmed that he visited you and had his eye test conducted again. Could you please share your",
+      "labels": [
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi Team,\r\n\r\nThank you for your response.\r\n\r\n@Akshay Ravindra Deshmukh <akshay.deshmukh@lenskart.in> We connected with\r\nthe customer, and he confirmed that he visited you and had his eye test\r\nconducted again.\r\n\r\nCould you please share your observations on latest eye test to help us\r\nunderstand the root cause for the discomfort, and the discussion you had\r\nwith the customer?\r\n\r\nOn Thu, Mar 19, 2026 at 2:24 PM 'LKST621 Mumbai_Bail Bazar_Kalyan' via CEO\r\nEscalation <CEOescalation@lenskart.com> wrote:\r\n\r\n> Dear Mam,\r\n>\r\n> This is to bring to your attention that the first customer order placed on\r\n> 10th feb order id (1331347813) and it was delivered on 17th feb. However\r\n> customer came back after one week stating that i'm not comfortable with the\r\n> power after troubleshoot we found there is a wrong addition power came\r\n> from warehouse so we politely asked customer to submit the frame so that we\r\n> can exchange the lens on priority basis but customer said he will submit\r\n> the frame after his examination.\r\n>\r\n> On 5th March at 2pm a customer visited the store and we had exchanged the\r\n> frame and created a fresh order id (1333230344) whose estimated date was\r\n> showing 15th March but we received the product on 16th march and the same\r\n> has been updated to the customer but still customer did not pick up the\r\n> frame.\r\n>\r\n> Secondly, the customer is keeping conditions that if my power gets\r\n> changed he needs a replacement along with compensation and asking\r\n> everything on email from our official email id.\r\n>\r\n> We have been doing a follow up of the above customer since the beginning\r\n> with regards to the urgent delivery on email still took 12 days to deliver\r\n> the same.\r\n>\r\n>\r\n> *Regards, *\r\n> *Faiyaz Shaikh** |Store Manager  LKST621, *\r\n> *Shop no - 16, Aum supreme Building, *\r\n> *Near D-mart, Bail Bazar, Kalyan West, *\r\n> *Maharashtra - 421301. *\r\n> *Mobile - 9867251865.*\r\n>\r\n>\r\n> On Thu, Mar 19, 2026 at 11:50 AM Charu Sahay <charu.sahay@lenskart.com>\r\n> wrote:\r\n>\r\n>> @Faiyaz Shaikh <faiyaz.shaikh@fos.lenskart.in>  Kindly check and revert\r\n>> Thanks & Regards\r\n>> Charu Sahay\r\n>> AOM\r\n>> 8482972078\r\n>>\r\n>>\r\n>> On Wed, Mar 18, 2026 at 5:03 PM Ankit Dua <ankit.dua@lenskart.in> wrote:\r\n>>\r\n>>> Hi Team,\r\n>>>\r\n>>> We received an escalation addressed to Mr. Peyush Bansal concerning a\r\n>>> customer’s experience. Please find the verbatim VOC below:\r\n>>>\r\n>>>\r\n>>> Dear Sir & Madam,\r\n>>>\r\n>>> I am writing to formally raise a serious complaint regarding the\r\n>>> eyeglasses (glasses with frame )I ordered from your Lenskart showroom in\r\n>>> Kalyan ( address - shop no-16, AUM Suprime, Kalyan west) approximately one\r\n>>> month ago.\r\n>>>\r\n>>> At the time of purchase, I clearly informed your staff that I had\r\n>>> upcoming examinations and urgently required the glasses.\r\n>>>\r\n>>> Despite this, I was advised that, as the lenses were progressive, it\r\n>>> would take 15 days to adjust and be ready. I accepted this assurance in\r\n>>> good faith.\r\n>>>\r\n>>> However, upon receiving the glasses, I found that the lens power was\r\n>>> incorrect, and I was unable to see clearly. I immediately returned the\r\n>>> defective product to your Kalyan showroom.\r\n>>>\r\n>>> It has now been over a month, and I have neither received the corrected\r\n>>> glasses nor any proper resolution.\r\n>>>\r\n>>> During this period:-\r\n>>> I have had to repeatedly follow up with your showroom staff.\r\n>>>\r\n>>> I requested official email IDs of management and customer care to\r\n>>> escalate the matter, but these were not provided in a timely manner.\r\n>>>\r\n>>> Due to the delay and incorrect glasses, I suffered from headaches and\r\n>>> was compelled to take painkillers and energy drinks to manage my studies,\r\n>>> office work, and exam preparation over the past month.\r\n>>>\r\n>>> The situation has caused me significant mental stress, inconvenience,\r\n>>> and harassment during a critical period.\r\n>>>\r\n>>> Your negligence has caused me considerable hardship.\r\n>>>\r\n>>> I would like to bring the following concerns to your attention:\r\n>>> If my eye power changes due to prolonged strain and stress caused by\r\n>>> this issue, who will be held responsible? Will you provide new frames and\r\n>>> corrected glasses in such a case?\r\n>>>\r\n>>> What compensation will be provided for the mental and physical distress\r\n>>> I have endured over the past month?\r\n>>>\r\n>>> This is to formally notify you that if the issue is not resolved\r\n>>> immediately—by providing correct eyeglasses along with appropriate\r\n>>> solution—I will be compelled to take further legal action against your\r\n>>> organization without any further notice.\r\n>>>\r\n>>> I request you to treat this matter with urgency and provide a resolution\r\n>>> at the earliest.\r\n>>>\r\n>>> Sincerely,\r\n>>>\r\n>>> Vaibhav Attarde\r\n>>> Calling number -9833377851\r\n>>> Register number in Lenskart - 97690 46337\r\n>>>\r\n>>> Kindly provide a detailed RCA\r\n>>> +Japin Charan <japin@lenskart.in> +Harpratap Malhi\r\n>>> <harpratap.malhi@lenskart.in> FYI\r\n>>>\r\n>>> *Regards*,\r\n>>> Ankit Dua\r\n>>> CEO Team (Escalations)\r\n>>> Number: +91-9910833053\r\n>>> [image: Lenskart logo DOWNLOAD in SVG or PNG format - LogosArchive]\r\n>>>\r\n>>>\r\n>>\r\n\r\n-- \r\nRegards\r\nDeepak Verma\r\nTeam-CEO Escalation\r\nLenskart\r\n",
+      "order_ids": [
+        "1333230344",
+        "1331347813"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1333230344,
+          "status": {
+            "status": "COMPLETE_SHIPPED",
+            "state": "COMPLETE",
+            "returnable": true,
+            "cancellable": false,
+            "comment": "complete_shipped",
+            "timestamp": 1773310619032,
+            "trackingStatus": "OUT_FOR_DELIVERY",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "RETURNABLE",
+            "orderTrackingStatusCheckpoint": "OUT_FOR_DELIVERY"
+          },
+          "created_at": 1772700861716,
+          "customer_name": null,
+          "customer_phone": "9769046337",
+          "customer_email": "9769046337@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1773409423446,
+              "updatedTime": 1773409423446,
+              "status": "OUT_FOR_DELIVERY",
+              "details": [
+                {
+                  "time": "13 Mar 7:13 PM",
+                  "trackStatus": "OUT_FOR_DELIVERY"
+                }
+              ]
+            },
+            {
+              "createdTime": 1773310619070,
+              "updatedTime": 1773310619070,
+              "status": "DISPATCHED",
+              "details": [
+                {
+                  "time": "12 Mar 3:46 PM",
+                  "trackStatus": "DISPATCHED"
+                }
+              ]
+            },
+            {
+              "createdTime": 1772700861716,
+              "updatedTime": 1772700861716,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "05 Mar 2:24 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:internal-lensonly-for-rimless-eyeglasses-pack_b_regular_progressive_wide_corridor_sc_ipad_forexp;lens-package-market-price:6000.0",
+              "name": "Internal Lenses Only for Rimless Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 7900.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        },
+        {
+          "order_id": 1331347813,
+          "status": {
+            "status": "CLOSED",
+            "state": "CLOSED",
+            "returnable": false,
+            "cancellable": false,
+            "comment": "closed",
+            "timestamp": 1772700862243,
+            "trackingStatus": "IN_HOUSE_PROCESSING",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "NON_RETURNABLE",
+            "orderTrackingStatusCheckpoint": "DELIVERED"
+          },
+          "created_at": 1770730836632,
+          "customer_name": null,
+          "customer_phone": "9769046337",
+          "customer_email": "9769046337@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1772700862367,
+              "updatedTime": 1772702053438,
+              "status": "DELIVERED",
+              "details": [
+                {
+                  "time": "05 Mar 2:44 PM",
+                  "trackStatus": "IN_HOUSE_PROCESSING"
+                },
+                {
+                  "time": "05 Mar 2:24 PM",
+                  "trackStatus": "RECEIVED_AT_WAREHOUSE"
+                },
+                {
+                  "time": "05 Mar 2:24 PM",
+                  "trackStatus": "RETURN_REQUESTED"
+                }
+              ]
+            },
+            {
+              "createdTime": 1771190623557,
+              "updatedTime": 1771190623557,
+              "status": "DISPATCHED",
+              "details": [
+                {
+                  "time": "16 Feb 2:53 AM",
+                  "trackStatus": "DISPATCHED"
+                }
+              ]
+            },
+            {
+              "createdTime": 1770730836632,
+              "updatedTime": 1770730836632,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "10 Feb 7:10 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:vincent-chase-vc-e17135-c1-eyeglasses-pack_owndays_blu_smart_prog;lens-package-market-price:6000.0",
+              "name": "Gold Rimless Rectangle Vincent Chase SLEEK STEEL VC E17135-C1 Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 7900.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1333230344": [
+          {
+            "error": "HTTP 401"
+          }
+        ],
+        "1331347813": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d1030b2e62f0f9",
+      "threadId": "19d05447a16f1be1",
+      "date": "Sat, 21 Mar 2026 17:08:27 +0530",
+      "from": "\"'Ayush Roy' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Vikas Singh <vikas.singh@lenskart.in>, Rahul Mehta <rahul.mehta@lenskart.in>",
+      "cc": "Akshay Bhardwaj <akshay.sharma@lenskart.mobi>, Mohit Kumar Singh <mohit.singh2@lenskart.com>, Logistics <logistics@lenskart.in>, Ashish Kumar Jaiswal <ashish.jaiswal1@delhivery.com>, CEO Escalation <CEOescalation@lenskart.com>, Vishal Gupta <vishal.gupta2@lenskart.in>",
+      "subject": "Re: CEO Escalation Case || 1332620322 || 118830840 || RCA Required",
+      "snippet": "Hi Vikas, Thanks for the clarification! Could you also help us understand how this location was held as an ODA address? Thanks &amp; Regards, Ayush Roy CEO Escalation Team | Lenskart.com On Thu, Mar 19",
+      "labels": [
+        "UNREAD",
+        "IMPORTANT",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi Vikas,\r\n\r\nThanks for the clarification!\r\n\r\nCould you also help us understand how this location was held as an ODA\r\naddress?\r\n\r\n*Thanks & Regards**,*\r\n*Ayush Roy*\r\n\r\n*CEO Escalation Team | Lenskart.com*\r\n\r\n\r\nOn Thu, Mar 19, 2026 at 7:31 PM Vikas Singh <vikas.singh@lenskart.in> wrote:\r\n\r\n> Hi Ayush,\r\n>\r\n> According per findings, Courier has not denied to delivery the shipment at\r\n> door step,  the delivery address was ODA  and held for consolidation.\r\n> Customer forced to courier  same-day delivery by using public transport and\r\n> asked that he will pay the extra charges which was rs 30.\r\n>\r\n> The claim for ₹130 does not match the verified expense.\r\n>\r\n> Vikas Singh\r\n> Thanks & Regards\r\n>\r\n>\r\n> On Thu, Mar 19, 2026 at 2:14 PM Ayush Roy <ayush.roy@lenskart.in> wrote:\r\n>\r\n>> Hi Vikas & Rahul,\r\n>>\r\n>> As per the customer he visited to the hub to collect and also paid some\r\n>> amounts for no reason.\r\n>>\r\n>> Kindly review the escalation and assist us with a detailed RCA covering:\r\n>>\r\n>> 1) The reason for non-delivery at the customer’s doorstep.\r\n>> 2) The reason for collecting an additional ₹130 from the customer.\r\n>>\r\n>> *Thanks & Regards**,*\r\n>> *Ayush Roy*\r\n>>\r\n>> *CEO Escalation Team | Lenskart.com*\r\n>>\r\n>>\r\n>> On Wed, Mar 18, 2026 at 3:14 PM Vikas Singh <vikas.singh@lenskart.in>\r\n>> wrote:\r\n>>\r\n>>> Hi Akshay,\r\n>>>\r\n>>> This is delivered at door step, will check and update on this.\r\n>>>\r\n>>> Vikas Singh\r\n>>> Thanks & Regards\r\n>>>\r\n>>>\r\n>>> On Wed, Mar 18, 2026 at 2:01 PM Akshay Bhardwaj <\r\n>>> akshay.sharma@lenskart.mobi> wrote:\r\n>>>\r\n>>>> +Vikas Singh <vikas.singh@lenskart.in>  please check\r\n>>>>\r\n>>>> Delhivery\r\n>>>> 34466717486544\r\n>>>>\r\n>>>> On Wed, Mar 18, 2026 at 12:13 PM Ayush Roy <ayush.roy@lenskart.in>\r\n>>>> wrote:\r\n>>>>\r\n>>>>> Hi Rahul,\r\n>>>>>\r\n>>>>> This email is regarding a CEO escalation we have received, wherein the\r\n>>>>> customer has reported the following concerns:\r\n>>>>>\r\n>>>>> 1) The order was not delivered to his home address, and he was asked\r\n>>>>> to self-collect.\r\n>>>>> 2) Upon visiting the hub, he was asked to pay an additional ₹130\r\n>>>>> despite the order being prepaid.\r\n>>>>>\r\n>>>>> Kindly review the escalation and assist us with a detailed RCA\r\n>>>>> covering:\r\n>>>>>\r\n>>>>> 1) The reason for non-delivery at the customer’s doorstep.\r\n>>>>> 2) The reason for collecting an additional ₹130 from the customer.\r\n>>>>>\r\n>>>>> Please find the attached details, including the delivery associate’s\r\n>>>>> contact number and proof of payment (₹100 in cash and ₹30 via UPI), for\r\n>>>>> your reference.\r\n>>>>>\r\n>>>>> Customer VOC:\r\n>>>>>\r\n>>>>> *Dear Team Lenskart,*\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>> *Did you take any action regarding my concern for delivering my\r\n>>>>> product and delivery partner ask for money.If I paid extra money than he\r\n>>>>> will deliver my product otherwise he will be returned my product or cancel\r\n>>>>> the delivery. I had to paid extra money while my product was prepaid.Thank\r\n>>>>> You!Regards,Ankush Agrawal*\r\n>>>>>\r\n>>>>> *Thanks & Regards**,*\r\n>>>>> *Ayush Roy*\r\n>>>>>\r\n>>>>> *CEO Escalation Team | Lenskart.com*\r\n>>>>>\r\n>>>>\r\n",
+      "order_ids": [
+        "1332620322"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1332620322,
+          "status": {
+            "status": "DELIVERED",
+            "state": "COMPLETE",
+            "returnable": true,
+            "cancellable": false,
+            "comment": "delivered",
+            "timestamp": 1772196002425,
+            "trackingStatus": "ORDER_PLACED",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "RETURNABLE",
+            "orderTrackingStatusCheckpoint": "ORDER_PLACED"
+          },
+          "created_at": 1772027783576,
+          "customer_name": null,
+          "customer_phone": "9926034697",
+          "customer_email": "9926034697@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1772027783576,
+              "updatedTime": 1772027783576,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "25 Feb 7:26 PM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:vincent-chase-vc-e17742-c1-eyeglasses-pack_bluecut_zp;lens-package-market-price:0.0",
+              "name": "Black Transparent Full Rim Square Vincent Chase Classic Acetate VC E17742 Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 1900.0,
+                "name": "Total Price"
+              }
+            },
+            {
+              "sku": "sun:vincent-chase-vc-s16747-c2-sunglasses",
+              "name": "Green Grey Full Rim Square Vincent Chase VC Sun Non-metal VC S16747 Sunglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 2000.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1332620322": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d1029103579059",
+      "threadId": "19d0f946cff83822",
+      "date": "Sat, 21 Mar 2026 17:00:04 +0530",
+      "from": "\"'Muskan Singh' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Anju Singh <anjus@lenskart.mobi>",
+      "cc": "delight <delight@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>, Himanshu Gupta <himanshu.gupta2@lenskart.in>",
+      "subject": "Re: LinkedIn Escalation | Refund not processed | 1332822487 | 118970019",
+      "snippet": "Hi Anju, Please check order 1332822487. The table created was incomplete, and the refund has not been processed yet. Please complete this immediately, as the customer has contacted the CEO. On Sat, Mar",
+      "labels": [
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi Anju,\r\n\r\nPlease check order 1332822487. The table created was incomplete, and the\r\nrefund has not been processed yet. Please complete this immediately, as the\r\ncustomer has contacted the CEO.\r\n[image: image.png]\r\n\r\nOn Sat, Mar 21, 2026 at 2:17 PM Himanshu Gupta <himanshu.gupta2@lenskart.in>\r\nwrote:\r\n\r\n> Dear Muskan,\r\n>\r\n>\r\n>\r\n> This is regarding a LinkedIn escalation wherein the customer returned the\r\n> order for a refund on 13th Mar’26; however, the refund has not been\r\n> credited yet.\r\n>\r\n>\r\n> As per VSM, the refund is showing as initiated on 13th Mar’26, but the\r\n> current status is not reflecting (whether successful, failed, processing,\r\n> or completed).\r\n>\r\n>\r\n> Request you to please check this on priority and help get the refund\r\n> processed at the earliest.\r\n>\r\n>\r\n> Order ID : 1332822487\r\n>\r\n> PID : 237233\r\n> [image: image.png]\r\n>\r\n>\r\n>\r\n> Regards,\r\n>\r\n> Himanshu | M : +91-8287561668\r\n>\r\n>\r\n",
+      "order_ids": [
+        "1332822487"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1332822487",
+          "error": "HTTPSConnectionPool(host='api-gateway.juno.lenskart.com', port=443): Max retries exceeded with url: /v2/orders/internal/1332822487 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+        }
+      ],
+      "crm_comments": {
+        "1332822487": [
+          {
+            "error": "HTTPSConnectionPool(host='crm-jr.scm.lenskart.com', port=443): Max retries exceeded with url: /v2/1332822487/comments (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d101ddca5c3486",
+      "threadId": "19d101ddca5c3486",
+      "date": "Sat, 21 Mar 2026 16:47:43 +0530",
+      "from": "\"'Ayush Roy' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Sumit Lasiyal <sumit.lasiyal@lenskart.in>, LKST1324 Urbanestate_Patiala <Urbanestate.patiala@lenskartstore.com>",
+      "cc": "Harkirat Singh <harkirat.singh@lenskart.com>, Sandeep Kumar <sandeep.kumar@thelenskart.com>, Japin Charan <japin@lenskart.in>, Harpratap Malhi <harpratap.malhi@lenskart.in>, Vanitha Balu <vanitha.balu@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>, Gagneet Singh <gagneet.singh@lenskart.in>",
+      "subject": "Re: CEO Escalation Case || 1333377762 || 118768436 || RCA Required- Store Visit",
+      "snippet": "Hi Team, The customer was scheduled to visit tomorrow (Sunday). However, when we attempted to reach out for confirmation, we were unable to connect as there was no response to our call. Kindly let us",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi Team,\r\n\r\nThe customer was scheduled to visit tomorrow (Sunday). However, when we\r\nattempted to reach out for confirmation, we were unable to connect as there\r\nwas no response to our call.\r\n\r\nKindly let us know if the customer visits the store. In case any variation\r\nis identified, please assist with a suitable resolution accordingly.\r\n\r\n*Thanks & Regards**,*\r\n*Ayush Roy*\r\n\r\n*CEO Escalation Team | Lenskart.com*\r\n\r\n\r\nOn Tue, Mar 17, 2026 at 6:18 PM Sumit Lasiyal <sumit.lasiyal@lenskart.in>\r\nwrote:\r\n\r\n> Hi Ayush,\r\n>\r\n>\r\n> The customer’s eye test was previously conducted by a senior optometrist.\r\n> I will be available at the store on Sunday. (11 AM to 8 PM )\r\n>\r\n> Regards,\r\n> Sumit Lasiyal\r\n>\r\n> On Tue, Mar 17, 2026 at 2:59 PM Ayush Roy <ayush.roy@lenskart.in> wrote:\r\n>\r\n>> Hi All,\r\n>>\r\n>> We spoke with the customer, and he along with his father is planning to\r\n>> visit the store on Sunday after 11:00 AM. Kindly arrange for a senior\r\n>> optometrist visit and ensure that the vision concern is thoroughly\r\n>> evaluated and addressed accurately.\r\n>>\r\n>> Also, request you to please confirm the exact availability of the\r\n>> senior/cluster optometrist, so that the same can be communicated to the\r\n>> customer prior to Sunday.\r\n>>\r\n>> *Thanks & Regards**,*\r\n>> *Ayush Roy*\r\n>>\r\n>> *CEO Escalation Team | Lenskart.com*\r\n>>\r\n>>\r\n>> On Tue, Mar 17, 2026 at 12:23 AM Sumit Lasiyal <sumit.lasiyal@lenskart.in>\r\n>> wrote:\r\n>>\r\n>>> Hi Sandeep\r\n>>>\r\n>>> Noted\r\n>>>\r\n>>>\r\n>>>\r\n>>> On Mon, Mar 16, 2026 at 11:59 PM Sandeep Kumar <\r\n>>> sandeep.kumar@thelenskart.com> wrote:\r\n>>>\r\n>>>> Hi Sumit,\r\n>>>>\r\n>>>> Regarding the CEO escalation case, please connect with the customer\r\n>>>> tomorrow to understand their concerns and invite them to the store.\r\n>>>>\r\n>>>> To ensure this is resolved effectively, please manage the following:\r\n>>>>\r\n>>>>   - The customer must be handled by a senior optometrist.\r\n>>>>   - The eye test must be performed under your direct supervision.\r\n>>>>\r\n>>>> Once completed, please share a detailed RCA in the standard format with\r\n>>>> me, including the solution provided.\r\n>>>>\r\n>>>>\r\n>>>> Regards\r\n>>>> Sandeep\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>> On Mon, 16 Mar, 2026, 7:20 pm Japin Charan, <japin@lenskart.in> wrote:\r\n>>>>\r\n>>>>> Hi,\r\n>>>>>\r\n>>>>> Mail acknowledged.\r\n>>>>>\r\n>>>>> Let me know if we can go ahead and invite customer to store?\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>> Regards,\r\n>>>>> Japin\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>>\r\n>>>>> On Mon, 16 Mar 2026 at 7:01 PM, Ayush Roy <ayush.roy@lenskart.in>\r\n>>>>> wrote:\r\n>>>>>\r\n>>>>>> +Japin Charan <japin@lenskart.in> +Harpratap Malhi\r\n>>>>>> <harpratap.malhi@lenskart.in> +Vanitha Balu\r\n>>>>>> <vanitha.balu@lenskart.in>\r\n>>>>>>\r\n>>>>>> *Thanks & Regards**,*\r\n>>>>>> *Ayush Roy*\r\n>>>>>>\r\n>>>>>> *CEO Escalation Team | Lenskart.com*\r\n>>>>>>\r\n>>>>>>\r\n>>>>>> On Mon, Mar 16, 2026 at 6:20 PM Ayush Roy <ayush.roy@lenskart.in>\r\n>>>>>> wrote:\r\n>>>>>>\r\n>>>>>>> Dear Store Team,\r\n>>>>>>>\r\n>>>>>>> This email is regarding a CEO Escalation we have received, wherein\r\n>>>>>>> the customer has reported a lack of proper assistance at the store.\r\n>>>>>>>\r\n>>>>>>> Kindly review the case and share a detailed RCA along with your\r\n>>>>>>> observations at the earliest so that we can proceed accordingly.\r\n>>>>>>>\r\n>>>>>>> Customer VOC:\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> *Dear Lenskart Customer Support Team,*\r\n>>>>>>> *My name is Gurpreet Singh and I am a regular and loyal customer of\r\n>>>>>>> Lenskart. You can verify my purchase history *through* my\r\n>>>>>>> registered contact number as I have been buying spectacles from Lenskart\r\n>>>>>>> for a long time and have always trusted your brand.*\r\n>>>>>>>\r\n>>>>>>> *Recently, I visited your Lenskart store in Patiala Urban Estate\r\n>>>>>>> Phase 2 for my father’s eye test. After the eye test conducted at the\r\n>>>>>>> store, we purchased spectacles for him. However, from the very first day my\r\n>>>>>>> father has been facing serious difficulty seeing clearly from a distance\r\n>>>>>>> while wearing these glasses.*\r\n>>>>>>>\r\n>>>>>>> *When we approached the store again to explain the issue, the staff\r\n>>>>>>> simply told my father to keep wearing the same glasses for one month and *that\r\n>>>>>>> the vision will* automatically adjust. Since the day the glasses\r\n>>>>>>> arrived, my father has been facing problems, and the response we received\r\n>>>>>>> from the store staff was very disappointing.*\r\n>>>>>>>\r\n>>>>>>> *I would like to *ask if this is* the correct way to treat a\r\n>>>>>>> customer? How can someone who already has vision problems be expected to\r\n>>>>>>> struggle for an entire month and hope *that *the issue will resolve\r\n>>>>>>> on its own?*\r\n>>>>>>>\r\n>>>>>>> *My father is not wearing spectacles for the first time. He already\r\n>>>>>>> had glasses *earlier *and understands very well when the vision is\r\n>>>>>>> not correct. If he wears these glasses while driving and something\r\n>>>>>>> unfortunate happens because he cannot see properly, who will take *responsibility\r\n>>>>>>> for that?* Will Lenskart take responsibility?*\r\n>>>>>>>\r\n>>>>>>> *A business survives only because of customer support and customer\r\n>>>>>>> trust. If customers are treated this way, how can they continue to trust\r\n>>>>>>> the brand?*\r\n>>>>>>>\r\n>>>>>>> *If someone wants low-quality service, *there are many random local\r\n>>>>>>> shops* available in the market at cheaper prices. The only reason\r\n>>>>>>> we preferred Lenskart was because we believed we would receive professional\r\n>>>>>>> service and accurate eye testing. Unfortunately, our experience this time\r\n>>>>>>> has been extremely disappointing.*\r\n>>>>>>>\r\n>>>>>>> I would also like to inform you that before leaving for my duty, I\r\n>>>>>>> personally visited the store and informed the staff about the issue and\r\n>>>>>>> even returned the glasses, telling them that my father would come later to\r\n>>>>>>> get his eyes checked again because* I could not accompany him due\r\n>>>>>>> to my duty schedule. My father is not very educated, so I trusted the store\r\n>>>>>>> staff to guide him properly. However, when he went there, instead of\r\n>>>>>>> conducting a proper re-examination, the staff simply convinced him with\r\n>>>>>>> unnecessary explanations and handed back the same *glasses again.\r\n>>>>>>>\r\n>>>>>>> *This is not the kind of service expected from a reputed brand like\r\n>>>>>>> Lenskart.*\r\n>>>>>>>\r\n>>>>>>> *I request you to *please *look into this matter seriously and\r\n>>>>>>> arrange for a proper eye re-examination and a suitable solution at the\r\n>>>>>>> earliest. I hope Lenskart will take immediate action and restore the trust\r\n>>>>>>> of its customers.*\r\n>>>>>>>\r\n>>>>>>> *Sincerely ,*\r\n>>>>>>> *Gurpreet singh*\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> *Thanks & Regards**,*\r\n>>>>>>> *Ayush Roy*\r\n>>>>>>>\r\n>>>>>>> *CEO Escalation Team | Lenskart.com*\r\n>>>>>>>\r\n>>>>>>\r\n",
+      "order_ids": [
+        "1333377762"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": 1333377762,
+          "status": {
+            "status": "COMPLETE_SHIPPED",
+            "state": "COMPLETE",
+            "returnable": true,
+            "cancellable": false,
+            "comment": "complete_shipped",
+            "timestamp": 1772957414954,
+            "trackingStatus": "OUT_FOR_DELIVERY",
+            "cancellableStatus": "NON_CANCELLABLE",
+            "returnableStatus": "RETURNABLE",
+            "orderTrackingStatusCheckpoint": "OUT_FOR_DELIVERY"
+          },
+          "created_at": 1772864168109,
+          "customer_name": null,
+          "customer_phone": "9855711834",
+          "customer_email": "9855711834@lenskartomni.com",
+          "store": null,
+          "total_amount": null,
+          "payment_status": null,
+          "tracking": [
+            {
+              "createdTime": 1773041540587,
+              "updatedTime": 1773041540587,
+              "status": "OUT_FOR_DELIVERY",
+              "details": [
+                {
+                  "time": "09 Mar 1:02 PM",
+                  "trackStatus": "OUT_FOR_DELIVERY"
+                }
+              ]
+            },
+            {
+              "createdTime": 1772957415059,
+              "updatedTime": 1772957415059,
+              "status": "DISPATCHED",
+              "details": [
+                {
+                  "time": "08 Mar 1:40 PM",
+                  "trackStatus": "DISPATCHED"
+                }
+              ]
+            },
+            {
+              "createdTime": 1772864168109,
+              "updatedTime": 1772864168109,
+              "trackStatus": "ORDER_PLACED",
+              "status": "ORDER_PLACED",
+              "details": [
+                {
+                  "time": "07 Mar 11:46 AM",
+                  "trackStatus": "ORDER_PLACED"
+                }
+              ]
+            }
+          ],
+          "items": [
+            {
+              "sku": "eye:vincent-chase-vce000373-c1-eyeglasses-pack_lenskart_blu_thin_wide_prog_pexp1;lens-package-market-price:6000.0",
+              "name": "Gunmetal Full Rim Aviator Vincent Chase Turban Edit VCE000373 Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 7900.0,
+                "name": "Total Price"
+              }
+            },
+            {
+              "sku": "eye:vincent-chase-full-rim-aviator-vc-e12422-c3-eyeglasses-pack_lenskart_blu_thin_wide_prog_pexp1;lens-package-market-price:6000.0",
+              "name": "Silver Black Full Rim Square Vincent Chase SLEEK STEEL VC E12422-C3 Eyeglasses",
+              "qty": 1,
+              "price": {
+                "currencyCode": "INR",
+                "value": 7900.0,
+                "name": "Total Price"
+              }
+            }
+          ]
+        }
+      ],
+      "crm_comments": {
+        "1333377762": [
+          {
+            "error": "HTTP 401"
+          }
+        ]
+      }
+    },
+    {
+      "id": "19d1013ad8ad98a8",
+      "threadId": "19d09de8c78b1023",
+      "date": "Sat, 21 Mar 2026 16:36:38 +0530",
+      "from": "\"'Himanshu Gupta' via CEO Escalation\" <CEOescalation@lenskart.com>",
+      "to": "Vipin Sharma <vipin.sharma2@flipkart.com>",
+      "cc": "Hemanth KumarS <Hemanth.s@flipkart.com>, Sumana Nayek <sumana.nayek@flipkart.com>, Arti Arti <arti@dealskart.in>, PAVANKUMAR S-Vendor <pavankumar.s.vc@flipkart.com>, Vasanth Kumar K <vasanth.kk@flipkart.com>, Sanjeev Kumar <sanjeev.kumar18@flipkart.com>, Riya Gupta <riya.gupta@dealskart.in>, Reverse Pick-up <reverse_team@lenskart.in>, CEO Escalation <ceoescalation@lenskart.com>",
+      "subject": "Re: CEO Escalation | Urgent Pickup Required | 1333545896, 1333808355 | 118485084",
+      "snippet": "Hi Team, It&#39;s been 4:30 Pm, and still not out for pickup. Please help to get the pickup completed today anyhow. On Sat, Mar 21, 2026 at 10:45 AM Vipin Sharma &lt;vipin.sharma2@flipkart.com&gt;",
+      "labels": [
+        "UNREAD",
+        "CATEGORY_FORUMS",
+        "INBOX"
+      ],
+      "body": "Hi Team,\r\n\r\nIt's been 4:30 Pm, and still not out for pickup. Please help to get the\r\npickup completed today anyhow.\r\n\r\n\r\n[image: image.png]\r\n\r\n\r\nOn Sat, Mar 21, 2026 at 10:45 AM Vipin Sharma <vipin.sharma2@flipkart.com>\r\nwrote:\r\n\r\n> +Vasanth Kumar K <vasanth.kk@flipkart.com> Sir, Pls help on this\r\n>\r\n> @Hemanth KumarS <Hemanth.s@flipkart.com> @Sumana Nayek\r\n> <sumana.nayek@flipkart.com> Pls support\r\n>\r\n>\r\n>\r\n> *Thanks & Regards *\r\n> *Vipin Sharma*\r\n> *Ekart Business*\r\n>\r\n> *Mob - 6378942440*\r\n>\r\n>\r\n> On Sat, Mar 21, 2026 at 9:56 AM Himanshu Gupta <\r\n> himanshu.gupta2@lenskart.in> wrote:\r\n>\r\n>> Hi Team,\r\n>>\r\n>> Still no attempt was made on this.\r\n>>\r\n>> Can we get the pickup done today?\r\n>>\r\n>> On Fri, Mar 20, 2026 at 5:21 PM Vipin Sharma <vipin.sharma2@flipkart.com>\r\n>> wrote:\r\n>>\r\n>>> +PAVANKUMAR S-Vendor <pavankumar.s.vc@flipkart.com> Can you please\r\n>>> check this\r\n>>>\r\n>>> ByatarayanapuraHub_BLR\r\n>>>\r\n>>> LKSR9999136068\r\n>>>  : LKSR9999136069\r\n>>>\r\n>>> *Thanks & Regards *\r\n>>> *Vipin Sharma*\r\n>>> *Ekart Business*\r\n>>>\r\n>>> *Mob - 6378942440*\r\n>>>\r\n>>>\r\n>>> On Fri, Mar 20, 2026 at 5:18 PM Himanshu Gupta <\r\n>>> himanshu.gupta2@lenskart.in> wrote:\r\n>>>\r\n>>>>\r\n>>>> Hi Arti,\r\n>>>>\r\n>>>> It's not even out for pickup yet.\r\n>>>> [image: image.png]\r\n>>>>\r\n>>>>\r\n>>>> On Fri, Mar 20, 2026 at 12:45 PM Himanshu Gupta <\r\n>>>> himanshu.gupta2@lenskart.in> wrote:\r\n>>>>\r\n>>>>> Hi Arti,\r\n>>>>>\r\n>>>>> This is the only contact number we have available.\r\n>>>>>\r\n>>>>> Number : 8088477678\r\n>>>>>\r\n>>>>> On Fri, Mar 20, 2026 at 12:41 PM Arti Arti <arti@dealskart.in> wrote:\r\n>>>>>\r\n>>>>>> Hi Himanshu,\r\n>>>>>>\r\n>>>>>> Please share the customer's alternate number if any.\r\n>>>>>>\r\n>>>>>> *Regards,*\r\n>>>>>> Arti Arora\r\n>>>>>> Reverse Logistics\r\n>>>>>> # 9560078371\r\n>>>>>>\r\n>>>>>>\r\n>>>>>> On Fri, Mar 20, 2026 at 12:39 PM Vipin Sharma <\r\n>>>>>> vipin.sharma2@flipkart.com> wrote:\r\n>>>>>>\r\n>>>>>>> Hi Arti Mam,\r\n>>>>>>>\r\n>>>>>>> The customer did not response to our FE calls, Pls share the cx alt\r\n>>>>>>> nu,mber\r\n>>>>>>>\r\n>>>>>>> @PAVANKUMAR S-Vendor <pavankumar.s.vc@flipkart.com> @Vasanth Kumar K\r\n>>>>>>> <vasanth.kk@flipkart.com> Pls help on this\r\n>>>>>>>\r\n>>>>>>> ByatarayanapuraHub_BLR\r\n>>>>>>>  : LKSR9999136068\r\n>>>>>>>  : LKSR9999136069\r\n>>>>>>>\r\n>>>>>>> [image: image.png]\r\n>>>>>>>\r\n>>>>>>> *Thanks & Regards *\r\n>>>>>>> *Vipin Sharma*\r\n>>>>>>> *Ekart Business*\r\n>>>>>>>\r\n>>>>>>> *Mob - 6378942440*\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> On Fri, Mar 20, 2026 at 12:30 PM Arti Arti <arti@dealskart.in>\r\n>>>>>>> wrote:\r\n>>>>>>>\r\n>>>>>>>> +Sanjeev Kumar <sanjeev.kumar18@flipkart.com>\r\n>>>>>>>> +Vipin Sharma <vipin.sharma2@flipkart.com>\r\n>>>>>>>>\r\n>>>>>>>> *Regards,*\r\n>>>>>>>> Arti Arora\r\n>>>>>>>> Reverse Logistics\r\n>>>>>>>> # 9560078371\r\n>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>> On Fri, Mar 20, 2026 at 11:41 AM Himanshu Gupta <\r\n>>>>>>>> himanshu.gupta2@lenskart.in> wrote:\r\n>>>>>>>>\r\n>>>>>>>>> Hi Riya,\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>> This is in regard to a CEO escalation.\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>> We had arranged the pickup for the below orders, and as per the\r\n>>>>>>>>> latest update, the status yesterday was marked as “Out for Pickup.”\r\n>>>>>>>>> However, the pickup was not completed.\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>> We request you to kindly look into this on priority and ensure\r\n>>>>>>>>> that the pickup is completed today without fail.\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>> Please treat this as urgent and share a confirmation once done.\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>> Order ID - 1333545896, AWB : LKSR9999136068\r\n>>>>>>>>>\r\n>>>>>>>>> Order ID - 1333808355, AWB : LKSR9999136069\r\n>>>>>>>>>\r\n>>>>>>>>> Regards,\r\n>>>>>>>>>\r\n>>>>>>>>> Himanshu | M : +91-8287561668\r\n>>>>>>>>>\r\n>>>>>>>>>\r\n>>>>>>>>\r\n>>>>>>>> --------------------------------------------------------------------------------------------------------------------------\r\n>>>>>>>> This email may contain confidential and/or privileged information.\r\n>>>>>>>> If you are not the intended recipient (or have received this e-mail in\r\n>>>>>>>> error) please notify the sender immediately and delete this e-mail. Any\r\n>>>>>>>> unauthorized copying, disclosure or distribution of this e-mail, or the\r\n>>>>>>>> material in this e-mail is strictly prohibited. Any views or opinions\r\n>>>>>>>> presented are solely those of the author and do not necessarily represent\r\n>>>>>>>> those of Lenskart.\r\n>>>>>>>>\r\n>>>>>>>> --------------------------------------------------------------------------------------------------------------------------\r\n>>>>>>>>\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> *-----------------------------------------------------------------------------------------*\r\n>>>>>>>\r\n>>>>>>> *This email and any files transmitted with it are confidential and\r\n>>>>>>> intended solely for the use of the individual or entity to whom they are\r\n>>>>>>> addressed. If you have received this email in error, please notify the\r\n>>>>>>> system manager. This message contains confidential information and is\r\n>>>>>>> intended only for the individual named. If you are not the named addressee,\r\n>>>>>>> you should not disseminate, distribute or copy this email. Please notify\r\n>>>>>>> the sender immediately by email if you have received this email by mistake\r\n>>>>>>> and delete this email from your system. If you are not the intended\r\n>>>>>>> recipient, you are notified that disclosing, copying, distributing or\r\n>>>>>>> taking any action in reliance on the contents of this information is\r\n>>>>>>> strictly prohibited.*\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> *Any views or opinions presented in this email are solely those of\r\n>>>>>>> the author and do not necessarily represent those of the organization. Any\r\n>>>>>>> information on shares, debentures or similar instruments, recommended\r\n>>>>>>> product pricing, valuations and the like are for information purposes only.\r\n>>>>>>> It is not meant to be an instruction or recommendation, as the case may be,\r\n>>>>>>> to buy or to sell securities, products, services nor an offer to buy or\r\n>>>>>>> sell securities, products or services unless specifically stated to be so\r\n>>>>>>> on behalf of the Flipkart group. Employees of the Flipkart group of\r\n>>>>>>> companies are expressly required not to make defamatory statements and not\r\n>>>>>>> to infringe or authorise any infringement of copyright or any other legal\r\n>>>>>>> right by email communications. Any such communication is contrary to\r\n>>>>>>> organizational policy and outside the scope of the employment of the\r\n>>>>>>> individual concerned. The organization will not accept any liability in\r\n>>>>>>> respect of such communication, and the employee responsible will be\r\n>>>>>>> personally liable for any damages or other liability arising.*\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> *Our organization accepts no liability for the content of this\r\n>>>>>>> email, or for the consequences of any actions taken on the basis of the\r\n>>>>>>> information *provided,* unless that information is subsequently\r\n>>>>>>> confirmed in writing. If you are not the intended recipient, you are\r\n>>>>>>> notified that disclosing, copying, distributing or taking any action in\r\n>>>>>>> reliance on the contents of this information is strictly prohibited.*\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>>> *-----------------------------------------------------------------------------------------*\r\n>>>>>>>\r\n>>>>>>>\r\n>>>>>\r\n>>>>> --\r\n>>>>>\r\n>>>>> Regards,\r\n>>>>>\r\n>>>>> Himanshu | M : +91-8287561668\r\n>>>>>\r\n>>>>>\r\n>>>>\r\n>>>> --\r\n>>>>\r\n>>>> Regards,\r\n>>>>\r\n>>>> Himanshu | M : +91-8287561668\r\n>>>>\r\n>>>>\r\n>>>>\r\n>>>> --------------------------------------------------------------------------------------------------------------------------\r\n>>>> This email may contain confidential and/or privileged information. If\r\n>>>> you are not the intended recipient (or have received this e-mail in error)\r\n>>>> please notify the sender immediately and delete this e-mail. Any\r\n>>>> unauthorized copying, disclosure or distribution of this e-mail, or the\r\n>>>> material in this e-mail is strictly prohibited. Any views or opinions\r\n>>>> presented are solely those of the author and do not necessarily represent\r\n>>>> those of Lenskart.\r\n>>>>\r\n>>>> --------------------------------------------------------------------------------------------------------------------------\r\n>>>>\r\n>>>\r\n>>>\r\n>>> *-----------------------------------------------------------------------------------------*\r\n>>>\r\n>>> *This email and any files transmitted with it are confidential and\r\n>>> intended solely for the use of the individual or entity to whom they are\r\n>>> addressed. If you have received this email in error, please notify the\r\n>>> system manager. This message contains confidential information and is\r\n>>> intended only for the individual named. If you are not the named addressee,\r\n>>> you should not disseminate, distribute or copy this email. Please notify\r\n>>> the sender immediately by email if you have received this email by mistake\r\n>>> and delete this email from your system. If you are not the intended\r\n>>> recipient, you are notified that disclosing, copying, distributing or\r\n>>> taking any action in reliance on the contents of this information is\r\n>>> strictly prohibited.*\r\n>>>\r\n>>>\r\n>>>\r\n>>> *Any views or opinions presented in this email are solely those of the\r\n>>> author and do not necessarily represent those of the organization. Any\r\n>>> information on shares, debentures or similar instruments, recommended\r\n>>> product pricing, valuations and the like are for information purposes only.\r\n>>> It is not meant to be an instruction or recommendation, as the case may be,\r\n>>> to buy or to sell securities, products, services nor an offer to buy or\r\n>>> sell securities, products or services unless specifically stated to be so\r\n>>> on behalf of the Flipkart group. Employees of the Flipkart group of\r\n>>> companies are expressly required not to make defamatory statements and not\r\n>>> to infringe or authorise any infringement of copyright or any other legal\r\n>>> right by email communications. Any such communication is contrary to\r\n>>> organizational policy and outside the scope of the employment of the\r\n>>> individual concerned. The organization will not accept any liability in\r\n>>> respect of such communication, and the employee responsible will be\r\n>>> personally liable for any damages or other liability arising.*\r\n>>>\r\n>>>\r\n>>>\r\n>>> *Our organization accepts no liability for the content of this email, or\r\n>>> for the consequences of any actions taken on the basis of the information *\r\n>>> provided,* unless that information is subsequently confirmed in\r\n>>> writing. If you are not the intended recipient, you are notified that\r\n>>> disclosing, copying, distributing or taking any action in reliance on the\r\n>>> contents of this information is strictly prohibited.*\r\n>>>\r\n>>>\r\n>>> *-----------------------------------------------------------------------------------------*\r\n>>>\r\n>>>\r\n>>\r\n>> --\r\n>>\r\n>> Regards,\r\n>>\r\n>> Himanshu | M : +91-8287561668\r\n>>\r\n>>\r\n>>\r\n>> --------------------------------------------------------------------------------------------------------------------------\r\n>> This email may contain confidential and/or privileged information. If you\r\n>> are not the intended recipient (or have received this e-mail in error)\r\n>> please notify the sender immediately and delete this e-mail. Any\r\n>> unauthorized copying, disclosure or distribution of this e-mail, or the\r\n>> material in this e-mail is strictly prohibited. Any views or opinions\r\n>> presented are solely those of the author and do not necessarily represent\r\n>> those of Lenskart.\r\n>>\r\n>> --------------------------------------------------------------------------------------------------------------------------\r\n>>\r\n>\r\n>\r\n> *-----------------------------------------------------------------------------------------*\r\n>\r\n> *This email and any files transmitted with it are confidential and\r\n> intended solely for the use of the individual or entity to whom they are\r\n> addressed. If you have received this email in error, please notify the\r\n> system manager. This message contains confidential information and is\r\n> intended only for the individual named. If you are not the named addressee,\r\n> you should not disseminate, distribute or copy this email. Please notify\r\n> the sender immediately by email if you have received this email by mistake\r\n> and delete this email from your system. If you are not the intended\r\n> recipient, you are notified that disclosing, copying, distributing or\r\n> taking any action in reliance on the contents of this information is\r\n> strictly prohibited.*\r\n>\r\n>\r\n>\r\n> *Any views or opinions presented in this email are solely those of the\r\n> author and do not necessarily represent those of the organization. Any\r\n> information on shares, debentures or similar instruments, recommended\r\n> product pricing, valuations and the like are for information purposes only.\r\n> It is not meant to be an instruction or recommendation, as the case may be,\r\n> to buy or to sell securities, products, services nor an offer to buy or\r\n> sell securities, products or services unless specifically stated to be so\r\n> on behalf of the Flipkart group. Employees of the Flipkart group of\r\n> companies are expressly required not to make defamatory statements and not\r\n> to infringe or authorise any infringement of copyright or any other legal\r\n> right by email communications. Any such communication is contrary to\r\n> organizational policy and outside the scope of the employment of the\r\n> individual concerned. The organization will not accept any liability in\r\n> respect of such communication, and the employee responsible will be\r\n> personally liable for any damages or other liability arising.*\r\n>\r\n>\r\n>\r\n> *Our organization accepts no liability for the content of this email, or\r\n> for the consequences of any actions taken on the basis of the information *\r\n> provided,* unless that information is subsequently confirmed in writing.\r\n> If you are not the intended recipient, you are notified that disclosing,\r\n> copying, distributing or taking any action in reliance on the contents of\r\n> this information is strictly prohibited.*\r\n>\r\n>\r\n> *-----------------------------------------------------------------------------------------*\r\n>\r\n>\r\n\r\n-- \r\n\r\nRegards,\r\n\r\nHimanshu | M : +91-8287561668\r\n",
+      "order_ids": [
+        "1333545896",
+        "1333808355"
+      ],
+      "vsm_orders": [
+        {
+          "order_id": "1333545896",
+          "error": "HTTPSConnectionPool(host='api-gateway.juno.lenskart.com', port=443): Max retries exceeded with url: /v2/orders/internal/1333545896 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+        },
+        {
+          "order_id": "1333808355",
+          "error": "HTTPSConnectionPool(host='api-gateway.juno.lenskart.com', port=443): Max retries exceeded with url: /v2/orders/internal/1333808355 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+        }
+      ],
+      "crm_comments": {
+        "1333545896": [
+          {
+            "error": "HTTPSConnectionPool(host='crm-jr.scm.lenskart.com', port=443): Max retries exceeded with url: /v2/1333545896/comments (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+          }
+        ],
+        "1333808355": [
+          {
+            "error": "HTTPSConnectionPool(host='crm-jr.scm.lenskart.com', port=443): Max retries exceeded with url: /v2/1333808355/comments (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+          }
+        ]
+      }
+    },
     {
       "id": "19d100247fe18c52",
       "threadId": "19d100247fe18c52",
