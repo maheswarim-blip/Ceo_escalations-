@@ -130,6 +130,21 @@ def _parse_vsm_order(data: dict) -> dict:
 
     store_type = (data.get("storeType") or "").upper()  # "ONLINE", "OFFLINE", "FRANCHISE" …
 
+    # ── Shipping / delivery address (for online orders shipped to customer) ──
+    ship_addr = (
+        data.get("shippingAddress")
+        or data.get("deliveryAddress")
+        or data.get("customerAddress")
+        or data.get("address")
+        or {}
+    )
+    if isinstance(ship_addr, dict):
+        shipping_city    = (ship_addr.get("city") or ship_addr.get("cityName") or "").strip()
+        shipping_state   = (ship_addr.get("state") or ship_addr.get("stateName") or ship_addr.get("stateCode") or "").strip()
+        shipping_pincode = (ship_addr.get("pinCode") or ship_addr.get("pincode") or ship_addr.get("zipCode") or ship_addr.get("zip") or "").strip()
+    else:
+        shipping_city = shipping_state = shipping_pincode = ""
+
     # ── Amount ────────────────────────────────────────────────────────────────
     amount_obj = data.get("amount")
     if isinstance(amount_obj, dict):
@@ -197,6 +212,10 @@ def _parse_vsm_order(data: dict) -> dict:
         "store_details":  store_details,    # full dict for future use
         "facility_code":  data.get("facilityCode"),
         "delivery_store_code": data.get("deliveryStoreCode"),
+        # ── Shipping address (online/home-delivery orders) ────────────────────
+        "shipping_city":    shipping_city,
+        "shipping_state":   shipping_state,
+        "shipping_pincode": shipping_pincode,
         # ── Financials ────────────────────────────────────────────────────────
         "total_amount":   total_amount,
         "total_saving":   data.get("totalSaving"),

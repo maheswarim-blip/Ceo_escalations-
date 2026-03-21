@@ -451,10 +451,11 @@ def _build_overview_data(cases: list) -> dict:
 
         # Zone lookup priority:
         #  1. CSV store_state_mapping via LKST code (facility_code / delivery_store_code / store)
-        #  2. storeDetails.city from VSM → _CITY_TO_ZONE
-        #  3. store name string → city regex lookup
-        #  4. Scan email subject + snippet + body for city names
-        #  5. lenskartomni.com customer_email → Store (Zone TBD)
+        #  2. VSM shipping address state/city (online orders shipped directly to customer)
+        #  3. storeDetails.city from VSM → _CITY_TO_ZONE
+        #  4. store name string → city regex lookup
+        #  5. Scan email subject + snippet + body for city names
+        #  6. lenskartomni.com customer_email → Store (Zone TBD)
         zone = "Unknown"
         for order in case.get("vsm_orders", []):
             # 1. CSV lookup via LKST store code
@@ -462,7 +463,25 @@ def _build_overview_data(cases: list) -> dict:
             if z and z != "Unknown":
                 zone = z
                 break
-            # 2. Explicit city from storeDetails
+            # 2. VSM shipping address (online/home-delivery orders shipped to customer)
+            ship_state = str(order.get("shipping_state") or "").strip()
+            if ship_state:
+                z = _STATE_TO_ZONE.get(ship_state.lower())
+                if z:
+                    zone = z
+                    break
+            ship_city = str(order.get("shipping_city") or "").strip()
+            if ship_city:
+                z = _CITY_TO_ZONE.get(ship_city)
+                if not z:
+                    for k, v in _CITY_TO_ZONE.items():
+                        if k.lower() in ship_city.lower() or ship_city.lower() in k.lower():
+                            z = v
+                            break
+                if z:
+                    zone = z
+                    break
+            # 3. Explicit city from storeDetails
             city = str(order.get("store_city") or "").strip()
             if city:
                 z = _CITY_TO_ZONE.get(city)
@@ -474,19 +493,19 @@ def _build_overview_data(cases: list) -> dict:
                 if z:
                     zone = z
                     break
-            # 3. Parse store name string → city
+            # 4. Parse store name string → city
             store = str(order.get("store") or "").strip()
             z = _store_to_zone(store)
             if z not in ("Unknown", ""):
                 zone = z
                 break
         if zone == "Unknown":
-            # 4. Scan full email text (subject + snippet + body)
+            # 5. Scan full email text (subject + snippet + body)
             email_text = " ".join(
                 (e.get("subject", "") + " " + e.get("snippet", "") + " " + (e.get("body", "") or "")[:1000])
                 for e in case.get("emails", [])
             )
-            # 5. Include VSM customer emails for omni detection
+            # 6. Include VSM customer emails for omni detection
             vsm_emails = " ".join(
                 (o.get("customer_email", "") or "") for o in case.get("vsm_orders", [])
             )
@@ -892,10 +911,17 @@ def render_order_cards(vsm_orders: list):
                 store_label = f"{store} ({loc})"
             if store_type:
                 store_label += f" · {store_type.title()}"
+            # Shipping address (online orders shipped directly to customer)
+            ship_city    = str(order.get("shipping_city") or "").strip()
+            ship_state   = str(order.get("shipping_state") or "").strip()
+            ship_pincode = str(order.get("shipping_pincode") or "").strip()
             st.markdown(f"👤 **{name}** · 📱 `{phone}`" + (f" · 🏅 {tier}" if tier else ""))
             if email and not email.endswith("@lenskartomni.com"):
                 st.markdown(f"✉️ `{email}`")
             st.markdown(f"🏬 {store_label} · 📅 {created_str}")
+            if ship_city or ship_state:
+                ship_loc = ", ".join(filter(None, [ship_city, ship_state, ship_pincode]))
+                st.markdown(f"📦 **Ships to:** {ship_loc}")
 
         with col_status:
             scolor = status_color(order_status)
