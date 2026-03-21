@@ -336,6 +336,28 @@ def _store_to_zone(store: str) -> str:
     return f"Unknown ({city})" if city else "Unknown"
 
 
+# Pre-compiled pattern for fast city scanning in email text
+_CITY_PATTERN = re.compile(
+    r"\b(" + "|".join(re.escape(c) for c in _CITY_TO_ZONE) + r")\b",
+    re.IGNORECASE,
+)
+
+
+def _zone_from_text(text: str) -> str:
+    """Scan free text (subject + snippet) for any known city and return its zone."""
+    m = _CITY_PATTERN.search(text)
+    if m:
+        city = m.group(1)
+        # Normalise case for lookup
+        for known, zone in _CITY_TO_ZONE.items():
+            if known.lower() == city.lower():
+                return zone
+    # Omni email implies store order but unknown location; real email → Online
+    if "lenskartomni.com" in text.lower():
+        return "Store (Zone TBD)"
+    return "Unknown"
+
+
 def _build_overview_data(cases: list) -> dict:
     region_counts: Counter = Counter()
     week_counts: dict = defaultdict(int)
@@ -347,7 +369,7 @@ def _build_overview_data(cases: list) -> dict:
         issue_counts[case["issue_type"]] += 1
         severity_counts[case["severity"]] += 1
 
-        # Zone from VSM store (first order that resolves to a known zone)
+        # Zone: (1) VSM store field → (2) city name in email subject+snippet
         zone = "Unknown"
         for order in case.get("vsm_orders", []):
             store = order.get("store", "") or ""
@@ -355,6 +377,18 @@ def _build_overview_data(cases: list) -> dict:
             if z not in ("Unknown", ""):
                 zone = z
                 break
+        if zone == "Unknown":
+            # Include body text for city name detection
+            email_text = " ".join(
+                (e.get("subject", "") + " " + e.get("snippet", "") + " " + (e.get("body", "") or "")[:1000])
+                for e in case.get("emails", [])
+            )
+            # Also append VSM customer emails (lenskartomni.com = store order)
+            vsm_emails = " ".join(
+                (o.get("customer_email", "") or "")
+                for o in case.get("vsm_orders", [])
+            )
+            zone = _zone_from_text(email_text + " " + vsm_emails)
         region_counts[zone] += 1
 
         dt = _parse_case_date(case.get("latest_date", ""))
@@ -609,15 +643,9 @@ def render_overview_tab(cases: list, filtered_cases: list):
     with col_r:
         st.markdown("**Cases by Zone** _(North / South / East / West / Online)_")
         if data["region_counts"]:
-            # Sort in a fixed cardinal order for readability
-            ordered_zones = ["North", "South", "East", "West", "Online"]
-            zone_data = {
-                z: data["region_counts"][z]
-                for z in ordered_zones
-                if z in data["region_counts"]
-            }
-            # Append any unexpected values (Unknown etc.) at the end
-            for k, v in data["region_counts"].items():
+            ordered_zones = ["North", "South", "East", "West", "Online", "Store (Zone TBD)", "Unknown"]
+            zone_data = {z: data["region_counts"][z] for z in ordered_zones if z in data["region_counts"]}
+            for k, v in data["region_counts"].items():   # any extra keys
                 if k not in zone_data:
                     zone_data[k] = v
             st.bar_chart(zone_data, height=260)

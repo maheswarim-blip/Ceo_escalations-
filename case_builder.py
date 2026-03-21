@@ -21,24 +21,63 @@ def extract_order_ids(text: str) -> list[str]:
 
 
 def infer_issue_type(subject: str, snippets: list[str]) -> str:
+    """
+    Map escalation text to one of five business themes:
+      Product Quality | Delivery Timelines | Staff Behaviour |
+      Pricing & Offers | Customer Expectations
+    """
     text = (subject + " " + " ".join(snippets)).lower()
-    if "refund" in text:
-        return "Refund Issue"
-    if "rca" in text:
-        return "RCA Required"
-    if "damage" in text or "damaged" in text:
-        return "Product Damage"
-    if "wrong" in text or "mismatch" in text:
-        return "Wrong Product"
-    if "delay" in text or "not delivered" in text or "pending" in text:
-        return "Delivery Delay"
-    if "prescription" in text or "power" in text:
-        return "Prescription Error"
-    if "social media" in text or "instagram" in text:
-        return "Social Media Escalation"
-    if "partial" in text:
-        return "Partial Delivery"
-    return "General Escalation"
+
+    # ── Product Quality ────────────────────────────────────────────────────────
+    # Lens/frame defects, prescription errors, power mismatch, wrong item
+    if any(kw in text for kw in (
+        "damage", "damaged", "defect", "defective", "broken", "crack", "scratch",
+        "prescription", "power mismatch", "wrong power", "wrong lens", "lens issue",
+        "wrong product", "wrong item", "mismatch", "wrong frame",
+        "quality", "tint", "coating", "faulty",
+    )):
+        return "Product Quality"
+
+    # ── Delivery Timelines ─────────────────────────────────────────────────────
+    # Delays, non-delivery, partial, dispatch issues
+    if any(kw in text for kw in (
+        "delay", "delayed", "not delivered", "not received", "not dispatch",
+        "undelivered", "pending delivery", "awaiting dispatch", "shipment",
+        "partial delivery", "partial", "missing item", "not shipped",
+        "logistics", "courier", "tracking",
+    )):
+        return "Delivery Timelines"
+
+    # ── Staff Behaviour ────────────────────────────────────────────────────────
+    # In-store experience, wrong advice, rude/unprofessional staff
+    if any(kw in text for kw in (
+        "staff", "rude", "behaviour", "behavior", "wrong practice", "misinformation",
+        "mislead", "unprofessional", "in-store", "store team", "executive",
+        "optometrist", "eye test", "wrong advice", "hygiene", "infrastructure",
+        "ambiguity", "invoice discrepancy", "warehouse",
+    )):
+        return "Staff Behaviour"
+
+    # ── Pricing & Offers ───────────────────────────────────────────────────────
+    # Refunds, billing, discounts, EMI, payment issues
+    if any(kw in text for kw in (
+        "refund", "billing", "invoice", "price", "pricing", "offer", "discount",
+        "cashback", "emi", "payment", "charge", "overcharge", "fee",
+        "amount", "cost", "money", "paid",
+    )):
+        return "Pricing & Offers"
+
+    # ── Customer Expectations ──────────────────────────────────────────────────
+    # Social media, unmet experience, general dissatisfaction, HTO, exchange
+    if any(kw in text for kw in (
+        "social media", "instagram", "linkedin", "twitter", "facebook",
+        "experience", "expectation", "dissatisfied", "unsatisfied", "unhappy",
+        "disappointed", "complaint", "feedback", "escalat",
+        "exchange", "return", "hto", "home trial", "visit",
+    )):
+        return "Customer Expectations"
+
+    return "Customer Expectations"  # safe default — any escalation is an unmet expectation
 
 
 def infer_severity(labels: list[list[str]]) -> str:
