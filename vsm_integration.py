@@ -210,6 +210,80 @@ def fetch_crm_comments(order_id: str) -> list[dict]:
         return [{"error": str(e)}]
 
 
+# ── Incremental enrichment (for pipeline / real-time sync) ───────────────────
+
+def enrich_one_email(
+    email: dict,
+    vsm_cache: dict,
+    crm_cache: dict,
+    phone_cache: dict,
+    gmail_creds=None,
+) -> dict:
+    """
+    Enrich a single email dict in-place with order_ids, vsm_orders, crm_comments.
+    Shared caches are passed in so callers can reuse VSM/CRM results across emails.
+    Returns the mutated email dict.
+    """
+    # Use stored body as part of search text if available
+    search_text = (
+        f"{email.get('subject', '')} "
+        f"{email.get('snippet', '')} "
+        f"{email.get('body', '')}"
+    )
+    order_ids = extract_order_ids(search_text)
+    phones    = extract_phones(search_text)
+
+    # Body-based lookup via OAuth (no body stored yet and OAuth available)
+    if not order_ids and not phones and gmail_creds and not email.get("body"):
+        body = _fetch_gmail_body(email.get("id", ""), gmail_creds)
+        if body:
+            full_text = search_text + " " + body
+            order_ids = extract_order_ids(full_text)
+            phones    = extract_phones(full_text)
+            if order_ids or phones:
+                email["body_preview"] = body[:1500]
+
+    email["order_ids"] = order_ids
+    email.setdefault("vsm_orders", [])
+    email.setdefault("crm_comments", {})
+
+    if order_ids:
+        for oid in order_ids:
+            if oid not in vsm_cache:
+                vsm_cache[oid] = fetch_vsm_order(oid)
+                time.sleep(0.3)
+            existing_oids = [str(o.get("order_id")) for o in email["vsm_orders"]]
+            if oid not in existing_oids:
+                email["vsm_orders"].append(vsm_cache[oid])
+
+            if oid not in crm_cache:
+                crm_cache[oid] = fetch_crm_comments(oid)
+                time.sleep(0.3)
+            email["crm_comments"][oid] = crm_cache[oid]
+
+    elif phones:
+        for phone in phones[:2]:
+            if phone not in phone_cache:
+                phone_cache[phone] = fetch_vsm_orders_by_phone(phone)
+                time.sleep(0.3)
+            for order in phone_cache[phone]:
+                oid = str(order.get("order_id", ""))
+                if not oid:
+                    continue
+                existing_oids = [str(o.get("order_id")) for o in email["vsm_orders"]]
+                if oid not in existing_oids:
+                    email["vsm_orders"].append(order)
+                if oid not in order_ids:
+                    order_ids.append(oid)
+                if oid not in crm_cache:
+                    crm_cache[oid] = fetch_crm_comments(oid)
+                    time.sleep(0.3)
+                email["crm_comments"][oid] = crm_cache[oid]
+        email["order_ids"] = order_ids
+
+    return email
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():

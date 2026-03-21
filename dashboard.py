@@ -115,24 +115,26 @@ def load_cases():
     return build_cases(data["emails"]), data.get("enriched_at") or data.get("collected_at"), meta
 
 
-def _gmail_sync_available() -> bool:
+def _sync_available() -> bool:
     token_file = os.environ.get("CLAUDE_SESSION_INGRESS_TOKEN_FILE", "")
     return bool(token_file and os.path.exists(token_file))
+
+
+def _do_full_sync():
+    """Run Gmail sync + body fetch + VSM enrichment, then clear the cache."""
+    try:
+        from pipeline import run_full_sync
+        result = run_full_sync(verbose=False)
+        st.session_state["last_sync_result"] = result
+        load_cases.clear()
+    except Exception as e:
+        st.session_state["last_sync_result"] = {"error": str(e)}
+
 
 # ── sidebar ────────────────────────────────────────────────────────────────────
 
 def severity_icon(s):
     return {"HIGH": "🔴", "MEDIUM": "🟠", "LOW": "🟢"}.get(s, "⚪")
-
-def _do_sync():
-    """Run Gmail sync and clear the cache so the dashboard reloads."""
-    try:
-        from gmail_sync import sync_new_emails
-        result = sync_new_emails()
-        st.session_state["last_sync_result"] = result
-        load_cases.clear()
-    except Exception as e:
-        st.session_state["last_sync_result"] = {"error": str(e)}
 
 
 def render_sidebar(cases, meta=None):
@@ -142,24 +144,28 @@ def render_sidebar(cases, meta=None):
 
         # ── Real-time sync controls ──────────────────────────────────────────
         st.divider()
-        sync_available = _gmail_sync_available()
+        available = _sync_available()
         col_btn, col_auto = st.columns([3, 2])
 
         with col_btn:
             if st.button(
-                "🔄 Sync Gmail",
-                disabled=not sync_available,
+                "🔄 Sync Now",
+                disabled=not available,
                 use_container_width=True,
-                help="Fetch new emails from ceoescalation@lenskart.com" if sync_available
-                     else "Available only inside a Claude Code session",
+                type="primary",
+                help=(
+                    "Fetch new emails, get full bodies & enrich with VSM order data"
+                    if available else
+                    "Available only inside a Claude Code session"
+                ),
             ):
-                with st.spinner("Syncing…"):
-                    _do_sync()
+                with st.spinner("Syncing Gmail + VSM enrichment…"):
+                    _do_full_sync()
                 st.rerun()
 
         with col_auto:
             auto = st.toggle("Auto", value=st.session_state.get("auto_refresh", False),
-                             help="Auto-refresh every 2 min")
+                             help="Full sync every 5 min")
             st.session_state["auto_refresh"] = auto
 
         # Show last sync result
@@ -167,11 +173,23 @@ def render_sidebar(cases, meta=None):
         if lsr:
             if "error" in lsr:
                 st.error(f"Sync failed: {lsr['error']}", icon="⚠️")
-            else:
-                st.success(
-                    f"+{lsr['new_count']} new · {lsr['total']} total",
-                    icon="✅"
+            elif lsr.get("errors"):
+                st.warning(
+                    f"+{lsr.get('new_gmail',0)} new · {lsr.get('new_enriched',0)} enriched "
+                    f"· ⚠️ {len(lsr['errors'])} warning(s)",
+                    icon="🔄"
                 )
+            else:
+                new_g = lsr.get("new_gmail", 0)
+                new_e = lsr.get("new_enriched", 0)
+                total = lsr.get("total", 0)
+                if new_g == 0:
+                    st.success(f"Up to date · {total} total emails", icon="✅")
+                else:
+                    st.success(
+                        f"+{new_g} new emails · {new_e} enriched · {total} total",
+                        icon="✅"
+                    )
 
         if meta and meta.get("synced_at"):
             st.caption(f"Last synced: {meta['synced_at'][:19]}")
@@ -633,10 +651,10 @@ def main():
     if enriched_at:
         st.caption(f"Data enriched at: {enriched_at}")
 
-    # Auto-refresh: rerun every 2 minutes when enabled
+    # Auto-refresh: full sync every 5 minutes when enabled
     if st.session_state.get("auto_refresh"):
-        time.sleep(120)
-        load_cases.clear()
+        time.sleep(300)
+        _do_full_sync()
         st.rerun()
 
 
