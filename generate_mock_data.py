@@ -17,8 +17,22 @@ NAMES = ["Rajesh Kumar","Priya Singh","Amit Sharma","Sunita Patel",
          "Vikram Nair","Ananya Rao","Deepak Verma","Meera Joshi",
          "Sanjay Gupta","Pooja Mehta","Arjun Reddy","Kavita Das"]
 
-CITIES = ["Mumbai","Delhi","Bengaluru","Hyderabad","Chennai","Kolkata",
-          "Pune","Jaipur","Ahmedabad","Lucknow"]
+# Cities mapped to zones so generated data populates zone charts correctly
+CITY_ZONES = {
+    # North
+    "Delhi": "North", "Lucknow": "North", "Jaipur": "North",
+    "Chandigarh": "North", "Agra": "North",
+    # South
+    "Bengaluru": "South", "Hyderabad": "South", "Chennai": "South",
+    "Kochi": "South", "Coimbatore": "South",
+    # West
+    "Mumbai": "West", "Pune": "West", "Ahmedabad": "West",
+    "Surat": "West", "Nagpur": "West",
+    # East
+    "Kolkata": "East", "Bhubaneswar": "East", "Patna": "East",
+    "Guwahati": "East", "Ranchi": "East",
+}
+CITIES = list(CITY_ZONES.keys())
 
 FRAME_BRANDS = ["Ray-Ban","Oakley","Vogue","Lenskart Own","Fastrack",
                 "Titan","Fossil","Tommy Hilfiger","Calvin Klein","Guess"]

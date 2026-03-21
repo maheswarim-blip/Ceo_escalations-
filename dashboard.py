@@ -279,12 +279,61 @@ def _parse_case_date(date_str: str):
     return None
 
 
-def _extract_region(store: str) -> str:
-    """'LKST2011 Mumbai' → 'Mumbai', 'LK Online' → 'Online'."""
+# City → India zone mapping (extend as new store cities appear)
+_CITY_TO_ZONE: dict[str, str] = {
+    # North
+    "Delhi": "North", "New Delhi": "North", "Gurgaon": "North", "Gurugram": "North",
+    "Noida": "North", "Faridabad": "North", "Ghaziabad": "North",
+    "Lucknow": "North", "Kanpur": "North", "Agra": "North", "Varanasi": "North",
+    "Jaipur": "North", "Jodhpur": "North", "Udaipur": "North", "Kota": "North",
+    "Chandigarh": "North", "Amritsar": "North", "Ludhiana": "North",
+    "Dehradun": "North", "Meerut": "North", "Patiala": "North",
+    # South
+    "Bengaluru": "South", "Bangalore": "South",
+    "Hyderabad": "South", "Chennai": "South", "Madras": "South",
+    "Kochi": "South", "Cochin": "South", "Thiruvananthapuram": "South",
+    "Coimbatore": "South", "Mysuru": "South", "Mysore": "South",
+    "Visakhapatnam": "South", "Vijayawada": "South", "Mangaluru": "South",
+    "Madurai": "South", "Tiruchirappalli": "South",
+    # West
+    "Mumbai": "West", "Pune": "West", "Ahmedabad": "West", "Surat": "West",
+    "Nagpur": "West", "Indore": "West", "Bhopal": "West", "Vadodara": "West",
+    "Nashik": "West", "Aurangabad": "West", "Goa": "West", "Panaji": "West",
+    "Thane": "West", "Navi Mumbai": "West",
+    # East
+    "Kolkata": "East", "Calcutta": "East",
+    "Bhubaneswar": "East", "Patna": "East", "Ranchi": "East",
+    "Guwahati": "East", "Cuttack": "East", "Jamshedpur": "East",
+    "Siliguri": "East", "Raipur": "East",
+}
+
+
+def _city_from_store(store: str) -> str:
+    """Extract city name from store string like 'LKST2011 Mumbai - Mall' → 'Mumbai'."""
+    if not store:
+        return ""
+    # Strip leading store-code prefix (e.g. LKST2011, LKST, LK)
+    cleaned = re.sub(r"^[A-Z]{2,6}\d*\s*[-–]?\s*", "", store).strip()
+    # Take the first token before any dash/hyphen
+    city = cleaned.split("-")[0].split("–")[0].strip()
+    return city
+
+
+def _store_to_zone(store: str) -> str:
+    """Map a VSM store string to North / South / East / West / Online / Unknown."""
     if not store:
         return "Unknown"
-    cleaned = re.sub(r"^[A-Z]{2,6}\d*\s*", "", store).strip()
-    return cleaned.split("-")[0].strip() or store.strip()
+    store_upper = store.upper()
+    if "ONLINE" in store_upper or "OMNI" in store_upper or "WEB" in store_upper:
+        return "Online"
+    city = _city_from_store(store)
+    # Try exact match first, then partial
+    if city in _CITY_TO_ZONE:
+        return _CITY_TO_ZONE[city]
+    for known_city, zone in _CITY_TO_ZONE.items():
+        if known_city.lower() in city.lower() or city.lower() in known_city.lower():
+            return zone
+    return f"Unknown ({city})" if city else "Unknown"
 
 
 def _build_overview_data(cases: list) -> dict:
@@ -298,15 +347,15 @@ def _build_overview_data(cases: list) -> dict:
         issue_counts[case["issue_type"]] += 1
         severity_counts[case["severity"]] += 1
 
-        # Region from VSM store (first order that has one)
-        region = "Unknown"
+        # Zone from VSM store (first order that resolves to a known zone)
+        zone = "Unknown"
         for order in case.get("vsm_orders", []):
-            store = order.get("store", "")
-            r = _extract_region(store)
-            if r and r != "Unknown":
-                region = r
+            store = order.get("store", "") or ""
+            z = _store_to_zone(store)
+            if z not in ("Unknown", ""):
+                zone = z
                 break
-        region_counts[region] += 1
+        region_counts[zone] += 1
 
         dt = _parse_case_date(case.get("latest_date", ""))
         if dt:
@@ -349,11 +398,14 @@ def _build_voc_corpus(cases: list) -> str:
             payment_str = (
                 payment_raw.get("status") if isinstance(payment_raw, dict) else str(payment_raw or "")
             )
+            zone = _store_to_zone(store) if store else ""
             line_parts = []
             if status_str:
                 line_parts.append(f"status={status_str}")
             if store:
                 line_parts.append(f"store={store}")
+            if zone and zone != "Unknown":
+                line_parts.append(f"zone={zone}")
             if amt:
                 line_parts.append(f"value=₹{amt:,.0f}")
             if payment_str:
@@ -516,6 +568,11 @@ def render_overview_tab(cases: list, filtered_cases: list):
                         })
                         if stores:
                             st.write(f"**Store(s):** {', '.join(stores[:3])}")
+                        zones = list({
+                            _store_to_zone(s) for s in stores if _store_to_zone(s) not in ("Unknown", "")
+                        })
+                        if zones:
+                            st.write(f"**Zone:** {', '.join(zones)}")
                     with cc:
                         # Find index in filtered_cases for navigation
                         try:
@@ -550,9 +607,20 @@ def render_overview_tab(cases: list, filtered_cases: list):
     # Row 1: Region | Issue Type
     col_r, col_i = st.columns(2)
     with col_r:
-        st.markdown("**Cases by Region**")
+        st.markdown("**Cases by Zone** _(North / South / East / West / Online)_")
         if data["region_counts"]:
-            st.bar_chart(data["region_counts"], height=260)
+            # Sort in a fixed cardinal order for readability
+            ordered_zones = ["North", "South", "East", "West", "Online"]
+            zone_data = {
+                z: data["region_counts"][z]
+                for z in ordered_zones
+                if z in data["region_counts"]
+            }
+            # Append any unexpected values (Unknown etc.) at the end
+            for k, v in data["region_counts"].items():
+                if k not in zone_data:
+                    zone_data[k] = v
+            st.bar_chart(zone_data, height=260)
         else:
             st.info("No region data — VSM store field empty.")
 
