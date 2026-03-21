@@ -369,24 +369,40 @@ def _build_overview_data(cases: list) -> dict:
         issue_counts[case["issue_type"]] += 1
         severity_counts[case["severity"]] += 1
 
-        # Zone: (1) VSM store field → (2) city name in email subject+snippet
+        # Zone priority:
+        #  1. storeDetails.city from VSM  (direct, most accurate)
+        #  2. store name string → city lookup
+        #  3. scan email subject + snippet + body for city names
+        #  4. lenskartomni.com in customer_email → Store (Zone TBD)
         zone = "Unknown"
         for order in case.get("vsm_orders", []):
-            store = order.get("store", "") or ""
+            # 1. Explicit city from storeDetails
+            city = (order.get("store_city") or "").strip()
+            if city:
+                z = _CITY_TO_ZONE.get(city)
+                if not z:
+                    for k, v in _CITY_TO_ZONE.items():
+                        if k.lower() in city.lower() or city.lower() in k.lower():
+                            z = v
+                            break
+                if z:
+                    zone = z
+                    break
+            # 2. Parse store name string
+            store = (order.get("store") or "").strip()
             z = _store_to_zone(store)
             if z not in ("Unknown", ""):
                 zone = z
                 break
         if zone == "Unknown":
-            # Include body text for city name detection
+            # 3. Scan full email text (subject + snippet + body)
             email_text = " ".join(
                 (e.get("subject", "") + " " + e.get("snippet", "") + " " + (e.get("body", "") or "")[:1000])
                 for e in case.get("emails", [])
             )
-            # Also append VSM customer emails (lenskartomni.com = store order)
+            # 4. Include VSM customer emails for omni detection
             vsm_emails = " ".join(
-                (o.get("customer_email", "") or "")
-                for o in case.get("vsm_orders", [])
+                (o.get("customer_email", "") or "") for o in case.get("vsm_orders", [])
             )
             zone = _zone_from_text(email_text + " " + vsm_emails)
         region_counts[zone] += 1
@@ -772,11 +788,19 @@ def render_order_cards(vsm_orders: list):
             name  = order.get("customer_name") or "—"
             phone = order.get("customer_phone") or "—"
             email = order.get("customer_email") or ""
-            store = order.get("store") or "—"
-            st.markdown(f"👤 **{name}** · 📱 `{phone}`")
+            store      = order.get("store") or "—"
+            store_city = order.get("store_city") or ""
+            store_type = order.get("store_type") or ""
+            tier       = order.get("customer_tier") or ""
+            store_label = store
+            if store_city and store_city not in store:
+                store_label = f"{store} ({store_city})"
+            if store_type:
+                store_label += f" · {store_type.title()}"
+            st.markdown(f"👤 **{name}** · 📱 `{phone}`" + (f" · 🏅 {tier}" if tier else ""))
             if email and not email.endswith("@lenskartomni.com"):
                 st.markdown(f"✉️ `{email}`")
-            st.markdown(f"🏬 {store} · 📅 {created_str}")
+            st.markdown(f"🏬 {store_label} · 📅 {created_str}")
 
         with col_status:
             scolor = status_color(order_status)

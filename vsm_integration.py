@@ -101,6 +101,119 @@ def _get_oauth_creds_silent():
         return None
 
 
+def _parse_vsm_order(data: dict) -> dict:
+    """
+    Normalise a raw VSM API order dict to our internal schema.
+    Uses actual API keys as confirmed by the live response.
+    """
+    if not isinstance(data, dict):
+        return {}
+
+    # ── Store / location ──────────────────────────────────────────────────────
+    store_details = data.get("storeDetails") or {}
+    if isinstance(store_details, dict):
+        store_name = (
+            store_details.get("storeName")
+            or store_details.get("name")
+            or store_details.get("storeCode")
+            or store_details.get("code")
+        )
+        store_city  = store_details.get("city") or store_details.get("cityName") or ""
+        store_state = store_details.get("state") or store_details.get("stateName") or ""
+    else:
+        store_name = None
+        store_city = store_state = ""
+
+    # Fallback: storeId alone gives a code but no city
+    if not store_name:
+        store_name = data.get("storeId") or data.get("deliveryStoreCode")
+
+    store_type = (data.get("storeType") or "").upper()  # "ONLINE", "OFFLINE", "FRANCHISE" …
+
+    # ── Amount ────────────────────────────────────────────────────────────────
+    amount_obj = data.get("amount")
+    if isinstance(amount_obj, dict):
+        total_amount = (
+            amount_obj.get("total")
+            or amount_obj.get("grandTotal")
+            or amount_obj.get("subTotal")
+            or amount_obj.get("totalAmount")
+        )
+    elif isinstance(amount_obj, (int, float)):
+        total_amount = amount_obj
+    else:
+        total_amount = None
+    total_amount = total_amount or data.get("finalTotal")
+
+    # ── Payment status ────────────────────────────────────────────────────────
+    payments = data.get("payments") or []
+    if isinstance(payments, list) and payments:
+        first_pay = payments[0] if isinstance(payments[0], dict) else {}
+        payment_status = (
+            first_pay.get("status")
+            or first_pay.get("paymentStatus")
+            or first_pay.get("payStatus")
+        )
+    elif isinstance(payments, dict):
+        payment_status = payments.get("status") or payments.get("paymentStatus")
+    else:
+        payment_status = data.get("paymentStatus")
+
+    # ── Items ─────────────────────────────────────────────────────────────────
+    # Prefer cartItemList (detailed), fall back to items
+    raw_items = data.get("cartItemList") or data.get("items") or []
+    items = []
+    for item in raw_items:
+        if not isinstance(item, dict):
+            continue
+        items.append({
+            "sku":   item.get("sku") or item.get("productSku") or item.get("productId"),
+            "name":  item.get("productName") or item.get("name") or item.get("title"),
+            "qty":   item.get("quantity") or item.get("qty") or 1,
+            "price": item.get("price") or item.get("salePrice") or item.get("rowTotal"),
+        })
+
+    return {
+        # ── Core identifiers ──────────────────────────────────────────────────
+        "order_id":       data.get("id") or data.get("legacyEntityId"),
+        "cart_id":        data.get("cartId"),
+        # ── Status ────────────────────────────────────────────────────────────
+        "status":         data.get("status"),
+        "status_history": data.get("statusHistory"),
+        # ── Dates ─────────────────────────────────────────────────────────────
+        "created_at":     data.get("createdAt"),
+        "delivery_date":  data.get("deliveryDate"),
+        "dispatch_date":  data.get("dispatchDate"),
+        # ── Customer ──────────────────────────────────────────────────────────
+        "customer_name":  data.get("customerName"),
+        "customer_phone": data.get("customerPhone"),
+        "customer_email": data.get("customerEmail"),
+        "customer_tier":  data.get("customerTierName"),
+        # ── Store / location ──────────────────────────────────────────────────
+        "store":          store_name,
+        "store_city":     store_city,
+        "store_state":    store_state,
+        "store_type":     store_type,       # ONLINE / OFFLINE / FRANCHISE
+        "store_details":  store_details,    # full dict for future use
+        "facility_code":  data.get("facilityCode"),
+        "delivery_store_code": data.get("deliveryStoreCode"),
+        # ── Financials ────────────────────────────────────────────────────────
+        "total_amount":   total_amount,
+        "total_saving":   data.get("totalSaving"),
+        "payment_status": payment_status,
+        # ── Order content ─────────────────────────────────────────────────────
+        "items":          items,
+        "tracking":       data.get("trackingDetails"),
+        "power_description": data.get("powerDescription"),
+        # ── Order flags ───────────────────────────────────────────────────────
+        "lk_country":     data.get("lkCountry"),
+        "is_hto":         bool(data.get("isOmniTbybFlow")),
+        "is_store_assisted": bool(data.get("isAssistedSaleFlow")),
+        "is_exchange":    bool(data.get("exchange")),
+        "is_bulk":        bool(data.get("isBulkOrder")),
+    }
+
+
 def fetch_vsm_orders_by_phone(phone: str) -> list[dict]:
     """Fetch orders for a customer phone number from VSM API."""
     url = f"{VSM_API_BASE}?phone={phone}&limit=5"
@@ -113,30 +226,7 @@ def fetch_vsm_orders_by_phone(phone: str) -> list[dict]:
             results = results.get("result") or results.get("orders") or []
         if not isinstance(results, list):
             return []
-        orders = []
-        for data in results:
-            orders.append({
-                "order_id":       data.get("orderId") or data.get("id"),
-                "status":         data.get("status") or data.get("orderStatus"),
-                "created_at":     data.get("createdAt") or data.get("orderDate"),
-                "customer_name":  data.get("customerName") or (data.get("shippingAddress") or {}).get("name"),
-                "customer_phone": data.get("customerPhone") or data.get("mobile"),
-                "customer_email": data.get("customerEmail") or data.get("email"),
-                "store":          data.get("storeName") or data.get("storeCode"),
-                "total_amount":   data.get("totalAmount") or data.get("grandTotal"),
-                "payment_status": data.get("paymentStatus"),
-                "tracking":       data.get("trackingDetails") or data.get("tracking"),
-                "items": [
-                    {
-                        "sku":   item.get("sku") or item.get("productSku"),
-                        "name":  item.get("productName") or item.get("name"),
-                        "qty":   item.get("qty") or item.get("quantity"),
-                        "price": item.get("price") or item.get("rowTotal"),
-                    }
-                    for item in (data.get("items") or data.get("orderItems") or [])
-                ],
-            })
-        return orders
+        return [_parse_vsm_order(item) for item in results if isinstance(item, dict)]
     except requests.exceptions.HTTPError as e:
         print(f"    [VSM] HTTP {e.response.status_code} for phone {phone}")
         return []
@@ -151,29 +241,10 @@ def fetch_vsm_order(order_id: str) -> dict:
     try:
         resp = requests.get(url, headers=VSM_HEADERS, timeout=15)
         resp.raise_for_status()
-        raw = resp.json()
-        data = raw.get("data", raw).get("result", raw)
-        return {
-            "order_id":       data.get("orderId") or data.get("id"),
-            "status":         data.get("status") or data.get("orderStatus"),
-            "created_at":     data.get("createdAt") or data.get("orderDate"),
-            "customer_name":  data.get("customerName") or (data.get("shippingAddress") or {}).get("name"),
-            "customer_phone": data.get("customerPhone") or data.get("mobile"),
-            "customer_email": data.get("customerEmail") or data.get("email"),
-            "store":          data.get("storeName") or data.get("storeCode"),
-            "total_amount":   data.get("totalAmount") or data.get("grandTotal"),
-            "payment_status": data.get("paymentStatus"),
-            "tracking":       data.get("trackingDetails") or data.get("tracking"),
-            "items": [
-                {
-                    "sku":   item.get("sku") or item.get("productSku"),
-                    "name":  item.get("productName") or item.get("name"),
-                    "qty":   item.get("qty") or item.get("quantity"),
-                    "price": item.get("price") or item.get("rowTotal"),
-                }
-                for item in (data.get("items") or data.get("orderItems") or [])
-            ],
-        }
+        raw  = resp.json()
+        inner = raw.get("data") or raw
+        data  = (inner.get("result") or inner) if isinstance(inner, dict) else raw
+        return _parse_vsm_order(data)
     except requests.exceptions.HTTPError as e:
         print(f"    [VSM] HTTP {e.response.status_code} for order {order_id}")
         return {"order_id": order_id, "error": f"HTTP {e.response.status_code}"}
