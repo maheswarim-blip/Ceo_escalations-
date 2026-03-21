@@ -485,7 +485,7 @@ def render_rca_panel(case: dict):
     with col1:
         api_key_set = bool(os.environ.get("ANTHROPIC_API_KEY", "").strip())
         gen_btn = st.button(
-            "✨ Generate RCA" if not existing_rca else "🔄 Regenerate",
+            "✨ Generate Initial RCA" if not existing_rca else "🔄 Regenerate",
             disabled=not api_key_set,
             type="primary",
             use_container_width=True,
@@ -495,9 +495,12 @@ def render_rca_panel(case: dict):
 
     with col2:
         if existing_rca:
-            st.caption("✅ RCA generated · scroll below")
+            st.caption("✅ Initial draft RCA generated · scroll below")
         elif api_key_set:
-            st.caption("Click to generate AI-powered RCA using Claude Opus 4.6")
+            st.caption(
+                "Generates an initial draft RCA from the **first escalation email only** "
+                "(not replies). Matches VSM order data and flags information gaps."
+            )
 
     if gen_btn and api_key_set:
         # Import here to avoid loading anthropic before the user runs the app
@@ -505,7 +508,7 @@ def render_rca_panel(case: dict):
 
         placeholder = st.empty()
         full_text = ""
-        with st.spinner("Claude is analyzing the case with adaptive thinking..."):
+        with st.spinner("Claude is drafting the initial RCA from the first escalation email…"):
             try:
                 for chunk in generate_rca_streaming(case):
                     full_text += chunk

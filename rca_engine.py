@@ -1,8 +1,10 @@
 """
 RCA Engine - Uses Claude Opus 4.6 with adaptive thinking to generate
-Root Cause Analysis for CEO escalation cases.
+an initial draft Root Cause Analysis for CEO escalation cases.
 
-Supports streaming output for real-time display in the dashboard.
+The RCA is based ONLY on the first (original) escalation email and
+its matched VSM order data.  Replies in the same thread are intentionally
+excluded so the analysis reflects what is known at the moment of escalation.
 """
 
 import os
@@ -37,7 +39,6 @@ def _make_client() -> anthropic.Anthropic:
     """
     api_key = os.environ.get("ANTHROPIC_API_KEY", "")
 
-    # Resolve CA bundle: prefer explicit paths, then system defaults
     ca_bundle = (
         os.environ.get("REQUESTS_CA_BUNDLE")
         or os.environ.get("SSL_CERT_FILE")
@@ -51,7 +52,7 @@ def _make_client() -> anthropic.Anthropic:
     elif ca_bundle:
         http_client = httpx.Client(verify=ca_bundle)
     else:
-        http_client = None  # default: let httpx use certifi / system certs
+        http_client = None
 
     kwargs = {"api_key": api_key}
     if http_client:
@@ -63,75 +64,126 @@ def _make_client() -> anthropic.Anthropic:
 client = _make_client()
 
 SYSTEM_PROMPT = """You are a senior Customer Experience analyst at Lenskart, India's leading eyewear company.
-You specialize in performing Root Cause Analysis (RCA) on CEO-escalated customer complaints.
 
-Your analysis must be structured, data-driven, and actionable. You have access to:
-- Email thread content showing the escalation chain
-- VSM (Visual Store Manager) order details including status, items, payments, tracking
-- CRM WhatsApp/email conversation logs
+Your task is to produce an **Initial Draft RCA** for a CEO-escalated complaint based solely on the
+FIRST escalation email received at ceoescalation@lenskart.com and the VSM order details matched
+to that email. No follow-up replies are available yet.
 
-For each case, provide a comprehensive RCA covering:
-1. **Issue Summary** – What the customer complained about (1-2 sentences)
-2. **Root Cause** – The primary reason this escalated (operational, process, human error, system)
-3. **Contributing Factors** – Secondary issues that made the situation worse
-4. **Timeline of Events** – Key events in chronological order
-5. **Impact Assessment** – Customer impact + business impact
-6. **Immediate Resolution** – What was or should be done NOW
-7. **Preventive Actions** – Process/system changes to prevent recurrence
-8. **Responsible Teams** – Which teams need to act (Store Ops, Logistics, Tech, Finance etc.)
+Your output must contain exactly these sections:
 
-Be specific. Reference order IDs, amounts, dates, and names where available.
-Use bullet points for clarity. Flag any data inconsistencies you notice."""
+---
+
+## 1. Escalation Summary
+One paragraph covering: who escalated, on behalf of which customer, the order ID(s) involved,
+the date the order was placed, and the nature of the complaint as stated in the email.
+
+## 2. Initial Root Cause (Hypothesis)
+Based only on available data, state the most likely root cause.
+Clearly label it as a hypothesis until confirmed.
+Categories: Operational Delay | Process Failure | Human Error | System / Tech Issue | Logistics | Product Quality | Communication Gap
+
+## 3. VSM Order Snapshot
+Summarise what the VSM data shows: order status, payment status, tracking checkpoint, items ordered, order value.
+Highlight anything that corroborates or contradicts the complaint.
+
+## 4. Timeline of Known Events
+Chronological list of events derived from the email date, order creation date, and tracking checkpoints.
+Mark any unexplained gaps.
+
+## 5. Customer & Business Impact
+- Customer impact (financial, experience, trust)
+- Business impact (brand risk given CEO escalation, potential refund/re-order cost)
+
+## 6. Immediate Recommended Action
+What should be done in the next 24 hours? Be specific about team and action.
+
+## 7. Information Gaps — What Is Needed to Close This RCA
+This section is critical. List every piece of information that is MISSING and would change or confirm the root cause.
+For each gap, state:
+  • What data is missing
+  • Where / from which team it should be obtained
+  • How it would impact the RCA conclusion
+
+## 8. Responsible Teams
+List teams that need to investigate or act, with the specific ask for each.
+
+## 9. RCA Confidence Score
+Rate your confidence in the current RCA: **Low / Medium / High**
+Explain why, referencing the information gaps above.
+
+---
+
+Be specific. Reference order IDs, amounts, dates, and names wherever available.
+Do NOT fabricate data. If a field is blank or unknown, state it explicitly rather than guessing.
+Use bullet points for clarity."""
+
+
+def get_first_email(case: dict) -> dict | None:
+    """
+    Return the first (original) escalation email in the thread.
+    Emails are already sorted by date ascending in case_builder.build_cases().
+    """
+    emails = case.get("emails", [])
+    return emails[0] if emails else None
 
 
 def build_rca_context(case: dict) -> str:
-    """Build a rich context string for the RCA prompt from a case dict."""
+    """
+    Build the context string for the RCA prompt using ONLY the first email
+    and its matched VSM order data.
+    """
     parts = []
 
-    # Email thread
-    emails = case.get("emails", [])
-    if emails:
-        parts.append("## EMAIL THREAD\n")
-        for e in emails:
-            parts.append(f"**Date:** {e.get('date','')}")
-            parts.append(f"**From:** {e.get('from','')}")
-            parts.append(f"**Subject:** {e.get('subject','')}")
-            parts.append(f"**Snippet:** {e.get('snippet','')}\n")
+    first_email = get_first_email(case)
+    if not first_email:
+        return "No email data available."
 
-    # VSM order details (deduplicated by order_id)
-    seen_orders = set()
-    all_vsm = []
-    for e in emails:
-        for order in e.get("vsm_orders", []):
-            oid = order.get("order_id")
-            if oid and oid not in seen_orders:
-                seen_orders.add(oid)
-                all_vsm.append(order)
+    # ── First (original) escalation email ────────────────────────────────────
+    parts.append("## ORIGINAL ESCALATION EMAIL\n")
+    parts.append(f"**Date Received:** {first_email.get('date', '—')}")
+    parts.append(f"**From:** {first_email.get('from', '—')}")
+    parts.append(f"**To:** {first_email.get('to', '—')}")
+    if first_email.get("cc"):
+        parts.append(f"**CC:** {first_email.get('cc', '')}")
+    parts.append(f"**Subject:** {first_email.get('subject', '—')}")
+    parts.append(f"**Email Content (snippet):**\n{first_email.get('snippet', '_(no preview available)_')}\n")
 
-    if all_vsm:
-        parts.append("## VSM ORDER DETAILS\n")
-        for order in all_vsm:
+    # ── VSM orders linked to the first email ─────────────────────────────────
+    vsm_orders = first_email.get("vsm_orders", [])
+    if vsm_orders:
+        parts.append("## VSM ORDER DATA (matched from first email)\n")
+        for order in vsm_orders:
             parts.append(f"**Order ID:** {order.get('order_id')}")
 
-            # status is a nested dict in real VSM data
             status_raw = order.get("status")
             if isinstance(status_raw, dict):
-                parts.append(f"**Order Status:** {status_raw.get('status')} | State: {status_raw.get('state')} | Checkpoint: {status_raw.get('orderTrackingStatusCheckpoint') or status_raw.get('trackingStatus')}")
-                parts.append(f"**Returnable:** {status_raw.get('returnable')} | Cancellable: {status_raw.get('cancellable')}")
+                parts.append(
+                    f"**Order Status:** {status_raw.get('status')} "
+                    f"| State: {status_raw.get('state')} "
+                    f"| Checkpoint: {status_raw.get('orderTrackingStatusCheckpoint') or status_raw.get('trackingStatus')}"
+                )
+                parts.append(
+                    f"**Returnable:** {status_raw.get('returnable')} "
+                    f"| Cancellable: {status_raw.get('cancellable')}"
+                )
             else:
                 parts.append(f"**Status:** {status_raw}")
 
-            parts.append(f"**Customer:** {order.get('customer_name')} | {order.get('customer_phone')}")
-            parts.append(f"**Store:** {order.get('store')}")
-            parts.append(f"**Total Amount:** ₹{order.get('total_amount')}")
+            customer_name = order.get("customer_name") or "— (not available in VSM)"
+            parts.append(f"**Customer Name:** {customer_name}")
+            parts.append(f"**Customer Phone:** {order.get('customer_phone') or '—'}")
+            parts.append(f"**Customer Email:** {order.get('customer_email') or '—'}")
+            parts.append(f"**Store:** {order.get('store') or '—'}")
+
+            amt = order.get("total_amount")
+            parts.append(f"**Order Value:** ₹{amt:,.0f}" if isinstance(amt, (int, float)) else "**Order Value:** —")
+            parts.append(f"**Order Date:** {_fmt_ts(order.get('created_at'))}")
 
             pay_raw = order.get("payment_status")
-            pay_str = pay_raw.get("status") if isinstance(pay_raw, dict) else pay_raw
+            pay_str = pay_raw.get("status") if isinstance(pay_raw, dict) else (pay_raw or "—")
             parts.append(f"**Payment Status:** {pay_str}")
 
-            parts.append(f"**Created At:** {_fmt_ts(order.get('created_at'))}")
-
-            # tracking is a list of checkpoints in real VSM data
+            # Tracking timeline
             tracking_raw = order.get("tracking") or []
             if isinstance(tracking_raw, list) and tracking_raw:
                 parts.append("**Tracking Timeline:**")
@@ -142,46 +194,68 @@ def build_rca_context(case: dict) -> str:
                         d.get("time", "") + (f" [{d['trackStatus']}]" if d.get("trackStatus") != ck_status else "")
                         for d in (ck.get("details") or [])
                     )
-                    parts.append(f"  {ck_status} ({ck_time})" + (f": {details}" if details else ""))
+                    parts.append(
+                        f"  {ck_status} ({ck_time})"
+                        + (f": {details}" if details else "")
+                    )
             elif isinstance(tracking_raw, dict) and tracking_raw:
-                parts.append(f"**Tracking:** {tracking_raw.get('status')} | Updated: {_fmt_ts(tracking_raw.get('updatedTime'))}")
+                parts.append(
+                    f"**Tracking:** {tracking_raw.get('status')} "
+                    f"| Updated: {_fmt_ts(tracking_raw.get('updatedTime'))}"
+                )
 
             items = order.get("items") or []
             if items:
-                parts.append("**Items:**")
+                parts.append("**Items Ordered:**")
                 for item in items:
                     price_raw = item.get("price", 0)
-                    price_str = f"₹{price_raw.get('value', 0):,.0f}" if isinstance(price_raw, dict) else f"₹{price_raw}"
+                    price_str = (
+                        f"₹{price_raw.get('value', 0):,.0f}"
+                        if isinstance(price_raw, dict)
+                        else f"₹{price_raw}"
+                    )
                     parts.append(f"  - {item.get('name')} × {item.get('qty')} @ {price_str}")
 
-            issue = order.get("issue_type")
-            if issue:
-                parts.append(f"**Reported Issue:** {issue}")
-
             parts.append("")
+    else:
+        parts.append("## VSM ORDER DATA\n_(No VSM order data was matched for this email)_\n")
 
-    # CRM comments (across all orders in this case)
-    seen_comments: set = set()
-    parts.append("## CRM / WHATSAPP CONVERSATION LOG\n")
-    has_comments = False
-    for e in emails:
-        crm = e.get("crm_comments", {})
-        for oid, comments in crm.items():
+    # ── CRM data for orders in the first email ────────────────────────────────
+    first_email_order_ids = {
+        str(o.get("order_id")) for o in vsm_orders if o.get("order_id")
+    }
+    crm_all = first_email.get("crm_comments", {})
+    relevant_crm = {
+        oid: comments
+        for oid, comments in crm_all.items()
+        if str(oid) in first_email_order_ids
+    }
+
+    if relevant_crm:
+        parts.append("## CRM / WHATSAPP LOG (for matched orders)\n")
+        for oid, comments in relevant_crm.items():
+            parts.append(f"**Order {oid}:**")
             for c in comments:
-                cid = c.get("id", "")
-                if cid in seen_comments:
-                    continue
-                seen_comments.add(cid)
-                has_comments = True
                 direction = c.get("direction", "")
                 arrow = "→ Agent" if direction == "outbound" else "← Customer"
                 ts = c.get("created_at", "")[:16]
                 author = c.get("author", "Unknown")
                 msg = c.get("message", "")
-                parts.append(f"[{ts}] {arrow} ({author}): {msg}")
+                parts.append(f"  [{ts}] {arrow} ({author}): {msg}")
+        parts.append("")
+    else:
+        parts.append("## CRM / WHATSAPP LOG\n_(No CRM data available for this order)_\n")
 
-    if not has_comments:
-        parts.append("_(No CRM conversation data available)_")
+    # ── Thread context note ───────────────────────────────────────────────────
+    total_emails = len(case.get("emails", []))
+    if total_emails > 1:
+        parts.append(
+            f"## NOTE\n"
+            f"This thread has {total_emails} emails in total. "
+            f"The RCA above is based ONLY on the first email. "
+            f"The {total_emails - 1} reply email(s) have been intentionally excluded "
+            f"to produce an initial draft RCA at the point of escalation.\n"
+        )
 
     return "\n".join(parts)
 
@@ -189,22 +263,45 @@ def build_rca_context(case: dict) -> str:
 def generate_rca_streaming(case: dict):
     """
     Generator that streams RCA text tokens for a given case dict.
-    Each yield is a string chunk.
-    Caller assembles the full RCA.
+    Uses only the first email for analysis.
+    Each yield is a string chunk. Caller assembles the full RCA.
     """
-    context = build_rca_context(case)
-    order_ids = list({
-        o.get("order_id")
-        for e in case.get("emails", [])
-        for o in e.get("vsm_orders", [])
-        if o.get("order_id")
-    })
+    first_email = get_first_email(case)
+    if not first_email:
+        yield "No email data found for this case."
+        return
 
-    prompt = f"""Please perform a detailed Root Cause Analysis for this CEO escalation case.
+    context = build_rca_context(case)
+
+    # Collect order IDs from the first email only
+    order_ids = [
+        str(o.get("order_id"))
+        for o in first_email.get("vsm_orders", [])
+        if o.get("order_id")
+    ]
+
+    # Try to extract customer name from VSM or email snippet
+    customer_name = next(
+        (o.get("customer_name") for o in first_email.get("vsm_orders", []) if o.get("customer_name")),
+        None,
+    ) or "— (not available)"
+
+    order_dates = [
+        _fmt_ts(o.get("created_at"))
+        for o in first_email.get("vsm_orders", [])
+        if o.get("created_at")
+    ]
+
+    prompt = f"""Please produce an Initial Draft RCA for this CEO escalation.
 
 **Case Title:** {case.get('title', 'CEO Escalation')}
-**Order IDs:** {', '.join(str(oid) for oid in order_ids) if order_ids else 'N/A'}
-**Total Emails in Thread:** {len(case.get('emails', []))}
+**Escalation Email Date:** {first_email.get('date', '—')}
+**Order ID(s):** {', '.join(order_ids) if order_ids else 'Not extracted'}
+**Customer Name (from VSM):** {customer_name}
+**Order Date(s):** {', '.join(order_dates) if order_dates else '—'}
+
+This analysis is based on the FIRST email in the escalation thread only.
+Do not assume information from any follow-up replies.
 
 ---
 
@@ -212,7 +309,7 @@ def generate_rca_streaming(case: dict):
 
 ---
 
-Generate the complete RCA now."""
+Generate the Initial Draft RCA now, following the required section structure exactly."""
 
     with client.messages.stream(
         model="claude-opus-4-6",
@@ -225,17 +322,17 @@ Generate the complete RCA now."""
             if event.type == "content_block_delta":
                 if event.delta.type == "text_delta":
                     yield event.delta.text
-        # Yield usage stats at end as a special marker
         final = stream.get_final_message()
         usage = final.usage
-        yield f"\n\n---\n_Tokens — Input: {usage.input_tokens} | Output: {usage.output_tokens}_"
+        yield (
+            f"\n\n---\n"
+            f"_Initial draft RCA · Based on first escalation email only · "
+            f"Tokens — Input: {usage.input_tokens} | Output: {usage.output_tokens}_"
+        )
 
 
 def generate_rca_sync(case: dict) -> str:
-    """
-    Non-streaming version - returns complete RCA string.
-    Useful for batch processing.
-    """
+    """Non-streaming version - returns complete RCA string."""
     return "".join(generate_rca_streaming(case))
 
 
@@ -247,7 +344,7 @@ if __name__ == "__main__":
 
     data_path = Path("ceo_escalation_emails_enriched.json")
     if not data_path.exists():
-        print("[!] Run generate_mock_data.py first")
+        print("[!] Run gmail_sync.py first")
         exit(1)
 
     with open(data_path) as f:
@@ -258,10 +355,12 @@ if __name__ == "__main__":
         print("[!] No cases found")
         exit(1)
 
-    # Test RCA on the first case
     case = cases[0]
+    first = case["emails"][0]
     print(f"\n{'='*60}")
-    print(f"RCA for: {case['title']}")
+    print(f"Initial Draft RCA for: {case['title']}")
+    print(f"Based on first email from: {first.get('from','')[:60]}")
+    print(f"Email date: {first.get('date','')}")
     print(f"{'='*60}\n")
 
     for chunk in generate_rca_streaming(case):
