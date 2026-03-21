@@ -5,6 +5,7 @@ A case = one escalation thread with all its emails, orders, and CRM data.
 
 import re
 from collections import defaultdict
+from email.utils import parsedate_to_datetime
 
 
 def extract_case_number(text: str) -> str | None:
@@ -61,8 +62,14 @@ def build_cases(emails: list[dict]) -> list[dict]:
 
     cases = []
     for thread_id, thread_emails in threads.items():
-        # Sort emails by date within thread
-        thread_emails.sort(key=lambda e: e.get("date", ""))
+        # Sort emails by date within thread (parse RFC 2822 dates properly)
+        def _parse_date(e):
+            try:
+                return parsedate_to_datetime(e.get("date", ""))
+            except Exception:
+                return e.get("date", "")
+
+        thread_emails.sort(key=_parse_date)
 
         # Use first email's subject as case title (strip Re:/Fwd: prefixes)
         raw_subject = thread_emails[0].get("subject", "Unknown Subject")

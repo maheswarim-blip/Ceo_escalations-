@@ -118,13 +118,35 @@ Do NOT fabricate data. If a field is blank or unknown, state it explicitly rathe
 Use bullet points for clarity."""
 
 
+def _extract_phones(text: str) -> list[str]:
+    """Extract 10-digit Indian mobile numbers from text."""
+    import re
+    return list(dict.fromkeys(re.findall(r"\b[6-9]\d{9}\b", text)))
+
+
 def get_first_email(case: dict) -> dict | None:
     """
     Return the first (original) escalation email in the thread.
-    Emails are already sorted by date ascending in case_builder.build_cases().
+    Emails are sorted by date ascending in case_builder.build_cases().
     """
     emails = case.get("emails", [])
     return emails[0] if emails else None
+
+
+def _get_vsm_orders_for_rca(case: dict, first_email: dict) -> list[dict]:
+    """
+    Return VSM orders to use in the RCA.
+    Preference: orders attached to the first email.
+    Fallback: case-level aggregated VSM orders (deduped across all thread emails).
+    This handles the common pattern where the forwarding email has no order ID
+    in its snippet, but a later reply's VSM data was fetched successfully.
+    """
+    first_email_orders = first_email.get("vsm_orders", [])
+    if first_email_orders:
+        return first_email_orders
+    # Fall back to case-level VSM orders (same case, same complaint)
+    case_orders = case.get("vsm_orders", [])
+    return case_orders
 
 
 def build_rca_context(case: dict) -> str:
@@ -146,12 +168,20 @@ def build_rca_context(case: dict) -> str:
     if first_email.get("cc"):
         parts.append(f"**CC:** {first_email.get('cc', '')}")
     parts.append(f"**Subject:** {first_email.get('subject', '—')}")
-    parts.append(f"**Email Content (snippet):**\n{first_email.get('snippet', '_(no preview available)_')}\n")
+    # Use full body preview if available (fetched during enrichment), else snippet
+    email_body = first_email.get("body_preview") or first_email.get("snippet") or "_(no preview available)_"
+    parts.append(f"**Email Content:**\n{email_body}\n")
 
-    # ── VSM orders linked to the first email ─────────────────────────────────
-    vsm_orders = first_email.get("vsm_orders", [])
+    # ── VSM orders: first-email preferred, case-level fallback ───────────────
+    vsm_orders = _get_vsm_orders_for_rca(case, first_email)
+    vsm_source = "first email" if first_email.get("vsm_orders") else "thread (order found in reply)"
+
+    # Phone numbers extracted from the email content (customer often includes theirs)
+    snippet_phones = _extract_phones(first_email.get("snippet", ""))
+    if snippet_phones:
+        parts.append(f"**Customer Phone (from email body):** {', '.join(snippet_phones)}\n")
     if vsm_orders:
-        parts.append("## VSM ORDER DATA (matched from first email)\n")
+        parts.append(f"## VSM ORDER DATA (source: {vsm_source})\n")
         for order in vsm_orders:
             parts.append(f"**Order ID:** {order.get('order_id')}")
 

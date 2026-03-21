@@ -10,6 +10,7 @@ Output:
     ceo_escalation_emails_enriched.json
 """
 
+import base64
 import json
 import re
 import time
@@ -46,6 +47,102 @@ CRM_HEADERS = {
 def extract_order_ids(text: str) -> list[str]:
     """Extract Lenskart order IDs (10-digit numbers starting with 1) from text."""
     return list(dict.fromkeys(re.findall(r"\b1[0-9]{9}\b", text)))
+
+
+def extract_phones(text: str) -> list[str]:
+    """Extract 10-digit Indian mobile numbers from text."""
+    return list(dict.fromkeys(re.findall(r"\b[6-9]\d{9}\b", text)))
+
+
+# ── Gmail full-body fetcher (OAuth2 mode, optional) ───────────────────────────
+
+def _fetch_gmail_body(email_id: str, creds) -> str:
+    """
+    Fetch the full plain-text body of a Gmail message.
+    Returns empty string on any error.
+    """
+    if creds is None:
+        return ""
+    try:
+        from googleapiclient.discovery import build as _gbuild
+        service = _gbuild("gmail", "v1", credentials=creds, cache_discovery=False)
+        raw = service.users().messages().get(
+            userId="me", id=email_id, format="full"
+        ).execute()
+        payload = raw.get("payload", {})
+        parts = payload.get("parts") or [payload]
+        text_parts = []
+        for part in parts:
+            if part.get("mimeType", "") in ("text/plain", ""):
+                body_data = (part.get("body") or {}).get("data", "")
+                if body_data:
+                    decoded = base64.urlsafe_b64decode(body_data + "==").decode("utf-8", errors="replace")
+                    text_parts.append(decoded)
+        return "\n".join(text_parts)
+    except Exception:
+        return ""
+
+
+def _get_oauth_creds_silent():
+    """Return OAuth2 creds if a token file exists, else None (no browser prompt)."""
+    token_file = Path(__file__).parent / "gmail_token.json"
+    if not token_file.exists():
+        return None
+    try:
+        from google.oauth2.credentials import Credentials
+        from google.auth.transport.requests import Request as GRequest
+        creds = Credentials.from_authorized_user_file(
+            str(token_file), ["https://www.googleapis.com/auth/gmail.readonly"]
+        )
+        if creds and creds.refresh_token and (not creds.token or creds.expired):
+            creds.refresh(GRequest())
+        return creds if creds and creds.valid else None
+    except Exception:
+        return None
+
+
+def fetch_vsm_orders_by_phone(phone: str) -> list[dict]:
+    """Fetch orders for a customer phone number from VSM API."""
+    url = f"{VSM_API_BASE}?phone={phone}&limit=5"
+    try:
+        resp = requests.get(url, headers=VSM_HEADERS, timeout=15)
+        resp.raise_for_status()
+        raw = resp.json()
+        results = raw.get("data", raw)
+        if isinstance(results, dict):
+            results = results.get("result") or results.get("orders") or []
+        if not isinstance(results, list):
+            return []
+        orders = []
+        for data in results:
+            orders.append({
+                "order_id":       data.get("orderId") or data.get("id"),
+                "status":         data.get("status") or data.get("orderStatus"),
+                "created_at":     data.get("createdAt") or data.get("orderDate"),
+                "customer_name":  data.get("customerName") or (data.get("shippingAddress") or {}).get("name"),
+                "customer_phone": data.get("customerPhone") or data.get("mobile"),
+                "customer_email": data.get("customerEmail") or data.get("email"),
+                "store":          data.get("storeName") or data.get("storeCode"),
+                "total_amount":   data.get("totalAmount") or data.get("grandTotal"),
+                "payment_status": data.get("paymentStatus"),
+                "tracking":       data.get("trackingDetails") or data.get("tracking"),
+                "items": [
+                    {
+                        "sku":   item.get("sku") or item.get("productSku"),
+                        "name":  item.get("productName") or item.get("name"),
+                        "qty":   item.get("qty") or item.get("quantity"),
+                        "price": item.get("price") or item.get("rowTotal"),
+                    }
+                    for item in (data.get("items") or data.get("orderItems") or [])
+                ],
+            })
+        return orders
+    except requests.exceptions.HTTPError as e:
+        print(f"    [VSM] HTTP {e.response.status_code} for phone {phone}")
+        return []
+    except Exception as e:
+        print(f"    [VSM] Error for phone {phone}: {e}")
+        return []
 
 
 def fetch_vsm_order(order_id: str) -> dict:
@@ -127,36 +224,84 @@ def main():
     emails = data["emails"]
     vsm_cache: dict[str, dict] = {}
     crm_cache: dict[str, list] = {}
+    phone_cache: dict[str, list] = {}
+
+    # Silent OAuth creds for full-body fetch (no browser prompt)
+    gmail_creds = _get_oauth_creds_silent()
+    if gmail_creds:
+        print("Gmail OAuth available – will fetch full email body when needed.\n")
+    else:
+        print("Gmail OAuth not available – using snippet only for order/phone extraction.\n")
 
     print(f"Processing {len(emails)} emails ...\n")
 
     for email in emails:
         search_text = f"{email.get('subject', '')} {email.get('snippet', '')}"
         order_ids = extract_order_ids(search_text)
+        phones = extract_phones(search_text)
+
+        # If no order IDs or phones in snippet, try fetching full email body
+        if not order_ids and not phones and gmail_creds:
+            body = _fetch_gmail_body(email.get("id", ""), gmail_creds)
+            if body:
+                full_text = search_text + " " + body
+                order_ids = extract_order_ids(full_text)
+                phones = extract_phones(full_text)
+                if order_ids or phones:
+                    print(f"  [body-fetch] Found in full body — orders: {order_ids} phones: {phones}")
+                    # Store the body snippet for RCA context (first 1500 chars)
+                    email["body_preview"] = body[:1500]
         email["order_ids"] = order_ids
         email["vsm_orders"] = []
         email["crm_comments"] = {}
 
-        if not order_ids:
-            continue
-
         print(f"[EMAIL] {email['subject'][:70]}")
-        print(f"  Order IDs: {order_ids}")
 
-        for oid in order_ids:
-            # VSM order details
-            if oid not in vsm_cache:
-                print(f"  → Fetching VSM order {oid}")
-                vsm_cache[oid] = fetch_vsm_order(oid)
-                time.sleep(0.3)
-            email["vsm_orders"].append(vsm_cache[oid])
+        # ── Order ID based lookup ─────────────────────────────────────────────
+        if order_ids:
+            print(f"  Order IDs: {order_ids}")
+            for oid in order_ids:
+                if oid not in vsm_cache:
+                    print(f"  → Fetching VSM order {oid}")
+                    vsm_cache[oid] = fetch_vsm_order(oid)
+                    time.sleep(0.3)
+                email["vsm_orders"].append(vsm_cache[oid])
 
-            # CRM comments (WhatsApp)
-            if oid not in crm_cache:
-                print(f"  → Fetching CRM comments for {oid}")
-                crm_cache[oid] = fetch_crm_comments(oid)
-                time.sleep(0.3)
-            email["crm_comments"][oid] = crm_cache[oid]
+                if oid not in crm_cache:
+                    print(f"  → Fetching CRM comments for {oid}")
+                    crm_cache[oid] = fetch_crm_comments(oid)
+                    time.sleep(0.3)
+                email["crm_comments"][oid] = crm_cache[oid]
+
+        # ── Phone-based fallback: try when no order IDs found in this email ──
+        elif phones:
+            print(f"  No order IDs found. Trying phone lookup: {phones}")
+            for phone in phones[:2]:  # limit to first 2 phones
+                if phone in phone_cache:
+                    phone_orders = phone_cache[phone]
+                else:
+                    print(f"  → Fetching VSM orders for phone {phone}")
+                    phone_orders = fetch_vsm_orders_by_phone(phone)
+                    phone_cache[phone] = phone_orders
+                    time.sleep(0.3)
+
+                for order in phone_orders:
+                    oid = str(order.get("order_id", ""))
+                    if not oid:
+                        continue
+                    if oid not in [str(o.get("order_id")) for o in email["vsm_orders"]]:
+                        email["vsm_orders"].append(order)
+                        if oid not in order_ids:
+                            order_ids.append(oid)
+                    if oid not in crm_cache:
+                        print(f"  → Fetching CRM comments for {oid}")
+                        crm_cache[oid] = fetch_crm_comments(oid)
+                        time.sleep(0.3)
+                    email["crm_comments"][oid] = crm_cache[oid]
+
+            email["order_ids"] = order_ids  # update with phone-resolved IDs
+        else:
+            print("  No order IDs or phones found. Skipping.")
 
         print()
 
