@@ -11,6 +11,7 @@ Run:
 import json
 import os
 import re
+import csv
 import time
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -95,6 +96,85 @@ st.markdown("""
 .ts { font-size:10px; color:#888; }
 </style>
 """, unsafe_allow_html=True)
+
+# ── store mapping ──────────────────────────────────────────────────────────────
+
+# State → Zone lookup (covers all Indian states in the CSV)
+_STATE_TO_ZONE: dict[str, str] = {
+    # North
+    "delhi": "North", "uttar pradesh": "North", "rajasthan": "North",
+    "haryana": "North", "punjab": "North", "uttarakhand": "North",
+    "himachal pradesh": "North", "jammu & kashmir": "North",
+    "jammu and kashmir": "North", "chandigarh": "North",
+    "dehradun": "North",   # used as state in CSV for some stores
+    # South
+    "karnataka": "South", "tamil nadu": "South", "telangana": "South",
+    "kerala": "South", "andhra pradesh": "South", "puducherry": "South",
+    "pondicherry": "South",
+    # West
+    "maharashtra": "West", "gujarat": "West", "goa": "West",
+    "madhya pradesh": "West", "chhattisgarh": "West",
+    # East
+    "west bengal": "East", "bihar": "East", "assam": "East",
+    "odisha": "East", "jharkhand": "East", "tripura": "East",
+    "nagaland": "East", "arunachal pradesh": "East", "meghalaya": "East",
+    "sikkim": "East", "mizoram": "East", "manipur": "East",
+}
+
+@st.cache_data(show_spinner=False)
+def _load_store_map() -> dict[str, dict]:
+    """
+    Load store_state_mapping.csv → dict keyed by normalised store code.
+    Each value: {city, state, zone, full_name}
+    Returns empty dict if file not found.
+    """
+    p = Path("store_state_mapping.csv")
+    if not p.exists():
+        return {}
+    store_map: dict[str, dict] = {}
+    with open(p, newline="", encoding="utf-8-sig") as f:
+        for row in csv.DictReader(f):
+            code = (row.get("store_code") or "").strip().upper()
+            if not code:
+                continue
+            state_raw = (row.get("state") or "").strip()
+            city  = (row.get("store_town") or "").strip()
+            zone  = _STATE_TO_ZONE.get(state_raw.lower(), "Unknown")
+            store_map[code] = {
+                "city":      city,
+                "state":     state_raw,
+                "zone":      zone,
+                "full_name": (row.get("store_code_name") or "").strip(),
+            }
+    return store_map
+
+
+def _lkst_code_from_string(s: str) -> str:
+    """Extract 'LKST1234' from strings like 'LKST1234 Mumbai' or 'LKST1234-Mall'."""
+    m = re.search(r'\bLKST\w+', str(s), re.IGNORECASE)
+    return m.group(0).upper() if m else ""
+
+
+def _zone_from_store_map(order: dict) -> str:
+    """
+    Try every store-code field on a VSM order dict against the CSV lookup.
+    Returns zone string or '' if not found.
+    """
+    store_map = _load_store_map()
+    if not store_map:
+        return ""
+    # Fields that may carry a LKST code
+    candidates = [
+        order.get("store") or "",
+        order.get("facility_code") or "",
+        order.get("delivery_store_code") or "",
+    ]
+    for raw in candidates:
+        code = _lkst_code_from_string(str(raw))
+        if code and code in store_map:
+            return store_map[code]["zone"]
+    return ""
+
 
 # ── data loading ───────────────────────────────────────────────────────────────
 
@@ -369,14 +449,20 @@ def _build_overview_data(cases: list) -> dict:
         issue_counts[case["issue_type"]] += 1
         severity_counts[case["severity"]] += 1
 
-        # Zone priority:
-        #  1. storeDetails.city from VSM  (direct, most accurate)
-        #  2. store name string → city lookup
-        #  3. scan email subject + snippet + body for city names
-        #  4. lenskartomni.com in customer_email → Store (Zone TBD)
+        # Zone lookup priority:
+        #  1. CSV store_state_mapping via LKST code (facility_code / delivery_store_code / store)
+        #  2. storeDetails.city from VSM → _CITY_TO_ZONE
+        #  3. store name string → city regex lookup
+        #  4. Scan email subject + snippet + body for city names
+        #  5. lenskartomni.com customer_email → Store (Zone TBD)
         zone = "Unknown"
         for order in case.get("vsm_orders", []):
-            # 1. Explicit city from storeDetails
+            # 1. CSV lookup via LKST store code
+            z = _zone_from_store_map(order)
+            if z and z != "Unknown":
+                zone = z
+                break
+            # 2. Explicit city from storeDetails
             city = str(order.get("store_city") or "").strip()
             if city:
                 z = _CITY_TO_ZONE.get(city)
@@ -388,19 +474,19 @@ def _build_overview_data(cases: list) -> dict:
                 if z:
                     zone = z
                     break
-            # 2. Parse store name string
+            # 3. Parse store name string → city
             store = str(order.get("store") or "").strip()
             z = _store_to_zone(store)
             if z not in ("Unknown", ""):
                 zone = z
                 break
         if zone == "Unknown":
-            # 3. Scan full email text (subject + snippet + body)
+            # 4. Scan full email text (subject + snippet + body)
             email_text = " ".join(
                 (e.get("subject", "") + " " + e.get("snippet", "") + " " + (e.get("body", "") or "")[:1000])
                 for e in case.get("emails", [])
             )
-            # 4. Include VSM customer emails for omni detection
+            # 5. Include VSM customer emails for omni detection
             vsm_emails = " ".join(
                 (o.get("customer_email", "") or "") for o in case.get("vsm_orders", [])
             )
@@ -790,11 +876,20 @@ def render_order_cards(vsm_orders: list):
             email = order.get("customer_email") or ""
             store      = str(order.get("store") or "—")
             store_city = str(order.get("store_city") or "")
+            store_state= str(order.get("store_state") or "")
             store_type = str(order.get("store_type") or "")
             tier       = str(order.get("customer_tier") or "")
+            # Enrich city/state from CSV if VSM didn't return them
+            if not store_city:
+                _sm = _load_store_map()
+                _code = _lkst_code_from_string(store)
+                if _code and _code in _sm:
+                    store_city  = _sm[_code]["city"]
+                    store_state = _sm[_code]["state"]
             store_label = store
             if store_city and store_city not in store:
-                store_label = f"{store} ({store_city})"
+                loc = store_city + (f", {store_state}" if store_state else "")
+                store_label = f"{store} ({loc})"
             if store_type:
                 store_label += f" · {store_type.title()}"
             st.markdown(f"👤 **{name}** · 📱 `{phone}`" + (f" · 🏅 {tier}" if tier else ""))
