@@ -420,7 +420,7 @@ Follow the six-section structure exactly. Be crisp."""
 
     with client.messages.stream(
         model="claude-opus-4-6",
-        max_tokens=5000,
+        max_tokens=8000,
         thinking={"type": "enabled", "budget_tokens": 3000},
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
